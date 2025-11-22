@@ -2,7 +2,7 @@
 
 **Plant-Based Clean Air Solutions for a Sustainable Future**
 
-SHUDDHUDARA is a full-stack web platform dedicated to promoting and deploying innovative plant-based clean-air technologies. Through collaboration with Vidaverde International and the Youth Development for Climate Tech (YDC-T) program powered by Meta AI, we're creating sustainable solutions for air purification and environmental restoration.
+SHUDDHUDARA is a full-stack web platform dedicated to promoting and deploying innovative plant-based clean-air technologies. Through collaboration with Vidaverde International and the Youth Development for Climate Tech (YDfCT) program powered by Meta AI, we're creating sustainable solutions for air purification and environmental restoration.
 
 ---
 
@@ -309,39 +309,6 @@ Our diverse international team includes:
 ---
 
 ## 🌍 Partnerships
-
-### Vidaverde International
-
-Global organization focused on environmental sustainability, ecological restoration, and green innovation with climate-positive community empowerment strategies.
-
-### YDC-T (Youth Development for Climate Tech)
-
-Cross-border innovation program supported by Meta AI, empowering young climate innovators across Singapore, India, and Indonesia with AI and data tools to address climate challenges.
-
----
-
-## 📄 License
-
-MIT License - Feel free to use this project for learning and development.
-
----
-
-## 🐛 Troubleshooting
-
-### MongoDB Connection Issues
-
-```bash
-# Check if MongoDB is running
-mongod --version
-
-# Start MongoDB manually
-mongod --dbpath C:\data\db
-```
-
-### Port Already in Use
-
-If port 3000 is occupied, change in `.env`:
-```env
 PORT=3001
 ```
 
