@@ -11,23 +11,6 @@ SHUDDHUDARA is a full-stack web platform dedicated to promoting and deploying in
 SHUDDHUDARA showcases cutting-edge climate technology solutions focused on:
 
 - **Plant-Based Air Purification**: Natural, sustainable air quality improvement systems
-- **AI-Powered Monitoring**: Intelligent air quality analysis and optimization platforms  
-- **Mobile Solutions**: Revolutionary moving botanical air purification (BioBloom)
-- **Youth-Led Innovation**: Empowering young climate tech innovators across borders
-
-### Key Solutions
-
-1. **Plantify** - Intelligent plant-based air purification systems for urban environments
-2. **AirthMind** - AI-powered air quality monitoring and optimization platform
-3. **AeroSense** - Advanced sensors for real-time air quality detection
-4. **BioBloom** - The Moving Tree: Revolutionary mobile botanical air purification
-5. **OxyGenZ** - Natural oxygen generation systems powered by plants
-6. **Future Innovations** - Upcoming climate tech solutions in development
-
----
-
-## 🚀 Technology Stack
-
 ### Frontend
 - **HTML5** - Semantic markup for structure
 - **CSS3** - Custom pastel green design system with animations
@@ -294,23 +277,6 @@ All pages are fully responsive and tested across devices.
 6. **Environment Variables**: Sensitive data protection
 
 ---
-
-## 🤝 Team
-
-Our diverse international team includes:
-
-1. **Aarushi Chatterjee** (India) - Environmental tech professional
-2. **Pooja Gunturu** (India) - Climate tech specialist
-3. **Setyorini Okiviana** (Indonesia) - Sustainability expert
-4. **Clarissa Tomponu** (Indonesia) - Environmental engineer
-5. **Vaisakh** (India) - Climate technology innovator
-6. **Varel** (Indonesia) - Environmental tech specialist
-
----
-
-## 🌍 Partnerships
-PORT=3001
-```
 
 ### CORS Errors
 
