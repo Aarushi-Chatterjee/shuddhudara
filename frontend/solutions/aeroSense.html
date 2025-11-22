@@ -28,16 +28,24 @@
             margin-bottom: 1rem;
         }
 
-        .feature-list {
-            max-width: 800px;
-            margin: 2rem auto;
-            text-align: left;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .feature-list li {
-            margin-bottom: 1rem;
-            line-height: 1.8;
-            color: var(--color-gray-700);
+        .feature-card {
+            text-align: left;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
         .highlight-box {
@@ -46,6 +54,7 @@
             border-radius: var(--radius-lg);
             margin: 2rem auto;
             max-width: 800px;
+            text-align: center;
         }
     </style>
 </head>
@@ -89,15 +98,23 @@
 
             <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">How It Works</h3>
 
-            <div class="feature-list scroll-reveal">
-                <ul style="list-style: none; padding: 0;">
-                    <li>🔬 <strong>Tiny, low-cost IoT sensors</strong> capture PM2.5, VOCs, CO₂, humidity, and
-                        temperature in real time.</li>
-                    <li>☁️ <strong>Secure cloud transmission</strong> — Data is transmitted securely to the cloud every
-                        few seconds, creating a dynamic, digital twin of each room's air environment.</li>
-                    <li>📊 <strong>Live Air Health Score</strong> — Each location (classroom, hall, ward, or workspace)
-                        receives a real-time "Air Health Score."</li>
-                </ul>
+            <div class="feature-grid scroll-reveal">
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🔬 Tiny, Low-Cost
+                        IoT Sensors</h4>
+                    <p>Capture PM2.5, VOCs, CO₂, humidity, and temperature in real time.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">☁️ Secure Cloud
+                        Transmission</h4>
+                    <p>Data is transmitted securely to the cloud every few seconds, creating a dynamic, digital twin of
+                        each room's air environment.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📊 Live Air Health
+                        Score</h4>
+                    <p>Each location (classroom, hall, ward, or workspace) receives a real-time "Air Health Score."</p>
+                </div>
             </div>
 
             <div class="highlight-box scroll-reveal">

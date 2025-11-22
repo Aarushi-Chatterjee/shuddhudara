@@ -28,16 +28,24 @@
             margin-bottom: 1rem;
         }
 
-        .feature-list {
-            max-width: 800px;
-            margin: 2rem auto;
-            text-align: left;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .feature-list li {
-            margin-bottom: 1rem;
-            line-height: 1.8;
-            color: var(--color-gray-700);
+        .feature-card {
+            text-align: left;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
         .transform-box {
@@ -90,17 +98,27 @@
 
             <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">Key Features</h3>
 
-            <div class="feature-list scroll-reveal">
-                <ul style="list-style: none; padding: 0;">
-                    <li>📊 <strong>Live Dashboards</strong> — Powered by IoT data showing each room's air score and
-                        oxygen levels in real time.</li>
-                    <li>🎯 <strong>Daily Challenges</strong> — Gamified goals like "Reduce VOCs by 20% today!" or "Keep
-                        AQI below 40!"</li>
-                    <li>🏆 <strong>Badges & Leaderboards</strong> — Recognition for schools, offices, and individuals
-                        improving their air quality.</li>
-                    <li>📚 <strong>Interactive Learning</strong> — Stories and quizzes teaching children and staff how
-                        their actions affect air health.</li>
-                </ul>
+            <div class="feature-grid scroll-reveal">
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📊 Live Dashboards
+                    </h4>
+                    <p>Powered by IoT data showing each room's air score and oxygen levels in real time.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🎯 Daily
+                        Challenges</h4>
+                    <p>Gamified goals like "Reduce VOCs by 20% today!" or "Keep AQI below 40!"</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🏆 Badges &
+                        Leaderboards</h4>
+                    <p>Recognition for schools, offices, and individuals improving their air quality.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📚 Interactive
+                        Learning</h4>
+                    <p>Stories and quizzes teaching children and staff how their actions affect air health.</p>
+                </div>
             </div>
 
             <div class="transform-box scroll-reveal">

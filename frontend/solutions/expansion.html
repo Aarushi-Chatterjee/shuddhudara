@@ -28,16 +28,24 @@
             margin-bottom: 1rem;
         }
 
-        .feature-list {
-            max-width: 800px;
-            margin: 2rem auto;
-            text-align: left;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .feature-list li {
-            margin-bottom: 1rem;
-            line-height: 1.8;
-            color: var(--color-gray-700);
+        .feature-card {
+            text-align: left;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
         .celebrate-box {
@@ -88,17 +96,30 @@
 
             <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">What It Does</h3>
 
-            <div class="feature-list scroll-reveal">
-                <ul style="list-style: none; padding: 0;">
-                    <li>📈 <strong>Monthly Air-Health Reports</strong> — Generates comprehensive reports with
-                        before-and-after graphs for PM2.5, VOCs, and CO₂.</li>
-                    <li>🔍 <strong>AI-Powered Insights</strong> — Provides behavioral and environmental trend analysis
-                        (e.g., how watering plants correlates with AQI improvement).</li>
-                    <li>🤝 <strong>Institutional Sharing</strong> — Enables dashboards to be shared with parents,
-                        management, or public partners, inspiring replication.</li>
-                    <li>🌆 <strong>Citywide Impact Map</strong> — Aggregates anonymized data across multiple sites to
-                        create an "Indoor Air Map" supporting urban policy and research.</li>
-                </ul>
+            <div class="feature-grid scroll-reveal">
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📈 Monthly
+                        Air-Health Reports</h4>
+                    <p>Generates comprehensive reports with before-and-after graphs for PM2.5, VOCs, and CO₂.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🔍 AI-Powered
+                        Insights</h4>
+                    <p>Provides behavioral and environmental trend analysis (e.g., how watering plants correlates with
+                        AQI improvement).</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🤝 Institutional
+                        Sharing</h4>
+                    <p>Enables dashboards to be shared with parents, management, or public partners, inspiring
+                        replication.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🌆 Citywide Impact
+                        Map</h4>
+                    <p>Aggregates anonymized data across multiple sites to create an "Indoor Air Map" supporting urban
+                        policy and research.</p>
+                </div>
             </div>
 
             <div class="celebrate-box scroll-reveal">

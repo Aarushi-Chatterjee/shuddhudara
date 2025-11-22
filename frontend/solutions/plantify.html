@@ -28,16 +28,24 @@
             margin-bottom: 1rem;
         }
 
-        .feature-list {
-            max-width: 800px;
-            margin: 2rem auto;
-            text-align: left;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .feature-list li {
-            margin-bottom: 1rem;
-            line-height: 1.8;
-            color: var(--color-gray-700);
+        .feature-card {
+            text-align: left;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
         .impact-box {
@@ -88,17 +96,29 @@
 
             <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">App Features</h3>
 
-            <div class="feature-list scroll-reveal">
-                <ul style="list-style: none; padding: 0;">
-                    <li>🌿 <strong>Smart Plant Recommendations</strong> — Suggests plant types (Peace Lily, Areca Palm,
-                        Snake Plant) based on pollutant type, available light, and space.</li>
-                    <li>📍 <strong>Optimal Placement</strong> — Uses floor plans and sensor maps to recommend ideal
-                        positioning for maximum air impact.</li>
-                    <li>🔔 <strong>Care Reminders</strong> — Includes watering reminders, care tips, and links to local
-                        nurseries for affordable implementation.</li>
-                    <li>📊 <strong>Green Impact Meter</strong> — Shows a live visualization of how your plants are
-                        improving AQI and CO₂ levels.</li>
-                </ul>
+            <div class="feature-grid scroll-reveal">
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🌿 Smart Plant
+                        Recommendations</h4>
+                    <p>Suggests plant types (Peace Lily, Areca Palm, Snake Plant) based on pollutant type, available
+                        light, and space.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📍 Optimal
+                        Placement</h4>
+                    <p>Uses floor plans and sensor maps to recommend ideal positioning for maximum air impact.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🔔 Care Reminders
+                    </h4>
+                    <p>Includes watering reminders, care tips, and links to local nurseries for affordable
+                        implementation.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📊 Green Impact
+                        Meter</h4>
+                    <p>Shows a live visualization of how your plants are improving AQI and CO₂ levels.</p>
+                </div>
             </div>
 
             <div class="impact-box scroll-reveal">
