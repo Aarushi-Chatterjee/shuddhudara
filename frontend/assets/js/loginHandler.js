@@ -61,41 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
             loginButton.classList.add('loading');
             loginButton.textContent = 'Signing In...';
 
-            // MOCK LOGIN IMPLEMENTATION (Bypass Backend)
-            // Simulating network delay
-            setTimeout(() => {
-                const mockResponse = {
-                    success: true,
-                    token: 'mock-jwt-token-12345',
-                    user: {
-                        username: 'Demo User',
-                        email: email
-                    }
-                };
-
-                // Simulate success
-                showSuccess('Login successful! Redirecting...');
-
-                // Store authentication token
-                localStorage.setItem('authToken', mockResponse.token);
-                localStorage.setItem('user', JSON.stringify(mockResponse.user));
-
-                // Redirect to dashboard after short delay
-                setTimeout(() => {
-                    window.location.href = '../dashboard/dashboard.html';
-                }, 1500);
-
-                // Re-enable button
-                loginButton.disabled = false;
-                loginButton.classList.remove('loading');
-                loginButton.textContent = 'Sign In';
-
-            }, 1000);
-
-            /* 
-            // ORIGINAL BACKEND CALL (Commented out for Demo)
+            // Real API Call
             try {
-                // Make API request to login endpoint
                 const response = await fetch(`${API_URL}/login`, {
                     method: 'POST',
                     headers: {
@@ -107,34 +74,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    // Login successful
                     showSuccess('Login successful! Redirecting...');
 
-                    // Store authentication token
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
 
-                    // Redirect to dashboard after short delay
                     setTimeout(() => {
                         window.location.href = '../dashboard/dashboard.html';
                     }, 1500);
-
                 } else {
-                    // Login failed
                     showError(data.message || 'Login failed. Please check your credentials.');
                 }
 
             } catch (error) {
-                // Network or server error
                 console.error('Login error:', error);
-                showError('Connection error. Please make sure the server is running.');
+                showError('Connection error. Please ensure the backend server is running.');
             } finally {
-                // Re-enable button
                 loginButton.disabled = false;
                 loginButton.classList.remove('loading');
                 loginButton.textContent = 'Sign In';
             }
-            */
         });
     }
 
