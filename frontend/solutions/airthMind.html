@@ -4,153 +4,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AirthMind - AI-powered air quality monitoring and optimization.">
     <title>AirthMind | SHUDDHUDARA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap"
         rel="stylesheet">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .solution-hero {
+            background: linear-gradient(135deg, var(--color-primary-lightest), var(--color-light-bg));
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .solution-icon-large {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 
-<body
-    style="background: linear-gradient(to bottom, var(--color-light-bg), var(--color-white)); padding-top: 80px; min-height: 100vh;">
+<body>
+
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <a href="../home/index.html" style="text-decoration: none;">
+                    <h1 class="site-title">SHUDDHUDARA</h1>
+                </a>
+            </div>
+            <a href="../home/index.html" class="btn btn-secondary">Back to Home</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="solution-hero">
+        <div class="container">
+            <div class="solution-icon-large fade-in-up">🧠</div>
+            <h1 class="fade-in-up">AirthMind</h1>
+            <p class="hero-subtitle fade-in-up">AI-powered air quality monitoring and optimization platform.</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
     <section class="section">
-        <div class="container" style="max-width: 1000px;">
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <div style="font-size: 6rem; margin-bottom: 2rem;">🧠</div>
-                <h1 style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">AirthMind</h1>
-                <p style="font-size: 1.5rem; color: var(--color-primary-dark); font-weight: 600;">AI Analysis and
-                    Intelligence Engine</p>
-            </div>
-
-            <!-- Introduction Section -->
-            <div
-                style="background: white; padding: 3rem; border-radius: 16px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;">
-                <p
-                    style="font-size: 1.25rem; color: var(--color-gray-700); line-height: 1.8; text-align: center; margin-bottom: 2rem;">
-                    All data from <strong>AeroSense</strong> flows into <strong>AirthMind</strong>, the AI-driven
-                    decision engine of the ecosystem.
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Overview</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p class="scroll-reveal">
+                    AirthMind uses advanced artificial intelligence to analyze air quality data and predict pollution
+                    trends.
+                    It provides actionable insights to optimize your indoor environment.
                 </p>
-            </div>
-
-            <!-- How It Works Section -->
-            <div style="background: var(--color-light-bg); padding: 3rem; border-radius: 16px; margin-bottom: 3rem;">
-                <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">How
-                    it works:</h2>
-
-                <div style="display: grid; gap: 2rem;">
-                    <div
-                        style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--color-primary);">
-                        <h3 style="color: var(--color-primary-dark); margin-bottom: 1rem;">🔍 Deep Analysis</h3>
-                        <p style="color: var(--color-gray-700); line-height: 1.8;">
-                            AirthMind analyzes <strong>pollution sources, daily activity patterns, and external haze
-                                data</strong> to understand your indoor environment comprehensively.
-                        </p>
+                <div class="solutions-grid">
+                    <div class="solution-card scroll-reveal">
+                        <h3>Predictive Analytics</h3>
+                        <p>Forecast air quality changes before they happen.</p>
                     </div>
-
-                    <div
-                        style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--color-accent);">
-                        <h3 style="color: var(--color-primary-dark); margin-bottom: 1rem;">📊 Trend Identification</h3>
-                        <p style="color: var(--color-gray-700); line-height: 1.8;">
-                            It identifies pollution trends — like <strong>VOC spikes during cleaning hours</strong> or
-                            <strong>rising CO₂ during high occupancy</strong>.
-                        </p>
-                    </div>
-
-                    <div
-                        style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--color-primary);">
-                        <h3 style="color: var(--color-primary-dark); margin-bottom: 1rem;">🎯 Smart Classification</h3>
-                        <p style="color: var(--color-gray-700); line-height: 1.8;">
-                            It classifies each room into <strong>Healthy / Moderate / Critical</strong> zones and
-                            <strong>predicts upcoming air-quality drops</strong>.
-                        </p>
+                    <div class="solution-card scroll-reveal">
+                        <h3>Smart Integration</h3>
+                        <p>Connects with HVAC systems to automatically adjust airflow.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Outcome Section -->
-            <div
-                style="background: var(--color-primary-lightest); padding: 3rem; border-radius: 16px; margin-bottom: 3rem;">
-                <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">
-                    Outcome</h2>
-                <p
-                    style="font-size: 1.25rem; color: var(--color-gray-800); line-height: 1.8; text-align: center; font-weight: 600;">
-                    AirthMind turns raw sensor data into <strong>actionable intelligence</strong>. It doesn't just
-                    detect — it <strong>learns and adapts</strong>, providing context-specific recommendations.
-                </p>
-            </div>
-
-            <!-- Key Capabilities -->
-            <div
-                style="background: white; padding: 3rem; border-radius: 16px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;">
-                <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Key
-                    Capabilities</h2>
-
-                <div style="display: grid; gap: 1.5rem;">
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">🤖</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">AI-Powered Analysis
-                            </h4>
-                            <p style="color: var(--color-gray-700);">Machine learning algorithms analyze patterns and
-                                correlations</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">📈</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Predictive Intelligence
-                            </h4>
-                            <p style="color: var(--color-gray-700);">Forecasts air quality changes before they occur</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">🎯</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Context-Aware
-                                Recommendations</h4>
-                            <p style="color: var(--color-gray-700);">Tailored suggestions based on specific room
-                                conditions</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">🔄</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Adaptive Learning</h4>
-                            <p style="color: var(--color-gray-700);">Continuously improves with more data and feedback
-                            </p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">🌍</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">External Data
-                                Integration</h4>
-                            <p style="color: var(--color-gray-700);">Incorporates outdoor haze and pollution data</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">⚠️</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Zone Classification
-                            </h4>
-                            <p style="color: var(--color-gray-700);">Healthy, Moderate, or Critical air quality ratings
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Back Button -->
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="../home/index.html" class="btn btn-primary">← Back to Homepage</a>
             </div>
         </div>
     </section>
+
+    <!-- Interactive Impact Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">See the Impact</h2>
+            <p class="text-center scroll-reveal" style="max-width: 600px; margin: 0 auto 2rem;">
+                Drag the slider to see how AirthMind transforms urban environments from polluted to pristine.
+            </p>
+
+            <div class="comparison-container scroll-reveal">
+                <div class="comparison-image-container">
+                    <!-- Polluted Image (Background) -->
+                    <img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?q=80&w=1000&auto=format&fit=crop"
+                        alt="Polluted City" class="comparison-image">
+
+                    <!-- Clean Image (Foreground - Clipped) -->
+                    <div class="comparison-overlay" id="overlay">
+                        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1000&auto=format&fit=crop"
+                            alt="Clean City" class="comparison-image">
+                    </div>
+                </div>
+
+                <!-- Slider Input -->
+                <input type="range" min="0" max="100" value="50" class="comparison-slider" id="slider"
+                    aria-label="Comparison Slider">
+
+                <!-- Slider Handle Line -->
+                <div class="slider-line" id="sliderLine">
+                    <div class="slider-button">↔</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .comparison-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            aspect-ratio: 16/9;
+        }
+
+        .comparison-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .comparison-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .comparison-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 50%;
+            /* Initial width */
+            overflow: hidden;
+            border-right: 2px solid white;
+        }
+
+        .comparison-overlay img {
+            width: 800px;
+            /* Must match container max-width roughly or be handled via JS to match container width */
+            max-width: none;
+            height: 100%;
+        }
+
+        .comparison-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: ew-resize;
+            z-index: 10;
+            margin: 0;
+        }
+
+        .slider-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: white;
+            pointer-events: none;
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slider = document.getElementById('slider');
+            const overlay = document.getElementById('overlay');
+            const sliderLine = document.getElementById('sliderLine');
+            const container = document.querySelector('.comparison-container');
+            const overlayImg = overlay.querySelector('img');
+
+            function updateSlider() {
+                const val = slider.value;
+                overlay.style.width = `${val}%`;
+                sliderLine.style.left = `${val}%`;
+
+                // Keep the overlay image static relative to container
+                if (container) {
+                    overlayImg.style.width = `${container.offsetWidth}px`;
+                }
+            }
+
+            slider.addEventListener('input', updateSlider);
+
+            // Handle resize
+            window.addEventListener('resize', updateSlider);
+
+            // Initial call
+            updateSlider();
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2025 SHUDDHUDARA. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/animations.js"></script>
 </body>
 
 </html>

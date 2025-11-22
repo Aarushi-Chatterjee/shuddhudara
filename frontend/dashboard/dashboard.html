@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SHUDDHUDARA Dashboard - Access your solutions">
+    <title>Dashboard | SHUDDHUDARA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body style="background: var(--color-light-bg); padding-top: 80px;">
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <h1 class="site-title">SHUDDHUDARA</h1>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <span id="userGreeting" style="color: var(--color-gray-700); font-weight: 500;">Welcome!</span>
+                <button onclick="logout()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dashboard Content -->
+    <section class="section">
+        <div class="container">
+            <h1 class="section-title" style="margin-bottom: 1rem;">Welcome to Your Dashboard</h1>
+            <p style="text-align: center; color: var(--color-gray-600); margin-bottom: 3rem; font-size: 1.125rem;">
+                Access and manage your clean air solutions
+            </p>
+
+            <!-- Solutions Grid -->
+            <div class="solutions-grid">
+                <!-- Plantify -->
+                <a href="../solutions/plantify.html" class="solution-card" style="text-decoration: none;">
+                    <div class="solution-icon">🌱</div>
+                    <h3 class="solution-title">Plantify</h3>
+                    <p class="solution-description">
+                        Intelligent plant-based air purification systems
+                    </p>
+                </a>
+
+                <!-- AirthMind -->
+                <a href="../solutions/airthMind.html" class="solution-card" style="text-decoration: none;">
+                    <div class="solution-icon">🧠</div>
+                    <h3 class="solution-title">AirthMind</h3>
+                    <p class="solution-description">
+                        AI-powered air quality monitoring
+                    </p>
+                </a>
+
+                <!-- AeroSense -->
+                <a href="../solutions/aeroSense.html" class="solution-card" style="text-decoration: none;">
+                    <div class="solution-icon">💨</div>
+                    <h3 class="solution-title">AeroSense</h3>
+                    <p class="solution-description">
+                        Advanced air quality sensors
+                    </p>
+                </a>
+
+                <!-- BioBloom -->
+                <a href="../solutions/bioBloom.html" class="solution-card" style="text-decoration: none;">
+                    <div class="solution-icon">🌸</div>
+                    <h3 class="solution-title">BioBloom</h3>
+                    <p class="solution-description">
+                        The Moving Tree - Revolutionary air purification
+                    </p>
+                </a>
+
+                <!-- OxyGenZ -->
+                <a href="../solutions/oxygenz.html" class="solution-card" style="text-decoration: none;">
+                    <div class="solution-icon">💚</div>
+                    <h3 class="solution-title">OxyGenZ</h3>
+                    <p class="solution-description">
+                        Natural oxygen generation systems
+                    </p>
+                </a>
+
+                <!-- Future Innovation -->
+                <a href="../solutions/expansion.html" class="solution-card" style="text-decoration: none;">
+                    <div class="solution-icon">🔬</div>
+                    <h3 class="solution-title">Future Innovation</h3>
+                    <p class="solution-description">
+                        Upcoming climate tech solutions
+                    </p>
+                </a>
+            </div>
+
+            <!-- Back to Home -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="../home/index.html" class="btn btn-secondary">
+                    ← Back to Homepage
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/loginHandler.js"></script>
+    <script>
+        // Check authentication and display user info
+        document.addEventListener('DOMContentLoaded', function () {
+            // Protect this page - redirect if not logged in
+            if (typeof requireAuth === 'function') {
+                requireAuth();
+            } else {
+                console.warn('requireAuth function not found. Authentication check skipped.');
+            }
+
+            // Display user greeting
+            if (typeof getUser === 'function') {
+                const user = getUser();
+                if (user) {
+                    const userGreeting = document.getElementById('userGreeting');
+                    if (userGreeting) {
+                        userGreeting.textContent = `Welcome, ${user.username}!`;
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

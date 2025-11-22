@@ -197,10 +197,18 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+  /* Fix for parallax overlap */
+  z-index: 10;
+  /* Ensure sections stay above hero */
+  background-color: var(--color-light-bg);
+  /* Default background */
 }
 
 .section-alt {
   background-color: var(--color-white);
+  background-image: radial-gradient(circle at 10% 20%, rgba(102, 187, 106, 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(102, 187, 106, 0.05) 0%, transparent 20%);
 }
 
 /* --------------------------------------------
@@ -311,6 +319,18 @@ img {
   background: linear-gradient(135deg, var(--color-light-bg) 0%, var(--color-primary-lightest) 100%);
   position: relative;
   overflow: hidden;
+  z-index: 1;
+  /* Lower z-index for parallax */
+}
+
+/* Nature Background Variant - Add this class to .hero to enable */
+.hero-nature-bg {
+  background: linear-gradient(rgba(241, 248, 233, 0.85), rgba(241, 248, 233, 0.7)),
+    url('https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* Parallax-like effect */
 }
 
 .hero::before {
@@ -740,89 +760,3 @@ img {
   background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary-dark));
   border-radius: var(--radius-full);
 }
-/* ============================================
-   DYNAMIC SOLUTIONS GRID ENHANCEMENTS
-   ============================================ */
-
-/* Staggered card positioning */
-.solution-card:nth-child(1) { position: relative; top: 0; }
-.solution-card:nth-child(2) { position: relative; top: 20px; }
-.solution-card:nth-child(3) { position: relative; top: 0; }
-.solution-card:nth-child(4) { position: relative; top: 20px; }
-.solution-card:nth-child(5) { position: relative; top: 0; }
-.solution-card:nth-child(6) { position: relative; top: 20px; }
-
-/* Enhanced gradient background */
-.solution-card {
-  background: linear-gradient(135deg, var(--color-white) 0%, #f8fffe 100%);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Animated gradient overlay */
-.solution-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(129, 199, 132, 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 0;
-}
-
-.solution-card:hover::before {
-  opacity: 1;
-}
-
-/* Enhanced hover effects */
-.solution-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(76, 175, 80, 0.15), 0 15px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* Adjust hover for staggered cards */
-.solution-card:nth-child(2):hover { transform: translateY(8px) scale(1.02); }
-.solution-card:nth-child(4):hover { transform: translateY(8px) scale(1.02); }
-.solution-card:nth-child(6):hover { transform: translateY(8px) scale(1.02); }
-
-/* Icon pulse animation */
-@keyframes iconPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.solution-icon {
-  display: inline-block;
-  transition: transform 0.3s ease;
-  position: relative;
-  z-index: 1;
-}
-
-.solution-card:hover .solution-icon {
-  transform: scale(1.15) rotate(5deg);
-  animation: iconPulse 1s ease-in-out;
-}
-
-/* Enhanced title hover */
-.solution-title {
-  position: relative;
-  z-index: 1;
-  transition: color 0.3s ease;
-}
-
-.solution-card:hover .solution-title {
-  color: var(--color-primary-dark);
-}
-
-/* Enhanced description */
-.solution-description {
-  position: relative;
-  z-index: 1;
-  line-height: 1.6;
-}
-

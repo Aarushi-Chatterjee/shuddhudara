@@ -4,143 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AeroSense - Advanced sensors for real-time air quality detection.">
     <title>AeroSense | SHUDDHUDARA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap"
         rel="stylesheet">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .solution-hero {
+            background: linear-gradient(135deg, var(--color-primary-lightest), var(--color-light-bg));
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .solution-icon-large {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 
-<body
-    style="background: linear-gradient(to bottom, var(--color-light-bg), var(--color-white)); padding-top: 80px; min-height: 100vh;">
+<body>
+
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <a href="../home/index.html" style="text-decoration: none;">
+                    <h1 class="site-title">SHUDDHUDARA</h1>
+                </a>
+            </div>
+            <a href="../home/index.html" class="btn btn-secondary">Back to Home</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="solution-hero">
+        <div class="container">
+            <div class="solution-icon-large fade-in-up">💨</div>
+            <h1 class="fade-in-up">AeroSense</h1>
+            <p class="hero-subtitle fade-in-up">Advanced sensors for real-time air quality detection and analysis.</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
     <section class="section">
-        <div class="container" style="max-width: 1000px;">
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <div style="font-size: 6rem; margin-bottom: 2rem;">💨</div>
-                <h1 style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">AeroSense</h1>
-                <p style="font-size: 1.5rem; color: var(--color-primary-dark); font-weight: 600;">Smart IoT Monitoring
-                    Network</p>
-            </div>
-
-            <!-- Introduction Section -->
-            <div
-                style="background: white; padding: 3rem; border-radius: 16px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;">
-                <p
-                    style="font-size: 1.25rem; color: var(--color-gray-700); line-height: 1.8; text-align: center; margin-bottom: 2rem;">
-                    At the foundation of ShuddhUdara is <strong>AeroSense</strong>, a distributed IoT network that
-                    continuously monitors air quality parameters across indoor spaces.
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Overview</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p class="scroll-reveal">
+                    AeroSense provides high-precision sensors that detect PM2.5, PM10, VOCs, CO2, and more.
+                    Get real-time data on the air you breathe.
                 </p>
-            </div>
-
-            <!-- How It Works Section -->
-            <div style="background: var(--color-light-bg); padding: 3rem; border-radius: 16px; margin-bottom: 3rem;">
-                <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">How
-                    it works:</h2>
-
-                <div style="display: grid; gap: 2rem;">
-                    <div
-                        style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--color-primary);">
-                        <h3 style="color: var(--color-primary-dark); margin-bottom: 1rem;">📡 Real-Time Monitoring</h3>
-                        <p style="color: var(--color-gray-700); line-height: 1.8;">
-                            Tiny, low-cost IoT sensors capture <strong>PM2.5, VOCs, CO₂, humidity, and
-                                temperature</strong> in real time.
-                        </p>
+                <div class="solutions-grid">
+                    <div class="solution-card scroll-reveal">
+                        <h3>Multi-Pollutant Detection</h3>
+                        <p>Detects a wide range of harmful particles and gases.</p>
                     </div>
-
-                    <div
-                        style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--color-accent);">
-                        <h3 style="color: var(--color-primary-dark); margin-bottom: 1rem;">☁️ Secure Cloud Integration
-                        </h3>
-                        <p style="color: var(--color-gray-700); line-height: 1.8;">
-                            Data is transmitted securely to the cloud every few seconds, creating a dynamic,
-                            <strong>digital twin</strong> of each room's air environment.
-                        </p>
-                    </div>
-
-                    <div
-                        style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--color-primary);">
-                        <h3 style="color: var(--color-primary-dark); margin-bottom: 1rem;">💚 Live Air Health Score</h3>
-                        <p style="color: var(--color-gray-700); line-height: 1.8;">
-                            Each location (classroom, hall, ward, or workspace) receives a live <strong>"Air Health
-                                Score"</strong> for instant air quality assessment.
-                        </p>
+                    <div class="solution-card scroll-reveal">
+                        <h3>Real-Time Alerts</h3>
+                        <p>Instant notifications when air quality drops below safe levels.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Purpose Section -->
-            <div
-                style="background: var(--color-primary-lightest); padding: 3rem; border-radius: 16px; margin-bottom: 3rem;">
-                <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">
-                    Purpose</h2>
-                <p
-                    style="font-size: 1.25rem; color: var(--color-gray-800); line-height: 1.8; text-align: center; font-weight: 600;">
-                    AeroSense acts as the <strong>eyes and ears</strong> of ShuddhUdara — making invisible pollution
-                    visible and measurable.
-                </p>
-            </div>
-
-            <!-- Key Features -->
-            <div
-                style="background: white; padding: 3rem; border-radius: 16px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;">
-                <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Key
-                    Features</h2>
-
-                <div style="display: grid; gap: 1.5rem;">
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">✅</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Multi-Parameter
-                                Monitoring</h4>
-                            <p style="color: var(--color-gray-700);">PM2.5, VOCs, CO₂, humidity, temperature</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">✅</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Low-Cost, Scalable
-                                Solution</h4>
-                            <p style="color: var(--color-gray-700);">Affordable sensors for widespread deployment</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">✅</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Secure Cloud
-                                Connectivity</h4>
-                            <p style="color: var(--color-gray-700);">Real-time data transmission every few seconds</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">✅</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Digital Twin Technology
-                            </h4>
-                            <p style="color: var(--color-gray-700);">Virtual representation of your air environment</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <span style="font-size: 2rem;">✅</span>
-                        <div>
-                            <h4 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Location-Specific
-                                Scores</h4>
-                            <p style="color: var(--color-gray-700);">Individual air health scores for every monitored
-                                space</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Back Button -->
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="../home/index.html" class="btn btn-primary">← Back to Homepage</a>
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2025 SHUDDHUDARA. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/animations.js"></script>
 </body>
 
 </html>

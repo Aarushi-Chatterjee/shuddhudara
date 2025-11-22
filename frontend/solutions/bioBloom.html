@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="BioBloom - The Moving Tree | Revolutionary air purification system by SHUDDHUDARA">
-    <title>BioBloom - The Moving Tree | SHUDDHUDARA</title>
+        content="BioBloom - The Moving Tree. Revolutionary mobile botanical air purification system.">
+    <title>BioBloom | SHUDDHUDARA</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,249 +17,295 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/bioBloom.css">
+    <style>
+        /* Page Specific Styles */
+        .biobloom-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0;
+            text-align: center;
+        }
+
+        .biobloom-hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--color-primary-dark);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--color-gray-600);
+        }
+
+        .faq-item.active .faq-answer {
+            padding-bottom: 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 
-<body class="biobloom-page">
+<body>
 
-    <!-- Product Hero Section -->
-    <section class="product-hero">
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <a href="../home/index.html" style="text-decoration: none;">
+                    <h1 class="site-title">SHUDDHUDARA</h1>
+                </a>
+            </div>
+            <a href="../home/index.html" class="btn btn-secondary">Back to Home</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="biobloom-hero">
         <div class="container">
-            <div class="product-image-container">
-                <!-- Placeholder for BioBloom product image -->
-                <div
-                    style="width: 100%; height: 400px; background: linear-gradient(135deg, #A5D6A7, #81C784, #66BB6A); display: flex; align-items: center; justify-content: center; border-radius: 16px;">
-                    <div style="text-align: center; color: white;">
-                        <div style="font-size: 6rem;">🌳</div>
-                        <h2 style="font-size: 2rem; margin-top: 1rem;">BioBloom System</h2>
+            <h1 class="fade-in-up">BioBloom</h1>
+            <p class="hero-subtitle fade-in-up" style="color: rgba(255,255,255,0.9);">The Moving Tree - Revolutionary
+                Mobile Botanical Air Purification</p>
+            <a href="#buy" class="btn btn-primary btn-large fade-in-up">Pre-Order Now</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">About BioBloom</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p class="scroll-reveal">
+                    BioBloom is not just an air purifier; it's a living, breathing ecosystem on wheels.
+                    Designed to bring the freshness of a forest into your home or office, BioBloom combines
+                    advanced botanical filtration with smart mobility to actively seek out and neutralize pollutants.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-card scroll-reveal">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🌿</div>
+                        <h3>Natural Filtration</h3>
+                        <p>Uses specific plant varieties known for high VOC absorption.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                        <h3>Smart Mobility</h3>
+                        <p>Autonomous navigation to areas with poor air quality.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                        <h3>App Connected</h3>
+                        <p>Monitor air stats and control BioBloom from your phone.</p>
                     </div>
                 </div>
             </div>
-            <h1 class="product-name">BioBloom</h1>
-            <p class="product-tagline">The Moving Tree - Nature's Answer to Clean Air</p>
         </div>
     </section>
 
-    <!-- About BioBloom Section -->
-    <section class="about-section" id="about-biobloom">
+    <!-- How It Works -->
+    <section class="section section-alt">
         <div class="container">
-            <h2 class="section-title">🌿 Breathe Better. Live Greener. Welcome to Biobloom! 🌿</h2>
-            <div class="about-content">
-                <p style="font-size: 1.25rem; margin-bottom: 2rem;">
-                    Imagine an air purifier that doesn't just clean—it <strong>revitalizes</strong> your indoor space.
-                    Biobloom combines nature, science, and smart technology to give you air that's fresher, healthier,
-                    and alive! 💨✨
-                </p>
-
-                <h3 style="color: var(--color-primary); font-size: 1.75rem; margin: 2rem 0 1rem;">How it works:</h3>
-
-                <div
-                    style="background: var(--color-light-bg); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                    <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 1rem;">
-                        🔹 <strong>Stage 1: Super-Filtration</strong> – Traps dust, smoke, allergens, odors, and harmful
-                        gases with advanced filters.
-                    </p>
-                    <p style="font-size: 1.125rem; line-height: 1.8;">
-                        🔹 <strong>Stage 2: Algae-Powered Oxygen</strong> – Microalgae in a transparent bioreactor
-                        absorb CO₂ and release pure, natural oxygen, like having your own indoor forest! 🌱
-                    </p>
+            <h2 class="section-title scroll-reveal">How It Works</h2>
+            <div class="text-center scroll-reveal">
+                <p>BioBloom uses a multi-stage purification process:</p>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem;">
+                    <div style="flex: 1; min-width: 250px; max-width: 300px;">
+                        <h4>1. Detection</h4>
+                        <p>Sensors detect pollutants (PM2.5, VOCs).</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px; max-width: 300px;">
+                        <h4>2. Navigation</h4>
+                        <p>The unit moves to the source.</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px; max-width: 300px;">
+                        <h4>3. Purification</h4>
+                        <p>Plants and bio-filters clean the air.</p>
+                    </div>
                 </div>
-
-                <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 2rem;">
-                    Smart AI controls keep the algae thriving, optimizing light, nutrients, and CO₂ absorption for
-                    maximum freshness.
-                </p>
-
-                <div
-                    style="background: var(--color-primary-lightest); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
-                    <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 0.5rem;">
-                        ✅ Reduce indoor CO₂
-                    </p>
-                    <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 0.5rem;">
-                        ✅ Enhance breathing comfort
-                    </p>
-                    <p style="font-size: 1.125rem; line-height: 1.8;">
-                        ✅ Add a serene, green vibe to any room
-                    </p>
-                </div>
-
-                <p
-                    style="font-size: 1.25rem; font-weight: 600; color: var(--color-primary-dark); text-align: center; margin-top: 2rem;">
-                    Biobloom—where technology meets nature, bringing a breath of life into your home. 🌟💚
-                </p>
             </div>
-        </div>
-    </section>
-
-    <!-- Buy Now Section -->
-    <section class="buy-now-section">
-        <div class="container">
-            <h2 style="font-size: 2.5rem; color: var(--color-primary-dark); margin-bottom: 1rem;">Ready to Transform
-                Your Air Quality?</h2>
-            <p style="font-size: 1.25rem; color: var(--color-gray-700); margin-bottom: 2rem;">
-                Get your BioBloom system today and experience the power of nature's air purification.
-            </p>
-            <a href="#contact" class="btn-buy-now">Buy Now</a>
-            <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--color-gray-600);">
-                Pricing and ordering details available through our contact team below
-            </p>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="faq-section" id="faq">
+    <section class="section">
         <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-
-            <div class="faq-container">
-                <!-- FAQ 1 -->
+            <h2 class="section-title scroll-reveal">Frequently Asked Questions</h2>
+            <div class="faq-container scroll-reveal">
+                <!-- Q1 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>How is biobloom different from a normal air purifier?</span>
-                        <div class="faq-toggle">+</div>
+                        How often do I need to water the plants?
+                        <span class="faq-icon">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Unlike traditional purifiers that only remove pollutants, biobloom also produces oxygen by
-                            using live microalgae. It reduces CO₂ levels and improves air quality in a more natural and
-                            sustainable way.
-                        </div>
+                        BioBloom has a self-watering system that lasts up to 2 weeks. You'll get a notification when it
+                        needs a refill.
                     </div>
                 </div>
-
-                <!-- FAQ 2 -->
+                <!-- Q2 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>How much maintenance does the algae system require?</span>
-                        <div class="faq-toggle">+</div>
+                        Does it work at night?
+                        <span class="faq-icon">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            The algae unit is designed to be low-maintenance. Thanks to the automated monitoring system,
-                            you only need to refill nutrients occasionally—far less work than maintaining indoor plants.
-                        </div>
+                        Yes! While photosynthesis slows down, the root zone filtration continues to work 24/7.
                     </div>
                 </div>
-
-                <!-- FAQ 3 -->
+                <!-- Q3 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Is the algae safe to keep inside my home?</span>
-                        <div class="faq-toggle">+</div>
+                        Is it safe for pets?
+                        <span class="faq-icon">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Yes. The algae are completely non-toxic, sealed inside a closed bioreactor, and pose no
-                            safety risk. They cannot leak, grow outside the device, or produce harmful substances.
-                        </div>
+                        Absolutely. We use non-toxic plant varieties that are safe for cats and dogs.
                     </div>
                 </div>
-
-                <!-- FAQ 4 -->
+                <!-- Q4 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>How much oxygen does biobloom generate?</span>
-                        <div class="faq-toggle">+</div>
+                        What is the battery life?
+                        <span class="faq-icon">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            The device can significantly improve indoor freshness and oxygen balance, especially in
-                            enclosed rooms. While it does not replace medical oxygen equipment, it naturally elevates
-                            oxygen levels and reduces CO₂ to create a healthier breathing environment.
-                        </div>
+                        The battery lasts for 12 hours of active movement and charges automatically at its dock.
                     </div>
                 </div>
-
-                <!-- FAQ 5 -->
+                <!-- Q5 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>What happens if the electricity goes off?</span>
-                        <div class="faq-toggle">+</div>
+                        Can I choose the plants?
+                        <span class="faq-icon">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            The device temporarily pauses filtering and lighting for the algae. The algae remain safe
-                            and stable for several hours without power.
-                        </div>
+                        Yes, we offer a selection of air-purifying plants like Snake Plant, Spider Plant, and Peace
+                        Lily.
                     </div>
                 </div>
-
-                <!-- FAQ 6 -->
+                <!-- Q6 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Does biobloom consume a lot of electricity?</span>
-                        <div class="faq-toggle">+</div>
+                        How loud is it?
+                        <span class="faq-icon">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            No. Biobloom uses energy-efficient LED lighting and smart sensors. It consumes power similar
-                            to a small table fan or lamp.
-                        </div>
+                        BioBloom is whisper-quiet, operating at less than 30dB.
                     </div>
                 </div>
-
-                <!-- FAQ 7 -->
+                <!-- Q7 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Can biobloom be used in offices, schools, or hospitals?</span>
-                        <div class="faq-toggle">+</div>
+                        What is the warranty?
+                        <span class="faq-icon">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Absolutely. Biobloom is ideal for homes, offices, meeting rooms, hospitals, clinics,
-                            classrooms, gyms, and co-working spaces—especially where ventilation is limited.
-                        </div>
+                        We offer a 2-year warranty on the mechanical parts and a 30-day guarantee on plant health.
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <p style="max-width: 600px; margin: 0 auto 2rem; color: var(--color-gray-600); font-size: 1.125rem;">
-                Have questions about BioBloom or ready to place an order? Get in touch with our team.
+    <!-- CTA Section -->
+    <section class="section section-alt" id="buy">
+        <div class="container text-center">
+            <h2 class="section-title scroll-reveal">Ready to Breathe Better?</h2>
+            <p class="scroll-reveal" style="margin-bottom: 2rem;">Join the waitlist and get 20% off your first BioBloom.
             </p>
-
-            <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-icon">✉️</div>
-                    <div class="contact-details">
-                        <div class="contact-label">Email Us</div>
-                        <div class="contact-value">
-                            <a href="mailto:biobloom@shuddhudara.org">biobloom@shuddhudara.org</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon">📞</div>
-                    <div class="contact-details">
-                        <div class="contact-label">Call Us</div>
-                        <div class="contact-value">
-                            <a href="tel:+911234567890">+91 123 456 7890</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <form class="scroll-reveal" style="max-width: 400px; margin: 0 auto; display: flex; gap: 1rem;">
+                <input type="email" placeholder="Enter your email"
+                    style="flex: 1; padding: 1rem; border: 1px solid #ddd; border-radius: 0.5rem;">
+                <button type="submit" class="btn btn-primary">Join Waitlist</button>
+            </form>
         </div>
     </section>
 
-    <!-- Go Back Section -->
-    <section class="go-back-section">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <a href="../home/index.html" class="btn-go-back">
-                <span>←</span>
-                <span>Go Back to Homepage</span>
-            </a>
+            <p class="footer-text">&copy; 2025 SHUDDHUDARA. All rights reserved.</p>
         </div>
-    </section>
+    </footer>
 
-    <!-- JavaScript Files -->
+    <!-- Scripts -->
     <script src="../assets/js/animations.js"></script>
+    <script>
+        // FAQ Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const faqItems = document.querySelectorAll('.faq-item');
 
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+
+                question.addEventListener('click', () => {
+                    // Close other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

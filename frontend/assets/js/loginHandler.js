@@ -61,6 +61,39 @@ document.addEventListener('DOMContentLoaded', function () {
             loginButton.classList.add('loading');
             loginButton.textContent = 'Signing In...';
 
+            // MOCK LOGIN IMPLEMENTATION (Bypass Backend)
+            // Simulating network delay
+            setTimeout(() => {
+                const mockResponse = {
+                    success: true,
+                    token: 'mock-jwt-token-12345',
+                    user: {
+                        username: 'Demo User',
+                        email: email
+                    }
+                };
+
+                // Simulate success
+                showSuccess('Login successful! Redirecting...');
+
+                // Store authentication token
+                localStorage.setItem('authToken', mockResponse.token);
+                localStorage.setItem('user', JSON.stringify(mockResponse.user));
+
+                // Redirect to dashboard after short delay
+                setTimeout(() => {
+                    window.location.href = '../dashboard/dashboard.html';
+                }, 1500);
+
+                // Re-enable button
+                loginButton.disabled = false;
+                loginButton.classList.remove('loading');
+                loginButton.textContent = 'Sign In';
+
+            }, 1000);
+
+            /* 
+            // ORIGINAL BACKEND CALL (Commented out for Demo)
             try {
                 // Make API request to login endpoint
                 const response = await fetch(`${API_URL}/login`, {
@@ -83,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Redirect to dashboard after short delay
                     setTimeout(() => {
-                        window.location.href = '../login/dashboard.html';
+                        window.location.href = '../dashboard/dashboard.html';
                     }, 1500);
 
                 } else {
@@ -101,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 loginButton.classList.remove('loading');
                 loginButton.textContent = 'Sign In';
             }
+            */
         });
     }
 
@@ -156,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // If on login page and already logged in, redirect to dashboard
         if (token && currentPath.includes('loginPage.html')) {
-            window.location.href = '../login/dashboard.html';
+            window.location.href = '../dashboard/dashboard.html';
         }
     };
 
