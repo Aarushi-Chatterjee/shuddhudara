@@ -108,8 +108,6 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  scroll-padding-top: 80px;
-  /* Fixed header offset for smooth scroll */
 }
 
 body {
@@ -199,8 +197,6 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  scroll-margin-top: 80px;
-  /* Scroll offset for fixed header */
 }
 
 .section-alt {
