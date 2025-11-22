@@ -33,6 +33,7 @@
   --color-gray-200: #EEEEEE;
   --color-gray-300: #E0E0E0;
   --color-gray-600: #757575;
+  --color-gray-700: #616161;
   --color-gray-800: #424242;
   --color-black: #212121;
 
@@ -106,8 +107,9 @@
 
 html {
   scroll-behavior: smooth;
-  /* Smooth scrolling for anchor links */
   font-size: 16px;
+  scroll-padding-top: 80px;
+  /* Fixed header offset for smooth scroll */
 }
 
 body {
@@ -193,12 +195,12 @@ img {
 
 .section {
   padding: var(--spacing-3xl) 0;
-  padding-top: 100px;
-  /* Add extra padding for fixed header */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  scroll-margin-top: 80px;
+  /* Scroll offset for fixed header */
 }
 
 .section-alt {

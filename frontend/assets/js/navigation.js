@@ -43,36 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /**
-     * Smooth Scroll to Sections
-     * Handles smooth scrolling for anchor links
-     */
-    navLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-
-            // Check if it's an internal anchor link
-            if (href && href.startsWith('#')) {
-                e.preventDefault();
-
-                const targetId = href.substring(1);
-                const targetSection = document.getElementById(targetId);
-
-                if (targetSection) {
-                    // Calculate offset for fixed header
-                    const headerHeight = header ? header.offsetHeight : 80;
-                    const targetPosition = targetSection.offsetTop - headerHeight;
-
-                    // Smooth scroll to target
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-
-    /**
      * Header Scroll Effect
      * Adds shadow to header when scrolling
      */
