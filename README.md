@@ -21,7 +21,7 @@ SHUDDHUDARA showcases cutting-edge climate technology solutions focused on:
 2. **AirthMind** - AI-powered air quality monitoring and optimization platform
 3. **AeroSense** - Advanced sensors for real-time air quality detection
 4. **BioBloom** - The Moving Tree: Revolutionary mobile botanical air purification
-5. **Oxygenz** - Natural oxygen generation systems powered by plants
+5. **OxyGenZ** - Natural oxygen generation systems powered by plants
 6. **Future Innovations** - Upcoming climate tech solutions in development
 
 ---
@@ -59,7 +59,7 @@ shuddhudara/
 │   │   ├── plantify.html               # Plantify placeholder
 │   │   ├── airthMind.html              # AirthMind placeholder
 │   │   ├── aeroSense.html              # AeroSense placeholder
-│   │   ├── oxygenz.html                # Oxygenz placeholder
+│   │   ├── oxygenz.html                # OxyGenZ placeholder
 │   │   └── expansion.html              # Future innovation placeholder
 │   ├── login/
 │   │   ├── loginPage.html              # User authentication page
@@ -345,7 +345,7 @@ app.use(cors({
 - [ ] Complete Plantify solution page
 - [ ] Complete AirthMind solution page
 - [ ] Complete AeroSense solution page
-- [ ] Complete Oxygenz solution page
+- [ ] Complete OxyGenZ solution page
 - [ ] Add user registration page
 - [ ] Implement password reset functionality
 - [ ] Add email verification
