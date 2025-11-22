@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login to SHUDDHUDARA - Access your clean air solutions dashboard">
+    <title>Login | SHUDDHUDARA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
+</head>
+
+<body>
+
+    <div class="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <!-- Login Header -->
+                <div class="login-header">
+                    <h1 class="login-logo">SHUDDHUDARA</h1>
+                    <p class="login-subtitle">Welcome back! Please login to continue.</p>
+                </div>
+
+                <!-- Error Message -->
+                <div id="errorMessage" class="error-message"></div>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="success-message"></div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="login-form">
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email"
+                            required autocomplete="email">
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" class="form-input"
+                                placeholder="Enter your password" required autocomplete="current-password">
+                            <button type="button" id="passwordToggle" class="password-toggle"
+                                aria-label="Toggle password visibility">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Form Options -->
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember" id="remember">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#forgot" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="loginButton" class="btn-login">
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Signup Link -->
+                <div class="signup-link">
+                    Don't have an account? <a href="#signup">Contact Admin</a>
+                </div>
+
+                <!-- Back to Home -->
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="../home/index.html"
+                        style="color: var(--color-gray-600); font-size: 0.875rem; text-decoration: none; transition: color 0.3s;">
+                        ← Back to Homepage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="../assets/js/loginHandler.js"></script>
+
+</body>
+
+</html>

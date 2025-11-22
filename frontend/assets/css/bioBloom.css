@@ -1,0 +1,284 @@
+/* ============================================
+   BioBloom Page Stylesheet
+   ============================================ */
+
+/* Bio Bloom Page Container */
+.biobloom-page {
+    background: linear-gradient(to bottom, var(--color-light-bg), var(--color-white));
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+/* Product Hero Section */
+.product-hero {
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+    background: var(--color-white);
+}
+
+.product-image-container {
+    max-width: 600px;
+    margin: 0 auto var(--spacing-2xl);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-name {
+    font-size: var(--font-size-5xl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+}
+
+.product-tagline {
+    font-size: var(--font-size-xl);
+    color: var(--color-gray-600);
+    font-style: italic;
+}
+
+/* About Section */
+.about-section {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-light-bg);
+}
+
+.about-content {
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-800);
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-white);
+}
+
+.how-it-works-content {
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-800);
+}
+
+/* Buy Now Section */
+.buy-now-section {
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary-lightest) 0%, var(--color-accent-light) 100%);
+}
+
+.btn-buy-now {
+    display: inline-block;
+    padding: var(--spacing-lg) var(--spacing-3xl);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+    color: var(--color-white);
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    transition: all var(--transition-base);
+    text-decoration: none;
+    font-family: var(--font-primary);
+}
+
+.btn-buy-now:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-light-bg);
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.faq-question {
+    padding: var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-800);
+    transition: all var(--transition-base);
+}
+
+.faq-question:hover {
+    background-color: var(--color-primary-lightest);
+    color: var(--color-primary-dark);
+}
+
+.faq-toggle {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-lightest);
+    color: var(--color-primary);
+    border-radius: 50%;
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    transition: all var(--transition-base);
+    flex-shrink: 0;
+    margin-left: var(--spacing-md);
+}
+
+.faq-item.active .faq-toggle {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-slow) ease-out;
+}
+
+.faq-answer-content {
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+    color: var(--color-gray-600);
+    line-height: 1.7;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+}
+
+/* Contact Section */
+.contact-section {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-white);
+    text-align: center;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-3xl);
+    margin-top: var(--spacing-2xl);
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: var(--color-light-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.contact-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.contact-icon {
+    font-size: var(--font-size-3xl);
+    color: var(--color-primary);
+}
+
+.contact-details {
+    text-align: left;
+}
+
+.contact-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-xs);
+}
+
+.contact-value {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.contact-value a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.contact-value a:hover {
+    text-decoration: underline;
+}
+
+/* Go Back Button */
+.go-back-section {
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+    background: var(--color-light-bg);
+}
+
+.btn-go-back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    font-family: var(--font-primary);
+}
+
+.btn-go-back:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    transform: translateX(-5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-name {
+        font-size: var(--font-size-4xl);
+    }
+
+    .contact-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-buy-now {
+        font-size: var(--font-size-xl);
+        padding: var(--spacing-md) var(--spacing-2xl);
+    }
+}
