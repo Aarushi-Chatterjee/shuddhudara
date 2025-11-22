@@ -415,7 +415,7 @@ img {
    -------------------------------------------- */
 .solutions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--spacing-xl);
   margin-top: var(--spacing-2xl);
 }
@@ -453,6 +453,82 @@ img {
 .solution-description {
   color: var(--color-gray-600);
   font-size: var(--font-size-sm);
+}
+
+/* --------------------------------------------
+   ABOUT US SECTION
+   -------------------------------------------- */
+.about-org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.about-card {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  border-left: 5px solid var(--color-primary);
+  transition: all var(--transition-base);
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.about-card h3 {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.about-card p {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.story-tile {
+  background: linear-gradient(135deg, var(--color-light-bg) 0%, var(--color-white) 100%);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-primary-lightest);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.story-tile:hover {
+  border-color: var(--color-primary);
+  transform: scale(1.02);
+}
+
+.story-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.story-tile h4 {
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.story-tile p {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  margin-bottom: 0;
 }
 
 /* --------------------------------------------
@@ -669,9 +745,9 @@ img {
     gap: var(--spacing-xl);
   }
 
-  /* Solutions Grid */
+  /* Solutions Grid - Keep 2 columns on tablet/large phone, only 1 on very small */
   .solutions-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   /* Spacing */
@@ -759,4 +835,18 @@ img {
   height: 4px;
   background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary-dark));
   border-radius: var(--radius-full);
+}
+
+@media (max-width: 480px) {
+  .solutions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-org-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
 }
