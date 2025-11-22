@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AirthMind - AI-powered air quality monitoring and optimization.">
+    <meta name="description"
+        content="AirthMind - AI Analysis and Intelligence Engine for smart air quality management.">
     <title>AirthMind | SHUDDHUDARA</title>
 
     <!-- Google Fonts -->
@@ -26,6 +27,27 @@
         .solution-icon-large {
             font-size: 5rem;
             margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            max-width: 800px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+
+        .feature-list li {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            color: var(--color-gray-700);
+        }
+
+        .outcome-box {
+            background: linear-gradient(135deg, var(--color-primary-lightest), var(--color-accent-light));
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            margin: 2rem auto;
+            max-width: 800px;
+            border-left: 4px solid var(--color-primary);
         }
     </style>
 </head>
@@ -49,179 +71,70 @@
         <div class="container">
             <div class="solution-icon-large fade-in-up">🧠</div>
             <h1 class="fade-in-up">AirthMind</h1>
-            <p class="hero-subtitle fade-in-up">AI-powered air quality monitoring and optimization platform.</p>
+            <p class="hero-subtitle fade-in-up">AI Analysis and Intelligence Engine</p>
         </div>
     </section>
 
     <!-- Content Section -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title scroll-reveal">Overview</h2>
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p class="scroll-reveal">
-                    AirthMind uses advanced artificial intelligence to analyze air quality data and predict pollution
-                    trends.
-                    It provides actionable insights to optimize your indoor environment.
+            <h2 class="section-title scroll-reveal">The Brain of SHUDDHUDARA</h2>
+            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <p class="scroll-reveal" style="font-size: 1.125rem; line-height: 1.8; color: var(--color-gray-800);">
+                    All data from AeroSense flows into <strong>AirthMind</strong>, the AI-driven decision engine of the
+                    ecosystem.
+                    AirthMind transforms raw sensor data into actionable intelligence — it doesn't just detect, it
+                    learns and adapts,
+                    providing context-specific recommendations.
                 </p>
-                <div class="solutions-grid">
-                    <div class="solution-card scroll-reveal">
-                        <h3>Predictive Analytics</h3>
-                        <p>Forecast air quality changes before they happen.</p>
-                    </div>
-                    <div class="solution-card scroll-reveal">
-                        <h3>Smart Integration</h3>
-                        <p>Connects with HVAC systems to automatically adjust airflow.</p>
-                    </div>
+            </div>
+
+            <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">How It Works</h3>
+
+            <div class="feature-list scroll-reveal">
+                <ul style="list-style: none; padding: 0;">
+                    <li>🔍 <strong>Analyzes pollution sources</strong> — Identifies daily activity patterns and external
+                        haze data to pinpoint pollution origins.</li>
+                    <li>📈 <strong>Identifies pollution trends</strong> — Detects patterns like VOC spikes during
+                        cleaning hours or rising CO₂ during high occupancy.</li>
+                    <li>🎯 <strong>Classifies zones</strong> — Categorizes each room into <span
+                            style="color: #4CAF50;">Healthy</span> / <span style="color: #FFA726;">Moderate</span> /
+                        <span style="color: #EF5350;">Critical</span> zones.</li>
+                    <li>🔮 <strong>Predicts air quality</strong> — Forecasts upcoming air-quality drops before they
+                        happen.</li>
+                </ul>
+            </div>
+
+            <div class="outcome-box scroll-reveal">
+                <h4 style="color: var(--color-primary-dark); margin-bottom: 1rem; font-size: 1.5rem;">✨ Outcome</h4>
+                <p style="margin: 0; line-height: 1.8; font-size: 1.125rem;">
+                    AirthMind turns raw sensor data into <strong>actionable intelligence</strong>. It doesn't just
+                    detect —
+                    it learns and adapts, providing context-specific recommendations tailored to your space's unique
+                    patterns
+                    and needs.
+                </p>
+            </div>
+
+            <div class="solutions-grid" style="margin-top: 3rem;">
+                <div class="solution-card scroll-reveal">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                    <h3>Predictive Analytics</h3>
+                    <p>Forecast air quality changes before they happen using machine learning.</p>
+                </div>
+                <div class="solution-card scroll-reveal">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎓</div>
+                    <h3>Pattern Recognition</h3>
+                    <p>Identifies trends in pollution linked to activities, time of day, and occupancy.</p>
+                </div>
+                <div class="solution-card scroll-reveal">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+                    <h3>Smart Recommendations</h3>
+                    <p>Context-aware suggestions for ventilation, plant placement, and cleaning schedules.</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Interactive Impact Section -->
-    <section class="section section-alt">
-        <div class="container">
-            <h2 class="section-title scroll-reveal">See the Impact</h2>
-            <p class="text-center scroll-reveal" style="max-width: 600px; margin: 0 auto 2rem;">
-                Drag the slider to see how AirthMind transforms urban environments from polluted to pristine.
-            </p>
-
-            <div class="comparison-container scroll-reveal">
-                <div class="comparison-image-container">
-                    <!-- Polluted Image (Background) -->
-                    <img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?q=80&w=1000&auto=format&fit=crop"
-                        alt="Polluted City" class="comparison-image">
-
-                    <!-- Clean Image (Foreground - Clipped) -->
-                    <div class="comparison-overlay" id="overlay">
-                        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1000&auto=format&fit=crop"
-                            alt="Clean City" class="comparison-image">
-                    </div>
-                </div>
-
-                <!-- Slider Input -->
-                <input type="range" min="0" max="100" value="50" class="comparison-slider" id="slider"
-                    aria-label="Comparison Slider">
-
-                <!-- Slider Handle Line -->
-                <div class="slider-line" id="sliderLine">
-                    <div class="slider-button">↔</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        .comparison-container {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-            aspect-ratio: 16/9;
-        }
-
-        .comparison-image-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .comparison-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .comparison-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 50%;
-            /* Initial width */
-            overflow: hidden;
-            border-right: 2px solid white;
-        }
-
-        .comparison-overlay img {
-            width: 800px;
-            /* Must match container max-width roughly or be handled via JS to match container width */
-            max-width: none;
-            height: 100%;
-        }
-
-        .comparison-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: ew-resize;
-            z-index: 10;
-            margin: 0;
-        }
-
-        .slider-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 2px;
-            background: white;
-            pointer-events: none;
-            z-index: 5;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-primary);
-            font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const slider = document.getElementById('slider');
-            const overlay = document.getElementById('overlay');
-            const sliderLine = document.getElementById('sliderLine');
-            const container = document.querySelector('.comparison-container');
-            const overlayImg = overlay.querySelector('img');
-
-            function updateSlider() {
-                const val = slider.value;
-                overlay.style.width = `${val}%`;
-                sliderLine.style.left = `${val}%`;
-
-                // Keep the overlay image static relative to container
-                if (container) {
-                    overlayImg.style.width = `${container.offsetWidth}px`;
-                }
-            }
-
-            slider.addEventListener('input', updateSlider);
-
-            // Handle resize
-            window.addEventListener('resize', updateSlider);
-
-            // Initial call
-            updateSlider();
-        });
-    </script>
 
     <!-- Footer -->
     <footer class="footer">
