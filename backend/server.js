@@ -91,33 +91,36 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 
 // Connect to database and start server
+// Connect to database and start server
 const startServer = async () => {
     try {
         // Connect to MongoDB
         await connectDatabase();
 
-        // Start listening for requests
-        app.listen(PORT, () => {
-            console.log('');
-            console.log('='.repeat(50));
-            console.log('🌿 SHUDDHUDARA Backend Server');
-            console.log('='.repeat(50));
-            console.log(`🚀 Server running on port: ${PORT}`);
-            console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
-            console.log(`📍 API Base URL: http://localhost:${PORT}/api`);
-            console.log(`📊 Health Check: http://localhost:${PORT}/`);
-            console.log('='.repeat(50));
-            console.log('');
-            console.log('📝 Available Endpoints:');
-            console.log('   POST   /api/auth/register');
-            console.log('   POST   /api/auth/login');
-            console.log('   GET    /api/auth/profile (protected)');
-            console.log('   POST   /api/auth/logout (protected)');
-            console.log('   POST   /api/auth/forgot-password');
-            console.log('');
-            console.log('💡 Tip: Use Ctrl+C to stop the server');
-            console.log('');
-        });
+        // Start listening for requests ONLY if running directly
+        if (require.main === module) {
+            app.listen(PORT, () => {
+                console.log('');
+                console.log('='.repeat(50));
+                console.log('🌿 SHUDDHUDARA Backend Server');
+                console.log('='.repeat(50));
+                console.log(`🚀 Server running on port: ${PORT}`);
+                console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
+                console.log(`📍 API Base URL: http://localhost:${PORT}/api`);
+                console.log(`📊 Health Check: http://localhost:${PORT}/`);
+                console.log('='.repeat(50));
+                console.log('');
+                console.log('📝 Available Endpoints:');
+                console.log('   POST   /api/auth/register');
+                console.log('   POST   /api/auth/login');
+                console.log('   GET    /api/auth/profile (protected)');
+                console.log('   POST   /api/auth/logout (protected)');
+                console.log('   POST   /api/auth/forgot-password');
+                console.log('');
+                console.log('💡 Tip: Use Ctrl+C to stop the server');
+                console.log('');
+            });
+        }
 
     } catch (error) {
         console.error('Failed to start server:', error);
@@ -125,8 +128,17 @@ const startServer = async () => {
     }
 };
 
-// Start the server
-startServer();
+// Start the server if running directly
+if (require.main === module) {
+    startServer();
+} else {
+    // For Vercel, we need to connect to DB but not listen
+    // Vercel handles the listening part
+    connectDatabase();
+}
+
+// Export the app for Vercel
+module.exports = app;
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {

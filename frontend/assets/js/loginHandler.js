@@ -2,7 +2,15 @@
 // Handles login form submission and API communication
 
 // API Base URL - Update this if your backend is hosted elsewhere
-const API_URL = 'http://localhost:3000/api/auth';
+// API Base URL - Dynamic based on environment
+const getApiUrl = () => {
+    const hostname = window.location.hostname;
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:3000/api/auth';
+    }
+    return '/api/auth';
+};
+const API_URL = getApiUrl();
 
 /**
  * Initialize Login Form
