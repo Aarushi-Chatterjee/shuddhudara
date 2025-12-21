@@ -1,102 +1,93 @@
-// userModel.js - User Database Schema
-// This file defines the structure of user data in MongoDB
-
-const mongoose = require('mongoose');
+const db = require('../config/database');
 const bcrypt = require('bcryptjs');
 
-/**
- * User Schema Definition
- * Defines what information we store for each user
- */
-const userSchema = new mongoose.Schema({
-    // Username field - must be unique and required
-    username: {
-        type: String,
-        required: [true, 'Please provide a username'],
-        unique: true,
-        trim: true, // Remove whitespace from both ends
-        minlength: [3, 'Username must be at least 3 characters long'],
-        maxlength: [30, 'Username cannot exceed 30 characters']
-    },
-
-    // Email field - must be unique, required, and valid format
-    email: {
-        type: String,
-        required: [true, 'Please provide an email address'],
-        unique: true,
-        lowercase: true, // Convert to lowercase
-        trim: true,
-        match: [
-            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-            'Please provide a valid email address'
-        ]
-    },
-
-    // Password field - will be hashed before saving
-    password: {
-        type: String,
-        required: [true, 'Please provide a password'],
-        minlength: [6, 'Password must be at least 6 characters long'],
-        select: false // Don't include password by default in queries
-    },
-
-    // Account creation timestamp
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-
-    // Last login timestamp
-    lastLogin: {
-        type: Date,
-        default: null
-    }
-}, {
-    // Add automatic timestamps for updates
-    timestamps: true
-});
-
-/**
- * Pre-save Hook - Hash Password Before Saving
- * This runs automatically before a user document is saved to the database
- */
-userSchema.pre('save', async function (next) {
-    // Only hash the password if it has been modified (or is new)
-    if (!this.isModified('password')) {
-        return next();
+class User {
+    /**
+     * Initialize the Users table
+     */
+    static async init() {
+        const createTableQuery = `
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(30) UNIQUE NOT NULL,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        last_login TIMESTAMP
+      );
+    `;
+        try {
+            await db.query(createTableQuery);
+            console.log('✅ Users table initialized');
+        } catch (err) {
+            console.error('❌ Error initializing Users table:', err);
+        }
     }
 
-    try {
-        // Generate salt (random data) for hashing
+    /**
+     * Create a new user
+     */
+    static async create({ username, email, password }) {
+        // Hash password
         const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Hash the password with the salt
-        this.password = await bcrypt.hash(this.password, salt);
+        const query = `
+      INSERT INTO users (username, email, password)
+      VALUES ($1, $2, $3)
+      RETURNING id, username, email, created_at
+    `;
+        const values = [username, email, hashedPassword];
 
-        next();
-    } catch (error) {
-        next(error);
+        const { rows } = await db.query(query, values);
+        return rows[0];
     }
-});
 
-/**
- * Method to Compare Passwords
- * Used during login to check if the entered password matches the stored hash
- */
-userSchema.methods.comparePassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
-};
+    /**
+     * Find user by email
+     */
+    static async findByEmail(email) {
+        const query = 'SELECT * FROM users WHERE email = $1';
+        const { rows } = await db.query(query, [email]);
+        return rows[0];
+    }
 
-/**
- * Method to Update Last Login Time
- * Call this when a user successfully logs in
- */
-userSchema.methods.updateLastLogin = async function () {
-    this.lastLogin = new Date();
-    await this.save();
-};
+    /**
+     * Find user by ID
+     */
+    static async findById(id) {
+        const query = 'SELECT id, username, email, created_at, last_login FROM users WHERE id = $1';
+        const { rows } = await db.query(query, [id]);
+        return rows[0];
+    }
 
-// Create and export the User model
-const User = mongoose.model('User', userSchema);
+    /**
+     * Check if username or email exists
+     */
+    static async exists(username, email) {
+        const query = 'SELECT * FROM users WHERE username = $1 OR email = $2';
+        const { rows } = await db.query(query, [username, email]);
+        return rows[0]; // Returns the user if found
+    }
+
+    /**
+     * Verify password
+     */
+    static async matchPassword(enteredPassword, storedHash) {
+        return await bcrypt.compare(enteredPassword, storedHash);
+    }
+
+    /**
+     * Update last login
+     */
+    static async updateLastLogin(id) {
+        const query = 'UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = $1';
+        await db.query(query, [id]);
+    }
+}
+
+// Initialize the table when this module is loaded (or called separately)
+// In production, you might run migrations separately, but for this setup:
+setTimeout(() => User.init(), 1000); // Small delay to ensure DB connection
 
 module.exports = User;

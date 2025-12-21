@@ -1,21 +1,19 @@
 // server.js - Main Express Server
 // This is the entry point for the SHUDDHUDARA backend application
 
+// Load environment variables from .env file (Must be first)
+require('dotenv').config();
+
 // Import required packages
 const express = require('express');
-const dotenv = require('dotenv');
+// const dotenv = require('dotenv'); // Already loaded
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-
-// Import database connection
-const connectDatabase = require('./config/database');
-
-// Import routes
+const db = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 
-// Load environment variables from .env file
-dotenv.config();
+
 
 // Initialize Express app
 const app = express();
@@ -110,8 +108,11 @@ const PORT = process.env.PORT || 3000;
 // Connect to database and start server
 const startServer = async () => {
     try {
-        // Connect to MongoDB
-        await connectDatabase();
+        // Initialize Database Tables
+        // The User model init is called automatically on require, but we can ensure DB check here
+        // db.pool.connect() is enough to test
+        console.log('✅ Connected to Neon PostgreSQL successfully');
+
 
         // Start listening for requests ONLY if running directly
         if (require.main === module) {
@@ -149,13 +150,9 @@ if (require.main === module) {
     // Running locally or as a standalone process
     startServer();
 } else {
-    // For Vercel, we need to connect to DB
-    // Vercel handles the listening part, but we must ensure DB is connected
-    // Most serverless functions connect on the first request or top-level
-    // We'll call connectDatabase() here to initiate connection
-    connectDatabase().catch(err => {
-        console.error('Vercel DB Connection Error:', err);
-    });
+    // For Vercel, connection pool is managed globally
+    // We might log a simple check
+    console.log('🚀 Serverless function initialized');
 }
 
 

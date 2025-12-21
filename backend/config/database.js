@@ -1,46 +1,23 @@
-// database.js - MongoDB Connection Configuration
-// This file handles the database connection for the SHUDDHUDARA application
+const { Pool } = require('pg');
 
-const mongoose = require('mongoose');
-
-/**
- * Connect to MongoDB Database
- * This function establishes a connection to MongoDB using Mongoose
- * It reads the connection string from environment variables
- */
-const connectDatabase = async () => {
-  try {
-    // Get MongoDB URI from environment variables
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/shuddhudara';
-
-    // Connect to MongoDB
-    // Note: Mongoose 7+ handles useNewUrlParser and useUnifiedTopology internally
-    const connection = await mongoose.connect(mongoURI);
-
-    console.log(`✅ MongoDB Connected Successfully: ${connection.connection.host}`);
-    console.log(`📊 Database Name: ${connection.connection.name}`);
-
-    return connection;
-  } catch (error) {
-    // If connection fails, log the error and exit the process
-    const maskedURI = process.env.MONGODB_URI
-      ? process.env.MONGODB_URI.replace(/:([^:@]{1,})@/, ':****@')
-      : 'localhost';
-
-    console.error('❌ MongoDB Connection Error:', error.message);
-    console.error(`📍 Attempted URI: ${maskedURI}`);
-    console.error('💡 Make sure MongoDB is running on your system');
-    console.error('   You can start MongoDB with: mongod');
-
-    if (process.env.NODE_ENV === 'production') {
-      console.error('⚠️ Critical error: MONGODB_URI might be missing or incorrect.');
-      console.error('📊 If this is Vercel, please check your Environment Variables.');
-    }
-    // Don't exit process in serverless env, just throw to let the request fail
-    throw error;
+// Create a new pool instance with the connection string from environment variables
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Required for Neon/Serverless Postgres
   }
+});
+
+// Test the connection
+pool.connect()
+  .then(() => console.log('✅ Connected to Neon PostgreSQL successfully'))
+  .catch(err => {
+    console.error('❌ Database Connection Error:', err.stack);
+    console.error('👉 Make sure DATABASE_URL is set in your .env file');
+    // Don't exit process here, let server decide
+  });
+
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+  pool // Export pool if needed for transactions
 };
-
-
-// Export the connection function
-module.exports = connectDatabase;

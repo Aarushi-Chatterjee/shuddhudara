@@ -12,7 +12,7 @@ const generateToken = (userId) => {
     return jwt.sign(
         { id: userId }, // Payload - user ID
         process.env.JWT_SECRET || 'shuddhudara_temp_secret_for_deployment', // Fallback for stability
-        { expiresIn: process.env.JWT_EXPIRE || '7d' } // Fallback for stability
+        { expiresIn: process.env.JWT_EXPIRE || '7d' } // Expiration time
     );
 };
 
@@ -35,9 +35,7 @@ exports.register = async (req, res) => {
         }
 
         // Check if user already exists
-        const existingUser = await User.findOne({
-            $or: [{ email }, { username }]
-        });
+        const existingUser = await User.exists(username, email);
 
         if (existingUser) {
             const field = existingUser.email === email ? 'Email' : 'Username';
@@ -47,7 +45,7 @@ exports.register = async (req, res) => {
             });
         }
 
-        // Create new user (password will be hashed automatically by the model)
+        // Create new user (password hashing is handled in User.create)
         const user = await User.create({
             username,
             email,
@@ -55,7 +53,7 @@ exports.register = async (req, res) => {
         });
 
         // Generate authentication token
-        const token = generateToken(user._id);
+        const token = generateToken(user.id);
 
         // Send success response
         res.status(201).json({
@@ -63,10 +61,10 @@ exports.register = async (req, res) => {
             message: 'User registered successfully',
             token,
             user: {
-                id: user._id,
+                id: user.id,
                 username: user.username,
                 email: user.email,
-                createdAt: user.createdAt
+                createdAt: user.created_at
             }
         });
 
@@ -97,8 +95,8 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Find user and include password (normally excluded)
-        const user = await User.findOne({ email }).select('+password');
+        // Find user
+        const user = await User.findByEmail(email);
 
         // Check if user exists
         if (!user) {
@@ -109,7 +107,7 @@ exports.login = async (req, res) => {
         }
 
         // Verify password
-        const isPasswordCorrect = await user.comparePassword(password);
+        const isPasswordCorrect = await User.matchPassword(password, user.password);
 
         if (!isPasswordCorrect) {
             return res.status(401).json({
@@ -119,10 +117,10 @@ exports.login = async (req, res) => {
         }
 
         // Update last login time
-        await user.updateLastLogin();
+        await User.updateLastLogin(user.id);
 
         // Generate token
-        const token = generateToken(user._id);
+        const token = generateToken(user.id);
 
         // Send success response
         res.status(200).json({
@@ -130,10 +128,10 @@ exports.login = async (req, res) => {
             message: 'Login successful',
             token,
             user: {
-                id: user._id,
+                id: user.id,
                 username: user.username,
                 email: user.email,
-                lastLogin: user.lastLogin
+                lastLogin: new Date() // Just for response
             }
         });
 
@@ -154,7 +152,7 @@ exports.login = async (req, res) => {
 exports.getProfile = async (req, res) => {
     try {
         // req.user is set by the auth middleware
-        const user = await User.findById(req.user.id);
+        const user = req.user; // User already retrieved in middleware
 
         if (!user) {
             return res.status(404).json({
@@ -166,11 +164,11 @@ exports.getProfile = async (req, res) => {
         res.status(200).json({
             success: true,
             user: {
-                id: user._id,
+                id: user.id,
                 username: user.username,
                 email: user.email,
-                createdAt: user.createdAt,
-                lastLogin: user.lastLogin
+                createdAt: user.created_at,
+                lastLogin: user.last_login
             }
         });
 
@@ -208,6 +206,7 @@ exports.logout = async (req, res) => {
  * @access  Public
  */
 exports.forgotPassword = async (req, res) => {
+    // Same as before...
     try {
         const { email } = req.body;
 
@@ -218,22 +217,14 @@ exports.forgotPassword = async (req, res) => {
             });
         }
 
-        // Check if user exists
-        const user = await User.findOne({ email });
+        const user = await User.findByEmail(email);
 
         if (!user) {
-            // For security, don't reveal if email exists or not
             return res.status(200).json({
                 success: true,
                 message: 'If an account exists with this email, you will receive password reset instructions.'
             });
         }
-
-        // TODO: Implement actual password reset logic
-        // This would typically involve:
-        // 1. Generate a reset token
-        // 2. Save it to the database with expiration
-        // 3. Send email with reset link
 
         res.status(200).json({
             success: true,

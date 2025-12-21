@@ -35,9 +35,9 @@ const protect = async (req, res, next) => {
             // Verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET || 'shuddhudara_temp_secret_for_deployment');
 
+            // Get user from database (exclude password - helper does this)
+            req.user = await User.findById(decoded.id);
 
-            // Get user from database (exclude password)
-            req.user = await User.findById(decoded.id).select('-password');
 
             // Check if user still exists
             if (!req.user) {
@@ -46,6 +46,7 @@ const protect = async (req, res, next) => {
                     message: 'User no longer exists'
                 });
             }
+
 
             // Call next middleware/route handler
             next();
