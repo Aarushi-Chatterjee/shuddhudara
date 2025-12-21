@@ -47,10 +47,16 @@ app.use(async (req, res, next) => {
             console.log('✅ Lazy initialization complete');
         } catch (error) {
             console.error('❌ Lazy initialization failed:', error);
+            return res.status(500).json({
+                success: false,
+                message: 'Database initialization failed. Please check server logs.'
+            });
         }
     }
     next();
 });
+
+
 
 
 // Serve Static Frontend Files

@@ -73,7 +73,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     body: JSON.stringify({ email, password })
                 });
 
-                const data = await response.json();
+                // Attempt to parse JSON response
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    console.error('JSON Parse Error:', parseError);
+                    throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+                }
 
                 if (response.ok && data.success) {
                     showSuccess('Login successful! Redirecting...');
@@ -90,8 +97,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             } catch (error) {
                 console.error('Login error:', error);
-                showError('Connection error. Please ensure the backend server is running.');
+                const msg = error.message.includes('Server Error')
+                    ? error.message
+                    : 'Connection error. Please ensure backend is running.';
+                showError(msg);
             } finally {
+
                 loginButton.disabled = false;
                 loginButton.classList.remove('loading');
                 loginButton.textContent = 'Sign In';

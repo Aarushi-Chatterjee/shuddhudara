@@ -77,7 +77,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     body: JSON.stringify({ username, email, password })
                 });
 
-                const data = await response.json();
+                // Attempt to parse JSON response
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    // Response was likely HTML (error page) on 500/404
+                    console.error('JSON Parse Error:', parseError);
+                    throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+                }
 
                 if (response.ok && data.success) {
                     showSuccess('Account created successfully! Redirecting to dashboard...');
@@ -96,8 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             } catch (error) {
                 console.error('Registration error:', error);
-                showError('Connection error. Please ensure the backend server is running.');
-            } finally {
+                // Show specific error message if available
+                const msg = error.message.includes('Server Error')
+                    ? error.message
+                    : 'Connection error. Please ensure backend is running.';
+                showError(msg);
+            }
+            finally {
                 registerButton.disabled = false;
                 registerButton.classList.remove('loading');
                 registerButton.textContent = 'Create Account';
