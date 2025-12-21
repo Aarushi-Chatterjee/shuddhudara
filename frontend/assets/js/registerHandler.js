@@ -96,8 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Redirect
                     setTimeout(() => {
-                        window.location.href = '../dashboard/dashboard.html';
+                        window.location.href = '/dashboard/dashboard.html';
                     }, 1500);
+
                 } else {
                     showError(data.message || 'Registration failed');
                 }

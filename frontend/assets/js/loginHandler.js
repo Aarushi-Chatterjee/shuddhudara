@@ -89,8 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     localStorage.setItem('user', JSON.stringify(data.user));
 
                     setTimeout(() => {
-                        window.location.href = '../dashboard/dashboard.html';
+                        window.location.href = '/dashboard/dashboard.html';
                     }, 1500);
+
                 } else {
                     showError(data.message || 'Login failed. Please check your credentials.');
                 }
@@ -161,10 +162,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentPath = window.location.pathname;
 
         // If on login page and already logged in, redirect to dashboard
-        if (token && currentPath.includes('loginPage.html')) {
-            window.location.href = '../dashboard/dashboard.html';
+        if (token && currentPath.includes('login/loginPage.html')) {
+            window.location.href = '/dashboard/dashboard.html';
         }
     };
+
 
     checkAuthStatus();
 
@@ -180,8 +182,9 @@ function logout() {
     localStorage.removeItem('user');
 
     // Redirect to login page
-    window.location.href = '../login/loginPage.html';
+    window.location.href = '/login/loginPage.html';
 }
+
 
 /**
  * Get Stored User Information
@@ -215,6 +218,7 @@ function isAuthenticated() {
  */
 function requireAuth() {
     if (!isAuthenticated()) {
-        window.location.href = '../login/loginPage.html';
+        window.location.href = '/login/loginPage.html';
     }
 }
+
