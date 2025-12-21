@@ -11,8 +11,8 @@ const jwt = require('jsonwebtoken');
 const generateToken = (userId) => {
     return jwt.sign(
         { id: userId }, // Payload - user ID
-        process.env.JWT_SECRET, // Secret key
-        { expiresIn: process.env.JWT_EXPIRE || '7d' } // Expiration time
+        process.env.JWT_SECRET || 'shuddhudara_temp_secret_for_deployment', // Fallback for stability
+        { expiresIn: process.env.JWT_EXPIRE || '7d' } // Fallback for stability
     );
 };
 

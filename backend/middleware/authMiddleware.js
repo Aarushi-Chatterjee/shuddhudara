@@ -33,7 +33,8 @@ const protect = async (req, res, next) => {
 
         try {
             // Verify token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'shuddhudara_temp_secret_for_deployment');
+
 
             // Get user from database (exclude password)
             req.user = await User.findById(decoded.id).select('-password');

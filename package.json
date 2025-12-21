@@ -1,0 +1,14 @@
+{
+    "name": "shuddhudara-root",
+    "version": "1.0.0",
+    "description": "Root package for SHUDDHUDARA deployment",
+    "scripts": {
+        "start": "node backend/server.js",
+        "dev": "nodemon backend/server.js",
+        "install-backend": "cd backend && npm install",
+        "postinstall": "npm run install-backend"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}

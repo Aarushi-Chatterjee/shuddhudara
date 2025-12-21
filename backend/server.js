@@ -6,6 +6,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 // Import database connection
 const connectDatabase = require('./config/database');
@@ -24,7 +25,6 @@ const app = express();
 // ============================================
 
 // Enable CORS (Cross-Origin Resource Sharing)
-// This allows the frontend to communicate with the backend
 app.use(cors({
     origin: '*', // In production, replace with your frontend URL
     credentials: true
@@ -36,24 +36,34 @@ app.use(express.json());
 // Parse URL-encoded request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Serve Static Frontend Files
+// Path leads to the 'frontend' directory (sibling of 'backend')
+const frontendPath = path.join(__dirname, '..', 'frontend');
+app.use(express.static(frontendPath));
+
 // Request logging middleware (for development)
 app.use((req, res, next) => {
     console.log(`📥 ${req.method} ${req.path}`);
     next();
 });
 
+
 // ============================================
 // API ROUTES
 // ============================================
 
-// Health check endpoint
-app.get('/', (req, res) => {
+// Health check endpoint (can still be used for monitoring)
+app.get('/health', (req, res) => {
     res.json({
         success: true,
-        message: '🌱 Welcome to SHUDDHUDARA API',
-        version: '1.0.0',
-        status: 'Server is running'
+        message: '🌱 SHUDDHUDARA API is healthy',
+        status: 'UP'
     });
+});
+
+// Serve Home Page on Root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'home', 'index.html'));
 });
 
 // Authentication routes
@@ -66,10 +76,17 @@ app.use('/api/auth', authRoutes);
 
 // 404 Handler - Route not found
 app.use((req, res, next) => {
-    res.status(404).json({
-        success: false,
-        message: `Route ${req.originalUrl} not found`
-    });
+    // If it's an API request, return JSON
+    if (req.originalUrl.startsWith('/api')) {
+        return res.status(404).json({
+            success: false,
+            message: `API Route ${req.originalUrl} not found`
+        });
+    }
+
+    // Otherwise, redirect to home or show a custom 404 page
+    // For now, let's just go back to home
+    res.redirect('/');
 });
 
 // Global Error Handler
@@ -90,7 +107,6 @@ app.use((err, req, res, next) => {
 // Get port from environment or use default
 const PORT = process.env.PORT || 3000;
 
-// Connect to database and start server
 // Connect to database and start server
 const startServer = async () => {
     try {
@@ -123,19 +139,25 @@ const startServer = async () => {
         }
 
     } catch (error) {
-        console.error('Failed to start server:', error);
-        process.exit(1);
+        console.error('❌ Failed to start server:', error.message);
+        // On Vercel, we don't want to kill the process
     }
 };
 
-// Start the server if running directly
+// Start the server or prepare for Vercel
 if (require.main === module) {
+    // Running locally or as a standalone process
     startServer();
 } else {
-    // For Vercel, we need to connect to DB but not listen
-    // Vercel handles the listening part
-    connectDatabase();
+    // For Vercel, we need to connect to DB
+    // Vercel handles the listening part, but we must ensure DB is connected
+    // Most serverless functions connect on the first request or top-level
+    // We'll call connectDatabase() here to initiate connection
+    connectDatabase().catch(err => {
+        console.error('Vercel DB Connection Error:', err);
+    });
 }
+
 
 // Export the app for Vercel
 module.exports = app;
@@ -143,6 +165,4 @@ module.exports = app;
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
     console.error('Unhandled Promise Rejection:', err);
-    console.log('Shutting down server...');
-    process.exit(1);
 });

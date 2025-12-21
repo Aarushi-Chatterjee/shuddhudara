@@ -3,14 +3,8 @@
 
 // API Base URL - Update this if your backend is hosted elsewhere
 // API Base URL - Dynamic based on environment
-const getApiUrl = () => {
-    const hostname = window.location.hostname;
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-        return 'http://localhost:3000/api/auth';
-    }
-    return '/api/auth';
-};
-const API_URL = getApiUrl();
+// API Base URL - Relative path works for both local and production when served from same origin
+const API_URL = '/api/auth';
 
 /**
  * Initialize Login Form
