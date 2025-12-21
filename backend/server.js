@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
+const User = require('./models/userModel');
+
 
 
 
@@ -32,7 +34,24 @@ app.use(cors({
 app.use(express.json());
 
 // Parse URL-encoded request bodies
+// Parse URL-encoded request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serverless Cold Start Initialization Middleware
+let isInitialized = false;
+app.use(async (req, res, next) => {
+    if (!isInitialized) {
+        try {
+            await User.init();
+            isInitialized = true;
+            console.log('✅ Lazy initialization complete');
+        } catch (error) {
+            console.error('❌ Lazy initialization failed:', error);
+        }
+    }
+    next();
+});
+
 
 // Serve Static Frontend Files
 // Path leads to the 'frontend' directory (sibling of 'backend')
@@ -113,8 +132,11 @@ const startServer = async () => {
         // db.pool.connect() is enough to test
         console.log('✅ Connected to Neon PostgreSQL successfully');
 
+        // Ensure Users table exists
+        await User.init();
 
         // Start listening for requests ONLY if running directly
+
         if (require.main === module) {
             app.listen(PORT, () => {
                 console.log('');

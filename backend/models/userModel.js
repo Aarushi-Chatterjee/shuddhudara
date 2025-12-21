@@ -87,7 +87,8 @@ class User {
 }
 
 // Initialize the table when this module is loaded (or called separately)
-// In production, you might run migrations separately, but for this setup:
-setTimeout(() => User.init(), 1000); // Small delay to ensure DB connection
+// We will call User.init() explicitly in server.js to ensure it completes before requests
+// setTimeout(() => User.init(), 1000); 
 
 module.exports = User;
+
