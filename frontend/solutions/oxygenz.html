@@ -132,6 +132,126 @@
                 </p>
             </div>
 
+            <!-- Play Game Section -->
+            <div class="scroll-reveal" style="margin-top: 4rem;">
+                <style>
+                    @keyframes bounce {
+
+                        0%,
+                        100% {
+                            transform: translateY(0);
+                        }
+
+                        50% {
+                            transform: translateY(-20px);
+                        }
+                    }
+
+                    @keyframes glow {
+
+                        0%,
+                        100% {
+                            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+                        }
+
+                        50% {
+                            box-shadow: 0 0 40px rgba(76, 175, 80, 0.6);
+                        }
+                    }
+
+                    .game-container {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        border-radius: 2rem;
+                        padding: 3rem;
+                        text-align: center;
+                        position: relative;
+                        overflow: hidden;
+                        animation: glow 2s ease-in-out infinite;
+                        cursor: pointer;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .game-container:hover {
+                        transform: scale(1.05);
+                    }
+
+                    .game-icon {
+                        font-size: 5rem;
+                        animation: bounce 1.5s ease-in-out infinite;
+                        display: inline-block;
+                        margin-bottom: 1rem;
+                    }
+
+                    .play-button {
+                        background: white;
+                        color: #667eea;
+                        padding: 1.2rem 3rem;
+                        border-radius: 3rem;
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                        text-decoration: none;
+                        display: inline-block;
+                        margin-top: 1.5rem;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                    }
+
+                    .play-button:hover {
+                        background: #4CAF50;
+                        color: white;
+                        transform: translateY(-5px);
+                        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+                    }
+
+                    .sparkle {
+                        position: absolute;
+                        font-size: 2rem;
+                        opacity: 0.7;
+                    }
+
+                    .sparkle-1 {
+                        top: 10%;
+                        left: 10%;
+                        animation: bounce 2s ease-in-out infinite 0.5s;
+                    }
+
+                    .sparkle-2 {
+                        top: 20%;
+                        right: 15%;
+                        animation: bounce 2.5s ease-in-out infinite 1s;
+                    }
+
+                    .sparkle-3 {
+                        bottom: 15%;
+                        left: 15%;
+                        animation: bounce 2.2s ease-in-out infinite 0.3s;
+                    }
+
+                    .sparkle-4 {
+                        bottom: 20%;
+                        right: 10%;
+                        animation: bounce 1.8s ease-in-out infinite 0.8s;
+                    }
+                </style>
+
+                <div class="game-container" onclick="window.open('https://oxygenz.streamlit.app/', '_blank')">
+                    <span class="sparkle sparkle-1">⭐</span>
+                    <span class="sparkle sparkle-2">✨</span>
+                    <span class="sparkle sparkle-3">💫</span>
+                    <span class="sparkle sparkle-4">🌟</span>
+
+                    <div class="game-icon">🎮</div>
+                    <h3 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">Ready to Play?</h3>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin-bottom: 0.5rem;">
+                        Experience OxyGenZ in action! Challenge yourself, earn badges, and make clean air fun!
+                    </p>
+                    <a href="https://oxygenz.streamlit.app/" target="_blank" class="play-button"
+                        onclick="event.stopPropagation();">
+                        🚀 Launch Game
+                    </a>
+                </div>
+            </div>
+
         </div>
     </section>
 
