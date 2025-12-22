@@ -98,136 +98,138 @@
 
 
 
-            <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">App Features</h3>
+            <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">Features</h3>
 
-            <div class="feature-card">
-                <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🌿 Smart Plant
-                    Recommendations</h4>
-                <p>Suggests plant types (Peace Lily, Areca Palm, Snake Plant) based on pollutant type, available
-                    light, and space.</p>
+            <div class="feature-grid scroll-reveal">
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🌿 Smart Plant
+                        Recommendations</h4>
+                    <p>Suggests plant types (Peace Lily, Areca Palm, Snake Plant) based on pollutant type, available
+                        light, and space.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🔔 Care Reminders
+                    </h4>
+                    <p>Includes watering reminders, care tips, and links to local nurseries for affordable
+                        implementation.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📍 Optimal
+                        Placement</h4>
+                    <p>Uses floor plans and sensor maps to recommend ideal positioning for maximum air impact.</p>
+                </div>
             </div>
-            <div class="feature-card">
-                <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📊 Green Impact
-                    Meter</h4>
-                <p>Shows a live visualization of how your plants are improving AQI and CO₂ levels.</p>
-            </div>
-            <div class="feature-card">
-                <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🔔 Care Reminders
-                </h4>
-                <p>Includes watering reminders, care tips, and links to local nurseries for affordable
-                    implementation.</p>
-            </div>
-        </div>
 
-        <div class="impact-box scroll-reveal">
-            <h4 style="color: var(--color-primary-dark); margin-bottom: 1rem; font-size: 1.75rem;">🌍 Bridging
-                Technology & Nature</h4>
-            <p style="margin: 0; line-height: 1.8; font-size: 1.125rem; color: var(--color-gray-800);">
-                Plantify bridges technology and nature — turning homes, schools, and care centers into breathing
-                green ecosystems.
-                Transform your space into a living air purifier with intelligent plant placement and care.
-            </p>
-        </div>
-
-
-
-        <!-- Let's Plantify Section -->
-        <div class="scroll-reveal" style="margin-top: 4rem;">
-            <style>
-                @keyframes grow {
-                    0% {
-                        transform: scale(1);
-                    }
-
-                    50% {
-                        transform: scale(1.1);
-                    }
-
-                    100% {
-                        transform: scale(1);
-                    }
-                }
-
-                @keyframes sway {
-
-                    0%,
-                    100% {
-                        transform: rotate(-5deg);
-                    }
-
-                    50% {
-                        transform: rotate(5deg);
-                    }
-                }
-
-                .plantify-container {
-                    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-                    border-radius: 2rem;
-                    padding: 3rem;
-                    text-align: center;
-                    position: relative;
-                    overflow: hidden;
-                    cursor: pointer;
-                    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.3);
-                    transition: transform 0.3s ease;
-                }
-
-                .plantify-container:hover {
-                    transform: translateY(-5px);
-                }
-
-                .plant-icon {
-                    font-size: 5rem;
-                    animation: sway 3s ease-in-out infinite;
-                    display: inline-block;
-                    margin-bottom: 1rem;
-                }
-
-                .action-button {
-                    background: white;
-                    color: #2E7D32;
-                    padding: 1.2rem 3rem;
-                    border-radius: 3rem;
-                    font-size: 1.5rem;
-                    font-weight: bold;
-                    text-decoration: none;
-                    display: inline-block;
-                    margin-top: 1.5rem;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                }
-
-                .action-button:hover {
-                    background: #81C784;
-                    color: white;
-                    transform: scale(1.05);
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-                }
-
-                .leaf-float {
-                    position: absolute;
-                    font-size: 2rem;
-                    opacity: 0.6;
-                    animation: grow 3s ease-in-out infinite;
-                }
-            </style>
-
-            <div class="plantify-container" onclick="window.open('https://plantify-lyart-zeta.vercel.app/', '_blank')">
-                <span class="leaf-float" style="top: 20px; left: 20px;">🌿</span>
-                <span class="leaf-float" style="bottom: 20px; right: 20px;">🍃</span>
-                <span class="leaf-float" style="top: 50%; right: 10%;">🌱</span>
-
-                <div class="plant-icon">🪴</div>
-                <h3 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">Let's Plantify!</h3>
-                <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin-bottom: 0.5rem;">
-                    Ready to green your space? Explore our interactive plant guide and start your journey!
+            <div class="impact-box scroll-reveal">
+                <h4 style="color: var(--color-primary-dark); margin-bottom: 1rem; font-size: 1.75rem;">🌍 Bridging
+                    Technology & Nature</h4>
+                <p style="margin: 0; line-height: 1.8; font-size: 1.125rem; color: var(--color-gray-800);">
+                    Plantify bridges technology and nature — turning homes, schools, and care centers into breathing
+                    green ecosystems.
+                    Transform your space into a living air purifier with intelligent plant placement and care.
                 </p>
-                <a href="https://plantify-lyart-zeta.vercel.app/" target="_blank" class="action-button"
-                    onclick="event.stopPropagation();">
-                    Start Planting 🌱
-                </a>
             </div>
-        </div>
+
+
+
+            <!-- Let's Plantify Section -->
+            <div class="scroll-reveal" style="margin-top: 4rem;">
+                <style>
+                    @keyframes grow {
+                        0% {
+                            transform: scale(1);
+                        }
+
+                        50% {
+                            transform: scale(1.1);
+                        }
+
+                        100% {
+                            transform: scale(1);
+                        }
+                    }
+
+                    @keyframes sway {
+
+                        0%,
+                        100% {
+                            transform: rotate(-5deg);
+                        }
+
+                        50% {
+                            transform: rotate(5deg);
+                        }
+                    }
+
+                    .plantify-container {
+                        background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+                        border-radius: 2rem;
+                        padding: 3rem;
+                        text-align: center;
+                        position: relative;
+                        overflow: hidden;
+                        cursor: pointer;
+                        box-shadow: 0 10px 30px rgba(46, 125, 50, 0.3);
+                        transition: transform 0.3s ease;
+                    }
+
+                    .plantify-container:hover {
+                        transform: translateY(-5px);
+                    }
+
+                    .plant-icon {
+                        font-size: 5rem;
+                        animation: sway 3s ease-in-out infinite;
+                        display: inline-block;
+                        margin-bottom: 1rem;
+                    }
+
+                    .action-button {
+                        background: white;
+                        color: #2E7D32;
+                        padding: 1.2rem 3rem;
+                        border-radius: 3rem;
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                        text-decoration: none;
+                        display: inline-block;
+                        margin-top: 1.5rem;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                    }
+
+                    .action-button:hover {
+                        background: #81C784;
+                        color: white;
+                        transform: scale(1.05);
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+                    }
+
+                    .leaf-float {
+                        position: absolute;
+                        font-size: 2rem;
+                        opacity: 0.6;
+                        animation: grow 3s ease-in-out infinite;
+                    }
+                </style>
+
+                <div class="plantify-container"
+                    onclick="window.open('https://plantify-lyart-zeta.vercel.app/', '_blank')">
+                    <span class="leaf-float" style="top: 20px; left: 20px;">🌿</span>
+                    <span class="leaf-float" style="bottom: 20px; right: 20px;">🍃</span>
+                    <span class="leaf-float" style="top: 50%; right: 10%;">🌱</span>
+
+                    <div class="plant-icon">🪴</div>
+                    <h3 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">Let's Plantify!</h3>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin-bottom: 0.5rem;">
+                        Ready to green your space? Explore our interactive plant guide and start your journey!
+                    </p>
+                    <a href="https://plantify-lyart-zeta.vercel.app/" target="_blank" class="action-button"
+                        onclick="event.stopPropagation();">
+                        Start Planting 🌱
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
