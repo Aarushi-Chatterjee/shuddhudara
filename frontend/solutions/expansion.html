@@ -94,31 +94,96 @@
                 </p>
             </div>
 
-            <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">What It Does</h3>
+            <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">🚧 Work in Progress
+                🚧</h3>
 
-            <div class="feature-grid scroll-reveal">
-                <div class="feature-card">
-                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">📈 Monthly
-                        Air-Health Reports</h4>
-                    <p>Generates comprehensive reports with before-and-after graphs for PM2.5, VOCs, and CO₂.</p>
-                </div>
-                <div class="feature-card">
-                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🔍 AI-Powered
-                        Insights</h4>
-                    <p>Provides behavioral and environmental trend analysis (e.g., how watering plants correlates with
-                        AQI improvement).</p>
-                </div>
-                <div class="feature-card">
-                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🤝 Institutional
-                        Sharing</h4>
-                    <p>Enables dashboards to be shared with parents, management, or public partners, inspiring
-                        replication.</p>
-                </div>
-                <div class="feature-card">
-                    <h4 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.25rem;">🌆 Citywide Impact
-                        Map</h4>
-                    <p>Aggregates anonymized data across multiple sites to create an "Indoor Air Map" supporting urban
-                        policy and research.</p>
+            <div class="scroll-reveal"
+                style="max-width: 900px; margin: 3rem auto; padding: 3rem; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 1.5rem; box-shadow: 0 8px 16px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
+                <!-- Animated background elements -->
+                <div
+                    style="position: absolute; top: 20px; right: 20px; font-size: 3rem; animation: float 3s ease-in-out infinite;">
+                    🛠️</div>
+                <div
+                    style="position: absolute; bottom: 20px; left: 20px; font-size: 2.5rem; animation: float 4s ease-in-out infinite 1s;">
+                    ⚡</div>
+                <div
+                    style="position: absolute; top: 50%; left: 10%; font-size: 2rem; animation: float 3.5s ease-in-out infinite 0.5s;">
+                    🎨</div>
+
+                <style>
+                    @keyframes float {
+
+                        0%,
+                        100% {
+                            transform: translateY(0px);
+                        }
+
+                        50% {
+                            transform: translateY(-20px);
+                        }
+                    }
+
+                    @keyframes pulse {
+
+                        0%,
+                        100% {
+                            transform: scale(1);
+                        }
+
+                        50% {
+                            transform: scale(1.05);
+                        }
+                    }
+
+                    .wip-badge {
+                        display: inline-block;
+                        padding: 0.5rem 1rem;
+                        background: var(--color-primary);
+                        color: white;
+                        border-radius: 2rem;
+                        font-weight: 600;
+                        margin: 1rem 0;
+                        animation: pulse 2s ease-in-out infinite;
+                    }
+
+                    .coming-soon-card {
+                        background: white;
+                        padding: 1.5rem;
+                        border-radius: 1rem;
+                        margin-top: 2rem;
+                        border-left: 4px solid var(--color-accent);
+                        transition: transform 0.3s ease;
+                    }
+
+                    .coming-soon-card:hover {
+                        transform: translateX(10px);
+                    }
+                </style>
+
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    <h4 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 1rem;">
+                        🌟 Something Awesome is Brewing! 🌟
+                    </h4>
+
+                    <div class="wip-badge">Coming Soon™</div>
+
+                    <p style="font-size: 1.125rem; line-height: 1.8; color: var(--color-gray-700); margin: 1.5rem 0;">
+                        Our team of air quality wizards is currently crafting something extraordinary for PurePulse.
+                        Think of it as giving your air quality data a megaphone, a dashboard, and maybe even a cape!
+                        🦸‍♀️
+                    </p>
+
+                    <div class="coming-soon-card">
+                        <p style="margin: 0; color: var(--color-gray-800); font-size: 1rem;">
+                            💡 <strong>Sneak Peek:</strong> We're cooking up features that'll make your data dance,
+                            your insights sparkle, and your community say "Wow, tell me more!"
+                            Stay tuned for analytics that actually make sense (and look pretty doing it).
+                        </p>
+                    </div>
+
+                    <p style="margin-top: 2rem; color: var(--color-gray-600); font-style: italic;">
+                        "Rome wasn't built in a day, but they were laying bricks every hour." - Us, probably 🧱
+                    </p>
                 </div>
             </div>
 
