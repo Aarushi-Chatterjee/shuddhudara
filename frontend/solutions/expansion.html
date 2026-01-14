@@ -30,9 +30,15 @@
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(1, 1fr);
             gap: 2rem;
             margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .feature-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .feature-card {
@@ -94,100 +100,110 @@
                 </p>
             </div>
 
-            <h3 class="section-title scroll-reveal" style="margin-top: 4rem; font-size: 1.875rem;">🚧 Work in Progress
-                🚧</h3>
+            <!-- Key Features (Matching Plantify Style) -->
+            <h3 class="section-title scroll-reveal" style="margin-top: 5rem; font-size: 2.25rem;">Key Features</h3>
+            <div class="feature-grid scroll-reveal" style="margin-bottom: 4rem;">
+                <div class="feature-card">
+                    <h4 style="color: #059669; margin-bottom: 1rem; font-size: 1.25rem;">🌿 Community Sharing</h4>
+                    <p style="color: #4b5563;">Post your clean air actions, from planting trees to installing purifiers,
+                        and inspire your neighbors.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: #059669; margin-bottom: 1rem; font-size: 1.25rem;">🤝 Collaborative Impact</h4>
+                    <p style="color: #4b5563;">Connect with other guardians and track our collective community "Pulse
+                        Impact" in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <h4 style="color: #059669; margin-bottom: 1rem; font-size: 1.25rem;">🌬️ Interactive Support</h4>
+                    <p style="color: #4b5563;">"Breathe Life" into other people's actions with likes and comments to
+                        strengthen the eco-network.</p>
+                </div>
+            </div>
 
-            <div class="scroll-reveal"
-                style="max-width: 900px; margin: 3rem auto; padding: 3rem; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 1.5rem; box-shadow: 0 8px 16px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
-                <!-- Animated background elements -->
-                <div
-                    style="position: absolute; top: 20px; right: 20px; font-size: 3rem; animation: float 3s ease-in-out infinite;">
-                    🛠️</div>
-                <div
-                    style="position: absolute; bottom: 20px; left: 20px; font-size: 2.5rem; animation: float 4s ease-in-out infinite 1s;">
-                    ⚡</div>
-                <div
-                    style="position: absolute; top: 50%; left: 10%; font-size: 2rem; animation: float 3.5s ease-in-out infinite 0.5s;">
-                    🎨</div>
-
+            <!-- Pure Pulse Intro CTA (Eco-Vibe Theme) -->
+            <div id="pulseIntro" class="scroll-reveal" style="margin-top: 3rem;">
+                <!-- Style block remains for the CTA box -->
                 <style>
+                    /* ... (keep existing styles for .pulse-cta-box, .floating-icon, .launch-btn) ... */
+                    .pulse-cta-box {
+                        background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+                        border-radius: 2rem;
+                        padding: 4.5rem 2rem;
+                        text-align: center;
+                        position: relative;
+                        overflow: hidden;
+                        color: white;
+                        box-shadow: 0 20px 40px rgba(13, 148, 136, 0.25);
+                    }
+
+                    .floating-icon {
+                        position: absolute;
+                        font-size: 2.5rem;
+                        opacity: 0.6;
+                        animation: float 5s ease-in-out infinite;
+                    }
+
                     @keyframes float {
 
                         0%,
                         100% {
-                            transform: translateY(0px);
+                            transform: translateY(0) rotate(0deg);
                         }
 
                         50% {
-                            transform: translateY(-20px);
+                            transform: translateY(-25px) rotate(8deg);
                         }
                     }
 
-                    @keyframes pulse {
-
-                        0%,
-                        100% {
-                            transform: scale(1);
-                        }
-
-                        50% {
-                            transform: scale(1.05);
-                        }
-                    }
-
-                    .wip-badge {
-                        display: inline-block;
-                        padding: 0.5rem 1rem;
-                        background: var(--color-primary);
-                        color: white;
-                        border-radius: 2rem;
-                        font-weight: 600;
-                        margin: 1rem 0;
-                        animation: pulse 2s ease-in-out infinite;
-                    }
-
-                    .coming-soon-card {
+                    .launch-btn {
                         background: white;
-                        padding: 1.5rem;
-                        border-radius: 1rem;
-                        margin-top: 2rem;
-                        border-left: 4px solid var(--color-accent);
-                        transition: transform 0.3s ease;
+                        color: #0d9488;
+                        padding: 1.3rem 3.5rem;
+                        border-radius: 3rem;
+                        font-size: 1.5rem;
+                        font-weight: 800;
+                        border: none;
+                        cursor: pointer;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.75rem;
+                        margin-top: 2.5rem;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                        text-decoration: none;
                     }
 
-                    .coming-soon-card:hover {
-                        transform: translateX(10px);
+                    .launch-btn:hover {
+                        transform: scale(1.08) translateY(-4px);
+                        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                        background: #f0fdfa;
                     }
                 </style>
 
-                <div style="position: relative; z-index: 1; text-align: center;">
-                    <h4 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 1rem;">
-                        🌟 Something Awesome is Brewing! 🌟
-                    </h4>
+                <div class="pulse-cta-box">
+                    <!-- Floating Icons -->
+                    <span class="floating-icon" style="top: 10%; left: 12%;">🍃</span>
+                    <span class="floating-icon" style="top: 25%; right: 18%; animation-delay: 1.5s;">🌬️</span>
+                    <span class="floating-icon" style="bottom: 20%; left: 15%; animation-delay: 2.5s;">🌱</span>
+                    <span class="floating-icon" style="bottom: 10%; right: 10%; animation-delay: 0.8s;">✨</span>
 
-                    <div class="wip-badge">Coming Soon™</div>
-
-                    <p style="font-size: 1.125rem; line-height: 1.8; color: var(--color-gray-700); margin: 1.5rem 0;">
-                        Our team of air quality wizards is currently crafting something extraordinary for PurePulse.
-                        Think of it as giving your air quality data a megaphone, a dashboard, and maybe even a cape!
-                        🦸‍♀️
+                    <div
+                        style="font-size: 5.5rem; margin-bottom: 2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                        🤝</div>
+                    <h2
+                        style="color: white; font-size: 3.8rem; margin-bottom: 1rem; font-weight: 900; letter-spacing: -2px; line-height: 1;">
+                        Share the Breath</h2>
+                    <p
+                        style="color: rgba(255,255,255,0.95); font-size: 1.4rem; max-width: 650px; margin: 0 auto; line-height: 1.5; font-weight: 500;">
+                        Join the community movement for cleaner air. Share your actions, connect with others, and grow
+                        our collective impact!
                     </p>
 
-                    <div class="coming-soon-card">
-                        <p style="margin: 0; color: var(--color-gray-800); font-size: 1rem;">
-                            💡 <strong>Sneak Peek:</strong> We're cooking up features that'll make your data dance,
-                            your insights sparkle, and your community say "Wow, tell me more!"
-                            Stay tuned for analytics that actually make sense (and look pretty doing it).
-                        </p>
-                    </div>
-
-                    <p style="margin-top: 2rem; color: var(--color-gray-600); font-style: italic;">
-                        "Rome wasn't built in a day, but they were laying bricks every hour." - Us, probably 🧱
-                    </p>
+                    <a href="community.html" class="launch-btn" id="startPulsingBtn">
+                        🌿 Enter PurePulse
+                    </a>
                 </div>
             </div>
-
-
 
         </div>
     </section>

@@ -12,6 +12,8 @@ class User {
         username VARCHAR(30) UNIQUE NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
+        points INTEGER DEFAULT 0,
+        impact_score INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         last_login TIMESTAMP
       );
@@ -53,12 +55,21 @@ class User {
     }
 
     /**
-     * Find user by ID
+     * Find user by ID with points
      */
     static async findById(id) {
-        const query = 'SELECT id, username, email, created_at, last_login FROM users WHERE id = $1';
+        const query = 'SELECT id, username, email, points, impact_score, created_at, last_login FROM users WHERE id = $1';
         const { rows } = await db.query(query, [id]);
         return rows[0];
+    }
+
+    /**
+     * Add/Update points for a user
+     */
+    static async updatePoints(id, amount) {
+        const query = 'UPDATE users SET points = points + $1 WHERE id = $2 RETURNING points';
+        const { rows } = await db.query(query, [amount, id]);
+        return rows[0].points;
     }
 
     /**

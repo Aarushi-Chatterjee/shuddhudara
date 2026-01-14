@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
+const pointsRoutes = require('./routes/pointsRoutes');
 const User = require('./models/userModel');
 
 
@@ -92,6 +93,7 @@ app.get('/', (req, res) => {
 // Authentication routes
 // All these routes will be prefixed with /api/auth
 app.use('/api/auth', authRoutes);
+app.use('/api/points', pointsRoutes);
 
 // ============================================
 // ERROR HANDLING

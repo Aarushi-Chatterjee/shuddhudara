@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PurePulse | Community Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --brand-green: #059669;
+            --brand-teal: #0d9488;
+            --bg-main: #f8fafc;
+            --sidebar-w: 260px;
+            --radius-main: 1.25rem;
+            --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: #1e293b;
+            overflow: hidden;
+            /* Main page won't scroll, inner areas will */
+        }
+
+        .dashboard-wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .side-nav {
+            width: var(--sidebar-w);
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .nav-logo h1 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: var(--brand-green);
+            letter-spacing: -1px;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+            padding: 0.85rem 1rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            color: #64748b;
+        }
+
+        .nav-item.active {
+            background: #ecfdf5;
+            color: var(--brand-green);
+        }
+
+        .nav-item:hover:not(.active) {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .nav-footer {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 1.5rem;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Header */
+        .top-bar {
+            padding: 1.5rem 2.5rem;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .search-box {
+            background: #f1f5f9;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            width: 350px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .user-panel {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .impact-score {
+            text-align: right;
+        }
+
+        .impact-score .value {
+            display: block;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--brand-green);
+        }
+
+        .impact-score .label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .avatar-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #ecfdf5;
+            color: var(--brand-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 2px solid var(--brand-green);
+        }
+
+        /* Dashboard Grid Layout */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 2rem;
+            padding: 2rem 2.5rem;
+            flex-grow: 1;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: var(--radius-main);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 1.5rem;
+            border: 1px solid #edf2f7;
+        }
+
+        /* Global Milestone Card */
+        .milestone-card {
+            background: linear-gradient(135deg, var(--brand-green), var(--brand-teal));
+            color: white;
+            padding: 2rem;
+        }
+
+        .milestone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .milestone-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .milestone-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 72%;
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            transition: width 1.5s ease;
+        }
+
+        .milestone-stats {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Post Input Pill */
+        .input-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+        .pill-input {
+            flex-grow: 1;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1rem 1.5rem;
+            border-radius: 3rem;
+            color: #94a3b8;
+            transition: all 0.2s;
+        }
+
+        .pill-input:hover {
+            border-color: var(--brand-green);
+        }
+
+        /* Community Guidelines alignment Fix */
+        .guidelines-title {
+            font-weight: 700;
+            color: #64748b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .gl-list {
+            list-style: none;
+        }
+
+        .gl-item {
+            display: grid;
+            grid-template-columns: 24px 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+
+        .gl-icon {
+            font-size: 1rem;
+        }
+
+        .gl-content {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .gl-content strong {
+            color: #1e293b;
+            display: inline-block;
+            width: 85px;
+        }
+
+        /* Fixed width for alignment */
+
+        /* Impact Table */
+        .impact-title {
+            font-weight: 700;
+            color: var(--brand-green);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .impact-card {
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+        }
+
+        .earn-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .earn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccfbf1;
+        }
+
+        /* Tab Content Control */
+        .tab-content {
+            display: none;
+            width: 100%;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Goal View Content */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .goal-stat {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.25rem;
+        }
+
+        .goal-chart {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 6px solid #e2e8f0;
+            border-top-color: var(--brand-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        /* Guardian List */
+        .g-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .g-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 1rem;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+        }
+
+        .g-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Life Map */
+        .map-wrapper {
+            height: 400px;
+            background: #f1f5f9;
+            border-radius: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-soft);
+            font-size: 0.8rem;
+        }
+
+        .city-pulse {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Feed Elements */
+        .post-card .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .post-card .author {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .post-card .meta {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1.5rem;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 1rem;
+        }
+
+        .breathe-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .breathe-btn:hover {
+            color: var(--brand-green);
+        }
+
+        /* Profile/Modal etc. hidden for now but ready */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-wrapper">
+        <!-- Dashboard Sidebar -->
+        <aside class="side-nav">
+            <div class="nav-logo">
+                <h1>PUREPULSE</h1>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item active" data-tab="feed"><span>🏠</span> Feed</li>
+                <li class="nav-item" data-tab="goals"><span>🚀</span> Impact Goals</li>
+                <li class="nav-item" data-tab="guardians"><span>👥</span> Guardians</li>
+                <li class="nav-item" data-tab="map"><span>🗺️</span> Life Map</li>
+            </ul>
+            <div class="nav-footer">
+                <li class="nav-item"><span>👤</span> My Profile</li>
+                <li class="nav-item"><span>⚙️</span> Settings</li>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <div class="content-container">
+            <header class="top-bar">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Find clean air champions...">
+                </div>
+                <div class="user-panel">
+                    <div class="impact-score">
+                        <span class="value">+450 Impact</span>
+                        <span class="label">Aarushi • level 4</span>
+                    </div>
+                    <div class="avatar-circle">A</div>
+                </div>
+            </header>
+
+            <div class="dash-grid">
+                <!-- Center Area: Switches Based on Tab -->
+                <div class="center-content">
+
+                    <!-- FEED TAB -->
+                    <div id="feed" class="tab-content active">
+                        <div class="card milestone-card">
+                            <div class="milestone-header">
+                                <div>
+                                    <h3 class="milestone-title">Global Pulse Milestone</h3>
+                                    <p style="opacity: 0.9; font-size: 0.9rem;">Help us reach 50,000 PurePulse points to
+                                        unlock a new neighborhood forest!</p>
+                                </div>
+                                <span class="milestone-tag">72% REACHED</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <p class="milestone-stats">36,000 / 50,000 Points collected by our Guardians</p>
+                        </div>
+
+                        <div class="card input-card" id="openModalBtn">
+                            <div class="avatar-circle"
+                                style="width: 32px; height: 32px; border: none; font-size: 0.8rem;">A</div>
+                            <div class="pill-input">Share your clean air action, Aarushi...</div>
+                        </div>
+
+                        <div id="feedItems">
+                            <div class="card post-card">
+                                <div class="header">
+                                    <div class="author">
+                                        <div class="avatar-circle"
+                                            style="border-color: #e2e8f0; width: 40px; height: 40px;">P</div>
+                                        <div>
+                                            <h4 style="font-size: 0.95rem;">Pooja Gunturu <span
+                                                    style="font-weight: 500; color: #94a3b8; font-size: 0.8rem;">@pooja.g</span>
+                                            </h4>
+                                            <span class="meta">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                    <span style="color: #94a3b8; cursor: pointer;">•••</span>
+                                </div>
+                                <div style="line-height: 1.6; margin-bottom: 1rem;">
+                                    <p>Just finished installing the BioBloom filter in my living room. Combined with my
+                                        new Peace Lily, the AQI indoors has dropped by 20% in just one hour! 🌿✨
+                                        #CleanAir #PurePulse</p>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1597050210227-211cc924032d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                                    alt="Post"
+                                    style="width: 100%; border-radius: 1rem; margin-bottom: 1rem; max-height: 300px; object-fit: cover;">
+                                <div class="post-actions">
+                                    <button class="breathe-btn"><span>🌬️</span> 24 Breaths</button>
+                                    <button class="breathe-btn"><span>💬</span> 8 Comments</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GOALS TAB -->
+                    <div id="goals" class="tab-content">
+                        <h2 style="margin-bottom: 1.5rem; font-family: 'Syne';">Impact Goals</h2>
+                        <div class="goals-grid">
+                            <div class="card">
+                                <div class="goal-chart">65%</div>
+                                <h4>Personal: The Green Commuter</h4>
+                                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Cycle 50km this month
+                                    to save 12kg of CO2 emissions.</p>
+                            </div>
+                            <div class="card">
+                                <div class="goal-chart" style="border-top-color: var(--brand-teal);">42%</div>
+                                <h4>Community: Re-Wilding Peak</h4>
+                                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Group effort to plant
+                                    500 trees in the urban sector.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h4 style="margin-bottom: 1rem;">Recent Achievements</h4>
+                            <div style="display: flex; gap: 1rem;">
+                                <div
+                                    style="padding: 1rem; background: #f0fdf4; border-radius: 1rem; flex: 1; text-align: center;">
+                                    <span style="font-size: 1.5rem; display: block;">🏆</span>
+                                    <span style="font-weight: 700; font-size: 0.8rem;">Filter Master</span>
+                                </div>
+                                <div
+                                    style="padding: 1rem; background: #fffbeb; border-radius: 1rem; flex: 1; text-align: center;">
+                                    <span style="font-size: 1.5rem; display: block;">🚲</span>
+                                    <span style="font-weight: 700; font-size: 0.8rem;">Eco Rider</span>
+                                </div>
+                                <div
+                                    style="padding: 1rem; background: #fdf2f8; border-radius: 1rem; flex: 1; text-align: center;">
+                                    <span style="font-size: 1.5rem; display: block;">🌿</span>
+                                    <span style="font-weight: 700; font-size: 0.8rem;">Oxygen Soul</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GUARDIANS TAB -->
+                    <div id="guardians" class="tab-content">
+                        <h2 style="margin-bottom: 1.5rem; font-family: 'Syne';">The Hall of Guardians</h2>
+                        <div class="g-list">
+                            <div class="g-item">
+                                <div class="g-avatar">👩‍💼</div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="font-size: 0.95rem;">Dr. Setyorini O.</h4>
+                                    <p style="font-size: 0.75rem; color: #94a3b8;">Level 15 • Air Chemist Expert</p>
+                                </div>
+                                <button
+                                    style="background: var(--brand-green); color: white; border: none; padding: 0.5rem 1rem; border-radius: 2rem; font-weight: 700; cursor: pointer;">PULSE</button>
+                            </div>
+                            <div class="g-item">
+                                <div class="g-avatar">🚵‍♂️</div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="font-size: 0.95rem;">Varel Amarta</h4>
+                                    <p style="font-size: 0.75rem; color: #94a3b8;">Level 12 • Urban Green Cyclist</p>
+                                </div>
+                                <button
+                                    style="background: var(--brand-green); color: white; border: none; padding: 0.5rem 1rem; border-radius: 2rem; font-weight: 700; cursor: pointer;">PULSE</button>
+                            </div>
+                            <div class="g-item">
+                                <div class="g-avatar">🌱</div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="font-size: 0.95rem;">Clarissa T.</h4>
+                                    <p style="font-size: 0.75rem; color: #94a3b8;">Level 10 • Community Planter</p>
+                                </div>
+                                <button
+                                    style="background: var(--brand-green); color: white; border: none; padding: 0.5rem 1rem; border-radius: 2rem; font-weight: 700; cursor: pointer;">PULSE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LIFE MAP TAB -->
+                    <div id="map" class="tab-content">
+                        <h2 style="margin-bottom: 1.5rem; font-family: 'Syne';">Life Map: Pure Air Hotspots</h2>
+                        <div class="map-wrapper">
+                            <div class="city-pulse" style="top: 30%; left: 40%;"></div>
+                            <div class="city-pulse" style="top: 60%; left: 20%; animation-delay: 0.5s;"></div>
+                            <div class="city-pulse" style="top: 45%; left: 70%; animation-delay: 1.2s;"></div>
+                            <div style="text-align: center; color: #94a3b8;">
+                                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🗺️</span>
+                                <p>Interactive city map visualization<br>showing where environmental actions are
+                                    thriving.</p>
+                            </div>
+                            <div class="map-overlay">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <span
+                                        style="width: 10px; height: 10px; background: var(--brand-green); border-radius: 50%;"></span>
+                                    <span>High Pure AIr Pulse</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span
+                                        style="width: 10px; height: 10px; background: #e2e8f0; border-radius: 50%;"></span>
+                                    <span>Untracked Sector</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Sidebar: Fixed structure -->
+                <aside class="right-sidebar">
+                    <div class="card">
+                        <span class="guidelines-title">Community Guidelines</span>
+                        <div class="gl-list">
+                            <div class="gl-item">
+                                <span class="gl-icon">🤝</span>
+                                <div class="gl-content"><strong>Be Respectful</strong> : Support fellow air guardians.
+                                </div>
+                            </div>
+                            <div class="gl-item">
+                                <span class="gl-icon">🌱</span>
+                                <div class="gl-content"><strong>Stay Action-Oriented</strong> : Share real impact.</div>
+                            </div>
+                            <div class="gl-item">
+                                <span class="gl-icon">🚭</span>
+                                <div class="gl-content"><strong>No Spam</strong> : Keep the feed clean and focused.
+                                </div>
+                            </div>
+                            <div class="gl-item">
+                                <span class="gl-icon">🔍</span>
+                                <div class="gl-content"><strong>Verify</strong> : Use reliable air data sources.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card impact-card">
+                        <span class="impact-title">How you earn impact</span>
+                        <div class="earn-item">
+                            <div class="earn-icon">🌿</div>
+                            <div style="font-weight: 500;"><strong>+50 Pts</strong> for Action Posts</div>
+                        </div>
+                        <div class="earn-item">
+                            <div class="earn-icon">💬</div>
+                            <div style="font-weight: 500;"><strong>+15 Pts</strong> for Feedback</div>
+                        </div>
+                        <div class="earn-item" style="margin-bottom: 0.5rem;">
+                            <div class="earn-icon">🌬️</div>
+                            <div style="font-weight: 500;"><strong>+10 Pts</strong> for Breathing Life</div>
+                        </div>
+                        <div
+                            style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed #99f6e4; text-align: center;">
+                            <p style="font-size: 0.8rem; color: #134e4a; font-weight: 600;">Your points help fund real
+                                city trees! 🌳</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4 style="margin-bottom: 1.5rem;">Impact Hall Top 3</h4>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 800; color: var(--brand-teal);">#1</span>
+                                <span style="font-weight: 700; flex-grow: 1; margin-left: 1rem;">Clarissa T.</span>
+                                <span style="font-weight: 800; color: #1e293b;">+2.4k</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 800; color: #94a3b8;">#2</span>
+                                <span style="font-weight: 700; flex-grow: 1; margin-left: 1rem;">Varel A.</span>
+                                <span style="font-weight: 800; color: #1e293b;">+1.8k</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 800; color: #b45309;">#3</span>
+                                <span style="font-weight: 700; flex-grow: 1; margin-left: 1rem;">Pooja G.</span>
+                                <span style="font-weight: 800; color: #1e293b;">+1.2k</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Posting Modal -->
+    <div id="postModal" class="modal">
+        <div class="card" style="width: 500px; max-width: 90vw;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <h3 style="font-family: 'Syne';">New PurePulse Action</h3>
+                <span id="closeModal" style="cursor: pointer; font-size: 1.5rem;">&times;</span>
+            </div>
+            <textarea id="modalText" placeholder="What clean air action did you take today?"
+                style="width: 100%; height: 120px; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1rem; font-family: inherit; margin-bottom: 1rem; outline: none;"></textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                <button id="postBtn"
+                    style="background: var(--brand-green); color: white; border: none; padding: 0.75rem 2rem; border-radius: 2rem; font-weight: 800; cursor: pointer;">Post
+                    Action</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.nav-item[data-tab]');
+            const contentSections = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.tab;
+
+                    // Update Active Link
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // Update Content
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === target) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // Modal Controls
+            const modal = document.getElementById('postModal');
+            const openBtn = document.getElementById('openModalBtn');
+            const closeBtn = document.getElementById('closeModal');
+            const submitPost = document.getElementById('postBtn');
+            const feedArea = document.getElementById('feedItems');
+            const modalText = document.getElementById('modalText');
+
+            openBtn.onclick = () => modal.style.display = 'flex';
+            closeBtn.onclick = () => modal.style.display = 'none';
+            window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
+
+            submitPost.onclick = () => {
+                const val = modalText.value.trim();
+                if (!val) return;
+
+                const post = document.createElement('div');
+                post.className = 'card post-card';
+                post.innerHTML = `
+                    <div class="header">
+                        <div class="author">
+                            <div class="avatar-circle" style="background: #f0fdf4; border-color: var(--brand-green); width: 40px; height: 40px;">A</div>
+                            <div>
+                                <h4 style="font-size: 0.95rem;">Aarushi (You)</h4>
+                                <span class="meta">Just now</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-bottom: 1rem; line-height: 1.6;">${val}</p>
+                    <div class="post-actions">
+                        <button class="breathe-btn"><span>🌬️</span> 0 Breaths</button>
+                    </div>
+                `;
+                feedArea.prepend(post);
+                modalText.value = '';
+                modal.style.display = 'none';
+
+                // Update Impact (Simulated)
+                const impactVal = document.querySelector('.impact-score .value');
+                impactVal.innerText = "+500 Impact";
+                alert('✨ Action posted! +50 Impact Points awarded.');
+            };
+
+            // Breathe Interaction
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('.breathe-btn');
+                if (!btn || btn.dataset.on) return;
+
+                if (btn.innerText.includes('Breaths')) {
+                    const current = parseInt(btn.innerText.match(/\d+/)[0]);
+                    btn.innerHTML = `<span>🌬️</span> ${current + 1} Breaths`;
+                    btn.style.color = 'var(--brand-green)';
+                    btn.dataset.on = 'true';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
