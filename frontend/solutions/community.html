@@ -192,24 +192,26 @@
             border: 1px solid #edf2f7;
         }
 
-        /* Global Milestone Card */
+        /* Global Milestone Card - Shortened */
         .milestone-card {
             background: linear-gradient(135deg, var(--brand-green), var(--brand-teal));
             color: white;
-            padding: 2rem;
+            padding: 1.25rem 1.5rem;
+            /* Reduced padding */
         }
 
         .milestone-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
+            align-items: center;
+            margin-bottom: 1rem;
         }
 
         .milestone-title {
-            font-size: 1.5rem;
+            font-size: 1.15rem;
+            /* Smaller font */
             font-weight: 800;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0rem;
         }
 
         .milestone-tag {
@@ -222,10 +224,10 @@
 
         .progress-track {
             width: 100%;
-            height: 12px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             position: relative;
         }
 
@@ -239,7 +241,8 @@
 
         .milestone-stats {
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            opacity: 0.9;
         }
 
         /* Post Input Pill */
@@ -530,7 +533,6 @@
                 <li class="nav-item active" data-tab="feed"><span>🏠</span> Feed</li>
                 <li class="nav-item" data-tab="goals"><span>🚀</span> Impact Goals</li>
                 <li class="nav-item" data-tab="guardians"><span>👥</span> Guardians</li>
-                <li class="nav-item" data-tab="map"><span>🗺️</span> Life Map</li>
             </ul>
             <div class="nav-footer">
                 <li class="nav-item"><span>👤</span> My Profile</li>
@@ -564,15 +566,15 @@
                             <div class="milestone-header">
                                 <div>
                                     <h3 class="milestone-title">Global Pulse Milestone</h3>
-                                    <p style="opacity: 0.9; font-size: 0.9rem;">Help us reach 50,000 PurePulse points to
-                                        unlock a new neighborhood forest!</p>
+                                    <p style="opacity: 0.9; font-size: 0.8rem; margin-top: 4px;">Help us reach 50,000
+                                        pts for a new neighborhood forest!</p>
                                 </div>
                                 <span class="milestone-tag">72% REACHED</span>
                             </div>
                             <div class="progress-track">
                                 <div class="progress-fill"></div>
                             </div>
-                            <p class="milestone-stats">36,000 / 50,000 Points collected by our Guardians</p>
+                            <p class="milestone-stats">36,000 / 50,000 pts collected</p>
                         </div>
 
                         <div class="card input-card" id="openModalBtn">
@@ -685,61 +687,11 @@
                         </div>
                     </div>
 
-                    <!-- LIFE MAP TAB -->
-                    <div id="map" class="tab-content">
-                        <h2 style="margin-bottom: 1.5rem; font-family: 'Syne';">Life Map: Pure Air Hotspots</h2>
-                        <div class="map-wrapper">
-                            <div class="city-pulse" style="top: 30%; left: 40%;"></div>
-                            <div class="city-pulse" style="top: 60%; left: 20%; animation-delay: 0.5s;"></div>
-                            <div class="city-pulse" style="top: 45%; left: 70%; animation-delay: 1.2s;"></div>
-                            <div style="text-align: center; color: #94a3b8;">
-                                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🗺️</span>
-                                <p>Interactive city map visualization<br>showing where environmental actions are
-                                    thriving.</p>
-                            </div>
-                            <div class="map-overlay">
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                    <span
-                                        style="width: 10px; height: 10px; background: var(--brand-green); border-radius: 50%;"></span>
-                                    <span>High Pure AIr Pulse</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <span
-                                        style="width: 10px; height: 10px; background: #e2e8f0; border-radius: 50%;"></span>
-                                    <span>Untracked Sector</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
 
-                <!-- Right Sidebar: Fixed structure -->
+                <!-- Right Sidebar -->
                 <aside class="right-sidebar">
-                    <div class="card">
-                        <span class="guidelines-title">Community Guidelines</span>
-                        <div class="gl-list">
-                            <div class="gl-item">
-                                <span class="gl-icon">🤝</span>
-                                <div class="gl-content"><strong>Be Respectful</strong> : Support fellow air guardians.
-                                </div>
-                            </div>
-                            <div class="gl-item">
-                                <span class="gl-icon">🌱</span>
-                                <div class="gl-content"><strong>Stay Action-Oriented</strong> : Share real impact.</div>
-                            </div>
-                            <div class="gl-item">
-                                <span class="gl-icon">🚭</span>
-                                <div class="gl-content"><strong>No Spam</strong> : Keep the feed clean and focused.
-                                </div>
-                            </div>
-                            <div class="gl-item">
-                                <span class="gl-icon">🔍</span>
-                                <div class="gl-content"><strong>Verify</strong> : Use reliable air data sources.</div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="card impact-card">
                         <span class="impact-title">How you earn impact</span>
                         <div class="earn-item">
@@ -778,6 +730,30 @@
                                 <span style="font-weight: 800; color: #b45309;">#3</span>
                                 <span style="font-weight: 700; flex-grow: 1; margin-left: 1rem;">Pooja G.</span>
                                 <span style="font-weight: 800; color: #1e293b;">+1.2k</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <span class="guidelines-title">Community Guidelines</span>
+                        <div class="gl-list">
+                            <div class="gl-item">
+                                <span class="gl-icon">🤝</span>
+                                <div class="gl-content"><strong>Be Respectful</strong> : Support fellow air guardians.
+                                </div>
+                            </div>
+                            <div class="gl-item">
+                                <span class="gl-icon">🌱</span>
+                                <div class="gl-content"><strong>Stay Action-Oriented</strong> : Share real impact.</div>
+                            </div>
+                            <div class="gl-item">
+                                <span class="gl-icon">🚭</span>
+                                <div class="gl-content"><strong>No Spam</strong> : Keep the feed clean and focused.
+                                </div>
+                            </div>
+                            <div class="gl-item">
+                                <span class="gl-icon">🔍</span>
+                                <div class="gl-content"><strong>Verify</strong> : Use reliable air data sources.</div>
                             </div>
                         </div>
                     </div>
