@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Subscriber = require('../models/subscriberModel');
-const { Resend } = require('resend');
-
-// Initialize Resend
-const resend = new Resend(process.env.RESEND_API_KEY);
+const { sendEmail } = require('../utils/emailService');
 
 // POST /api/newsletter/join
 router.post('/join', async (req, res) => {
@@ -32,30 +29,31 @@ router.post('/join', async (req, res) => {
 
         // Send Welcome Email
         try {
-            await resend.emails.send({
-                from: 'PurePulse <shuddhudara@gmail.com>', // Note: Works best with verified domain
-                to: email, // Valid only if verified or for test account in Resend
+            await sendEmail({
+                to: email,
                 subject: 'Welcome to the Movement! 🌿',
                 html: `
-                    <div style="font-family: Arial, sans-serif; color: #111827; max-width: 600px; margin: 0 auto;">
-                        <h1 style="color: #10b981;">Welcome to Shuddhudara, ${name || 'Friend'}!</h1>
-                        <p>Thank you for joining the Clean Air Revolution. You've taken the first step towards a healthier, more sustainable future.</p>
+                    <div style="font-family: Arial, sans-serif; color: #111827; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; padding: 40px; border-radius: 12px;">
+                        <h1 style="color: #10b981; margin-top: 0;">Welcome to Shuddhudara, ${name || 'Friend'}!</h1>
+                        <p style="font-size: 16px; line-height: 1.6;">Thank you for joining the Clean Air Revolution. You've taken the first step towards a healthier, more sustainable future.</p>
                         
-                        <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                            <h3 style="margin-top: 0; color: #059669;">What happens next?</h3>
-                            <ul style="padding-left: 20px;">
-                                <li>📈 You'l receive weekly insights on air quality.</li>
-                                <li>🎁 Early access to new BioBloom updates.</li>
+                        <div style="background-color: #f0fdf4; padding: 25px; border-radius: 10px; margin: 30px 0;">
+                            <h3 style="margin-top: 0; color: #059669; font-size: 18px;">What happens next?</h3>
+                            <ul style="padding-left: 20px; font-size: 15px; color: #374151;">
+                                <li style="margin-bottom: 10px;">📈 Periodic insights on air quality.</li>
+                                <li style="margin-bottom: 10px;">🎁 Early access to new BioBloom updates.</li>
                                 <li>🌍 Real-time impact reports from our community.</li>
                             </ul>
                         </div>
 
-                        <p>We're thrilled to have you with us.</p>
-                        <p><strong>The Shuddhudara Team</strong></p>
+                        <p style="font-size: 16px; line-height: 1.6;">We're thrilled to have you with us in making the air pure again.</p>
+                        <p style="margin-top: 40px; border-top: 1px solid #f3f4f6; padding-top: 20px;">
+                            <strong>Stay Bold,</strong><br>
+                            <span style="color: #10b981; font-weight: 700;">The Shuddhudara Team</span>
+                        </p>
                     </div>
                 `
             });
-            console.log(`📧 Welcome email sent to ${email}`);
         } catch (emailError) {
             // Don't fail the request if email fails (non-critical)
             console.error('❌ Failed to send welcome email:', emailError.message);

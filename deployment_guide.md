@@ -1,45 +1,50 @@
-# Deployment Guide: SHUDDHUDARA
+# 🚀 PurePulse Deployment & Configuration Guide
 
-To share your website with the world, we need to move it from your local computer to the cloud. We will use **Render** (free) for the server and **MongoDB Atlas** (free) for the database.
+Follow these steps to set up your APIs and fix the "Server Busy" errors on Vercel.
 
-## Phase 1: Cloud Database (MongoDB Atlas)
+## 1. Setting up Environment Variables on Vercel
+You must add your API keys to the Vercel Dashboard for the backend to communicate with the database and email service.
 
-Your local MongoDB won't work in the cloud. You need a cloud database.
+### Steps:
+1.  Go to your **Vercel Dashboard**.
+2.  Select your project (**shuddhudara**).
+3.  Click on **Settings** > **Environment Variables**.
+4.  Add the following three variables:
 
-1.  **Create Account:** Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) and sign up (free).
-2.  **Create Cluster:** Create a new "Shared" (Free) cluster.
-3.  **Create User:** In "Database Access", create a user (e.g., `admin`) and password. **Write this down.**
-4.  **Network Access:** In "Network Access", add IP Address `0.0.0.0/0` (allows access from anywhere).
-5.  **Get Connection String:**
-    *   Click **Connect** -> **Drivers**.
-    *   Copy the string (looks like `mongodb+srv://admin:<password>@cluster0...`).
-    *   Replace `<password>` with your actual password.
+| Variable Name | Value / Description |
+| :--- | :--- |
+| `DATABASE_URL` | Your Neon PostgreSQL connection string (starts with `postgres://...`) |
+| `JWT_SECRET` | Create a random secure string (e.g., `shuddhudara_secure_key_2024`) |
+| `FREESEND_API_KEY` | Your API Key: `317fa49e-f709-45bb-9874-42d8e1fdbe09` |
 
-## Phase 2: Code Preparation (I can help with this!)
+5.  Click **Save**.
+6.  **IMPORTANT**: You must **Redeploy** your project for these changes to take effect.
 
-We need to make two small changes to your code so it works online:
+---
 
-1.  **Serve Frontend:** Update `server.js` to serve your HTML files automatically.
-2.  **Relative Paths:** Update your frontend JavaScript to talk to `/api/auth` instead of `http://localhost:3000/api/auth`.
+## 2. Email Service (Freesend/Elastic Email)
+We have switched from Resend to **Freesend**. 
+*   **Key used**: `317fa49e-f709-45bb-9874-42d8e1fdbe09`
+*   **Variable Name**: `FREESEND_API_KEY`
+*   Note: Ensure your sender address `shuddhudara@gmail.com` is verified in your Elastic Email dashboard.
 
-**> Would you like me to make these code changes for you now?**
+---
 
-## Phase 3: Deploy to Render
+## 3. The PurePulse Login Fix
+The error you saw earlier ("Servers are busy") was caused by the server trying to connect to a missing database or failing to initialize the tables on a cold start.
 
-Once the code is ready and pushed to GitHub:
+### What I Fixed for you:
+*   **Resilient Initialization**: I updated `backend/server.js` with a "Singleton Promise" logic. This ensures that even if 10 users login at the exact same millisecond, the server only tries to connect to the database **once**, preventing the "Connection Pool" from crashing.
+*   **Dark-Tech Aesthetic**: I've updated the background from the old green gradient to a **premium Navy & Emerald radial glow** with Glassmorphism for a "PurePulse" tech feel.
+*   **Status Code Tracking**: If it fails now, it will show you the exact error code (like `500`) so we know if it's a password issue or a server configuration issue.
 
-1.  **Sign Up:** Go to [Render.com](https://render.com/) and sign up with GitHub.
-2.  **New Web Service:** Click **New +** -> **Web Service**.
-3.  **Connect Repo:** Select your `shuddhudara` repository.
-4.  **Settings:**
-    *   **Runtime:** Node
-    *   **Build Command:** `npm install` (inside the backend folder, we might need a root package.json)
-    *   **Start Command:** `node backend/server.js`
-5.  **Environment Variables:**
-    *   Add `MONGODB_URI` -> Paste your connection string from Phase 1.
-    *   Add `NODE_ENV` -> `production`.
-6.  **Deploy:** Click **Create Web Service**.
+---
 
-## Phase 4: Done!
+## 4. Final Verification Steps
+Once you've added the variables and redeployed:
+1.  Try to **Sign Up** first (this ensures the user is created in the database).
+2.  If Sign Up works, **Login** will work immediately.
+3.  Check the **Join Us** page; entering an email should now return a success message and send you a welcome email via Resend.
 
-Render will give you a URL (e.g., `https://shuddhudara.onrender.com`). You can share this link with anyone!
+> [!TIP]
+> If you still see "Server Busy", check the **Logs** tab in Vercel to see the exact red error message—it usually tells us if the database rejected the connection!
