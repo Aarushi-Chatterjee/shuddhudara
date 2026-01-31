@@ -527,10 +527,18 @@
         // Fetch initial count from backend
         async function fetchMemberCount() {
             try {
-                const response = await fetch('/api/newsletter/count');
+                // Clear suspiciously high legacy values (remnants of old 5247 baseline)
+                const cached = parseInt(localStorage.getItem('memberCount'));
+                if (cached > 1000) {
+                    localStorage.removeItem('memberCount');
+                }
+
+                // Fetch with cache-busting timestamp
+                const response = await fetch('/api/newsletter/count?t=' + Date.now());
                 const data = await response.json();
                 if (data.success) {
                     stats.members = data.count;
+                    localStorage.setItem('memberCount', data.count);
                     updateStats();
                 }
             } catch (error) {
