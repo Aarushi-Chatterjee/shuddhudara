@@ -302,11 +302,16 @@
             <h2 class="section-title scroll-reveal">Ready to Breathe Better?</h2>
             <p class="scroll-reveal" style="margin-bottom: 2rem;">Join the waitlist and get 20% off your first BioBloom.
             </p>
-            <form class="scroll-reveal" style="max-width: 400px; margin: 0 auto; display: flex; gap: 1rem;">
-                <input type="email" placeholder="Enter your email"
+            <form id="waitlistForm" class="scroll-reveal"
+                style="max-width: 400px; margin: 0 auto; display: flex; gap: 1rem;">
+                <input type="email" id="waitlistEmail" placeholder="Enter your email" required
                     style="flex: 1; padding: 1rem; border: 1px solid #ddd; border-radius: 0.5rem;">
-                <button type="submit" class="btn btn-primary">Join Waitlist</button>
+                <button type="submit" id="waitlistBtn" class="btn btn-primary">Join Waitlist</button>
             </form>
+            <div id="waitlistSuccess"
+                style="display: none; margin-top: 1.5rem; color: #10b981; font-weight: 600; font-size: 1.1rem; animation: fadeInUp 0.5s ease forwards;">
+                🎉 You're on the list! Check your email for a 20% discount code.
+            </div>
         </div>
 
         <div class="container text-center scroll-reveal" style="margin-top: 4rem;">
@@ -358,6 +363,59 @@
 
     <!-- Scripts -->
     <script src="../assets/js/animations.js"></script>
+    <script>
+        // Waitlist Form Handling
+        document.getElementById('waitlistForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('waitlistEmail').value;
+            const btn = document.getElementById('waitlistBtn');
+            const success = document.getElementById('waitlistSuccess');
+            const form = this;
+
+            // Show loading state
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = 'Joining...';
+
+            try {
+                const response = await fetch('/api/newsletter/join', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        name: 'BioBloom Waitlist Member'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    form.style.display = 'none';
+                    success.style.display = 'block';
+
+                    // Optional: Reset form after delay if we wanted to show it again
+                } else {
+                    alert(data.message || 'Something went wrong. Please try again.');
+                }
+            } catch (error) {
+                console.error('Waitlist Error:', error);
+                alert('Connection error. Please check your internet and try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 
 </html>

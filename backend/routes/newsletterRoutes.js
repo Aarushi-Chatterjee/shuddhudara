@@ -29,14 +29,27 @@ router.post('/join', async (req, res) => {
 
         // Send Welcome Email
         try {
+            const isWaitlist = name === 'BioBloom Waitlist Member';
+            const subject = isWaitlist ? 'Your BioBloom Waitlist Confirmation + 20% OFF! 🌸' : 'Welcome to the Movement! 🌿';
+
+            const discountHtml = isWaitlist ? `
+                <div style="background-color: #fff7ed; padding: 25px; border: 2px dashed #f97316; border-radius: 10px; margin: 30px 0; text-align: center;">
+                    <p style="margin: 0; color: #9a3412; font-weight: bold; font-size: 13px; text-transform: uppercase;">Your Exclusive Discount Code</p>
+                    <h2 style="margin: 10px 0; color: #ea580c; font-size: 28px; font-family: monospace;">PUREAIR20</h2>
+                    <p style="margin: 0; color: #c2410c; font-size: 14px;">Enjoy 20% off your first BioBloom order.</p>
+                </div>
+            ` : '';
+
             await sendEmail({
                 to: email,
-                subject: 'Welcome to the Movement! 🌿',
+                subject: subject,
                 html: `
                     <div style="font-family: Arial, sans-serif; color: #111827; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; padding: 40px; border-radius: 12px;">
                         <h1 style="color: #10b981; margin-top: 0;">Welcome to Shuddhudara, ${name || 'Friend'}!</h1>
                         <p style="font-size: 16px; line-height: 1.6;">Thank you for joining the Clean Air Revolution. You've taken the first step towards a healthier, more sustainable future.</p>
                         
+                        ${discountHtml}
+
                         <div style="background-color: #f0fdf4; padding: 25px; border-radius: 10px; margin: 30px 0;">
                             <h3 style="margin-top: 0; color: #059669; font-size: 18px;">What happens next?</h3>
                             <ul style="padding-left: 20px; font-size: 15px; color: #374151;">
