@@ -168,6 +168,35 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 
+    // Forgot Password Functinality
+    const forgotLink = document.getElementById('forgotPasswordLink');
+    if (forgotLink) {
+        forgotLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            if (!email) {
+                showError('Please enter your email address first to reset password.');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showSuccess(data.message);
+                } else {
+                    showError(data.message);
+                }
+            } catch (err) {
+                showError('Server busy. Please try again later.');
+            }
+        });
+    }
+
     checkAuthStatus();
 
 });

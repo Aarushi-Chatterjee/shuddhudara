@@ -49,6 +49,7 @@ app.use(async (req, res, next) => {
         try {
             await User.init();
             await Post.init();
+            await Subscriber.init();
             isInitialized = true;
             console.log('✅ Lazy initialization complete');
         } catch (error) {

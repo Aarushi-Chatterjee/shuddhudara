@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Us | SHUDDHUDARA</title>
+    <title>Join Us | PurePulse</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -425,7 +425,7 @@
 
     <!-- Header -->
     <header class="header">
-        <a href="/" class="logo">SHUDDHUDARA</a>
+        <a href="/" class="logo" style="font-family: 'Syne', sans-serif;">PurePulse</a>
         <div style="margin-top: 1rem;">
             <a href="/" style="text-decoration: none; color: var(--gray-600); font-size: 0.9rem; font-weight: 500;">←
                 Back to Home</a>
@@ -593,7 +593,13 @@
                     body: JSON.stringify({ name, email })
                 });
 
-                const data = await response.json();
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    console.error('Parse error:', e);
+                    throw new Error('Our servers are currently busy or the table is setting up. Please try again in a few moments.');
+                }
 
                 if (data.success) {
                     // Hide loading

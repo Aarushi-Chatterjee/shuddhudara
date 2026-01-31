@@ -33,7 +33,7 @@ router.post('/join', async (req, res) => {
         // Send Welcome Email
         try {
             await resend.emails.send({
-                from: 'Shuddhudara <shuddhudara@gmail.com>', // Note: Works best with verified domain
+                from: 'PurePulse <shuddhudara@gmail.com>', // Note: Works best with verified domain
                 to: email, // Valid only if verified or for test account in Resend
                 subject: 'Welcome to the Movement! 🌿',
                 html: `
