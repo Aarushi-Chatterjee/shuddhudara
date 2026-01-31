@@ -134,20 +134,27 @@
       </div>
       <div class="scroll-reveal" style="margin-top: 4rem; text-align: center;">
         <h3 style="color: var(--color-primary); font-size: 1.875rem; margin-bottom: 2rem;">See the Impact</h3>
-        <div class="slider-container" id="sliderHome"
-          style="position: relative; max-width: 800px; margin: 0 auto; height: 400px; overflow: hidden; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
-          <!-- After Image (Background) -->
-          <img src="../assets/images/comparison/room_after.png" alt="Clean Air Space" class="slider-image-after"
-            style="width: 100%; height: 100%; object-fit: cover; display: block;">
-          <span
-            style="position: absolute; top: 20px; right: 20px; background: rgba(76, 175, 80, 0.9); padding: 5px 10px; border-radius: 5px; font-weight: bold; color: white; z-index: 2;">AFTER:
-            Revitalized & Pure</span>
+        <!-- Image Slider Container -->
+        <div class="slider-container"
+          style="position: relative; width: 100%; max-width: 800px; height: 500px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
 
-          <!-- Before Image (Overlay) -->
-          <div class="slider-image-before" id="beforeImageHome"
-            style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: url('../assets/images/comparison/room_before.png') no-repeat left center; background-size: cover; border-right: 3px solid white; overflow: hidden; filter: grayscale(40%) sepia(20%) brightness(80%) contrast(90%);">
-            <div
-              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(100, 100, 100, 0.2); backdrop-filter: blur(2px);">
+          <!-- After Image (Background) -->
+          <div class="image-after"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('../assets/images/room_after.png') no-repeat center center/cover;">
+            <span
+              style="position: absolute; top: 20px; right: 20px; background: rgba(16, 185, 129, 0.9); padding: 5px 10px; border-radius: 5px; font-weight: bold; color: white; z-index: 2;">AFTER:
+              Vitalized by PurePulse</span>
+
+            <!-- Overlaid Purifier Image -->
+            <img src="../assets/images/purifier_overlay.png" alt="Zygreen Purifier"
+              style="position: absolute; bottom: 20px; right: 20px; height: 350px; z-index: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));">
+          </div>
+
+          <!-- Before Image (Foreground with Clip) -->
+          <div class="image-before" id="beforeImageHome"
+            style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: url('../assets/images/room_before.png') no-repeat center center/cover; border-right: 2px solid white; z-index: 2;">
+            <div class="overlay"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.1);">
             </div>
             <span
               style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); padding: 5px 10px; border-radius: 5px; font-weight: bold; color: white; z-index: 2;">BEFORE:
