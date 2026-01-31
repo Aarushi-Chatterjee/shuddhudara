@@ -42,25 +42,44 @@ app.use(express.json());
 // Parse URL-encoded request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serverless Cold Start Initialization Middleware
+// Serverless Initialization Middleware with better error catching
 let isInitialized = false;
-app.use(async (req, res, next) => {
-    if (!isInitialized) {
-        try {
-            await User.init();
-            await Post.init();
-            await Subscriber.init();
-            isInitialized = true;
-            console.log('✅ Lazy initialization complete');
-        } catch (error) {
-            console.error('❌ Lazy initialization failed:', error);
-            return res.status(500).json({
-                success: false,
-                message: 'Database initialization failed. Please check server logs.'
-            });
-        }
+let initPromise = null;
+
+const initializeApp = async () => {
+    try {
+        await User.init();
+        await Post.init();
+        await Subscriber.init();
+        console.log('✅ Services initialized');
+    } catch (error) {
+        console.error('❌ Service initialization error:', error);
+        throw error;
     }
-    next();
+};
+
+app.use(async (req, res, next) => {
+    // Skip init for health checks or if already done
+    if (isInitialized) return next();
+
+    // Ensure only one initialization runs at a time
+    if (!initPromise) {
+        initPromise = initializeApp().then(() => {
+            isInitialized = true;
+            initPromise = null;
+        });
+    }
+
+    try {
+        await initPromise;
+        next();
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Database connection failed. Please try again.',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
 });
 
 

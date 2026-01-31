@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&family=Montserrat:wght@700&family=Syne:wght@700;800&display=swap"
         rel="stylesheet">
 
     <style>
@@ -33,9 +33,9 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #d1fae5 100%);
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
             min-height: 100vh;
-            color: var(--gray-900);
+            color: white;
             overflow-x: hidden;
         }
 
@@ -115,12 +115,16 @@
         }
 
         .hero h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--gray-900);
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #10b981, #00ff88);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
-            line-height: 1.2;
+            line-height: 1.1;
+            letter-spacing: -2px;
         }
 
         .hero p {
@@ -132,14 +136,16 @@
 
         /* Newsletter Form */
         .newsletter-form {
-            background: white;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
             padding: 2.5rem;
             border-radius: 1.5rem;
-            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             margin-bottom: 4rem;
             animation: fadeInUp 0.8s ease 0.2s both;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .newsletter-form::before {
@@ -160,7 +166,10 @@
             display: block;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--gray-900);
+            color: #94a3b8;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-input {
@@ -168,17 +177,18 @@
             padding: 1rem 1.25rem;
             font-size: 1rem;
             font-family: 'Inter', sans-serif;
-            border: 2px solid var(--gray-100);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 0.75rem;
             transition: all 0.3s ease;
-            background: var(--gray-50);
+            background: rgba(15, 23, 42, 0.5);
+            color: white;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--primary-green);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
         }
 
         .submit-btn {
@@ -269,12 +279,13 @@
 
         /* Stats Section */
         .stats-section {
-            background: white;
+            background: rgba(15, 23, 42, 0.4);
             padding: 3rem 2rem;
             border-radius: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             margin-bottom: 4rem;
             animation: fadeInUp 0.8s ease 0.4s both;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .stats-title {
@@ -283,7 +294,7 @@
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 2.5rem;
-            color: var(--gray-900);
+            color: white;
         }
 
         .stats-grid {
@@ -425,7 +436,7 @@
 
     <!-- Header -->
     <header class="header">
-        <a href="/" class="logo" style="font-family: 'Syne', sans-serif;">PurePulse</a>
+        <a href="/" class="logo">PurePulse</a>
         <div style="margin-top: 1rem;">
             <a href="/" style="text-decoration: none; color: var(--gray-600); font-size: 0.9rem; font-weight: 500;">←
                 Back to Home</a>

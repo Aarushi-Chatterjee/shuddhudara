@@ -79,8 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     data = await response.json();
                 } catch (parseError) {
                     console.error('JSON Parse Error:', parseError);
+                    console.error('Response Status:', response.status);
                     // If JSON fails, it's likely a 500 HTML error page from the server or proxy
-                    throw new Error('Our servers are currently busy or down. Please try again later.');
+                    throw new Error(`Our servers are currently busy (Status ${response.status}). Please try again later.`);
                 }
 
                 if (response.ok && data.success) {

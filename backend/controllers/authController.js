@@ -139,7 +139,7 @@ exports.login = async (req, res) => {
         console.error('Login Error:', error);
         res.status(500).json({
             success: false,
-            message: 'Server error during login. Please try again later.'
+            message: 'Internal server error during login. Please contact support.'
         });
     }
 };
