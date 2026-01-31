@@ -465,26 +465,11 @@
         <!-- Stats Section -->
         <section class="stats-section">
             <h2 class="stats-title">Our Growing Impact</h2>
-            <div class="stats-grid">
+            <div class="stats-grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
                 <div class="stat-card">
                     <div class="stat-icon">🌍</div>
                     <span class="stat-number" id="memberCount">5,247</span>
                     <div class="stat-label">Community Members</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🌱</div>
-                    <span class="stat-number" id="co2Count">12,580</span>
-                    <div class="stat-label">kg CO₂ Reduced</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🌳</div>
-                    <span class="stat-number" id="treeCount">2,516</span>
-                    <div class="stat-label">Trees Equivalent</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⏱️</div>
-                    <span class="stat-number" id="hourCount">98,450</span>
-                    <div class="stat-label">Clean Air Hours</div>
                 </div>
             </div>
         </section>
@@ -498,11 +483,7 @@
                     <h3 class="benefit-title">Weekly Insights</h3>
                     <p class="benefit-text">Expert tips on clean air, sustainability, and healthy living</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🎁</div>
-                    <h3 class="benefit-title">Exclusive Perks</h3>
-                    <p class="benefit-text">Early access to new products and member-only discounts</p>
-                </div>
+                <!-- Removed Exclusive Perks Card -->
                 <div class="benefit-card">
                     <div class="benefit-icon">🤝</div>
                     <h3 class="benefit-title">Community Access</h3>
@@ -534,13 +515,30 @@
             }
         }
 
-        // Initialize counters from localStorage or defaults
+        // Initialize counters
         let stats = {
-            members: parseInt(localStorage.getItem('memberCount')) || 5247,
-            co2: parseInt(localStorage.getItem('co2Count')) || 12580,
-            trees: parseInt(localStorage.getItem('treeCount')) || 2516,
-            hours: parseInt(localStorage.getItem('hourCount')) || 98450
+            members: 5247 // Default fallback
         };
+
+        // Fetch initial count from backend
+        async function fetchMemberCount() {
+            try {
+                const response = await fetch('/api/newsletter/count');
+                const data = await response.json();
+                if (data.success) {
+                    stats.members = data.count;
+                    updateStats();
+                }
+            } catch (error) {
+                console.error('Failed to fetch count:', error);
+                // Fallback to localStorage if offline
+                const cached = parseInt(localStorage.getItem('memberCount'));
+                if (cached) {
+                    stats.members = cached;
+                    updateStats();
+                }
+            }
+        }
 
         // Animate counter
         function animateCounter(element, start, end, duration) {
@@ -561,39 +559,10 @@
         // Update stats display
         function updateStats() {
             document.getElementById('memberCount').textContent = stats.members.toLocaleString();
-            document.getElementById('co2Count').textContent = stats.co2.toLocaleString();
-            document.getElementById('treeCount').textContent = stats.trees.toLocaleString();
-            document.getElementById('hourCount').textContent = stats.hours.toLocaleString();
-        }
-
-        // Increment counters when someone joins
-        function incrementCounters() {
-            const memberEl = document.getElementById('memberCount');
-            const co2El = document.getElementById('co2Count');
-            const treeEl = document.getElementById('treeCount');
-            const hourEl = document.getElementById('hourCount');
-
-            // Increment values
-            stats.members += 1;
-            stats.co2 += Math.floor(Math.random() * 5) + 3; // 3-8 kg
-            stats.trees += 1;
-            stats.hours += Math.floor(Math.random() * 50) + 150; // 150-200 hours
-
-            // Save to localStorage
-            localStorage.setItem('memberCount', stats.members);
-            localStorage.setItem('co2Count', stats.co2);
-            localStorage.setItem('treeCount', stats.trees);
-            localStorage.setItem('hourCount', stats.hours);
-
-            // Animate the changes
-            animateCounter(memberEl, stats.members - 1, stats.members, 800);
-            animateCounter(co2El, stats.co2 - 5, stats.co2, 800);
-            animateCounter(treeEl, stats.trees - 1, stats.trees, 800);
-            animateCounter(hourEl, stats.hours - 180, stats.hours, 800);
         }
 
         // Form submission
-        document.getElementById('joinForm').addEventListener('submit', function (e) {
+        document.getElementById('joinForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const submitBtn = document.getElementById('submitBtn');
@@ -601,38 +570,74 @@
             const successMessage = document.getElementById('successMessage');
             const form = this;
 
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
             // Show loading state
             submitBtn.classList.add('loading');
             btnText.textContent = '';
             submitBtn.disabled = true;
 
-            // Simulate API call
-            setTimeout(() => {
-                // Hide loading
+            try {
+                // Call Backend API
+                const response = await fetch('/api/newsletter/join', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Hide loading
+                    submitBtn.classList.remove('loading');
+                    btnText.textContent = 'Welcome Aboard! 🎉';
+
+                    // Show success message
+                    successMessage.classList.add('show');
+                    if (data.message === 'You are already subscribed!') {
+                        successMessage.querySelector('h3').textContent = '🎉 Already Joined!';
+                        successMessage.querySelector('p').textContent = 'You are already part of the community.';
+                    }
+
+                    // Update counter with new verifiable count from server
+                    const oldVal = stats.members;
+                    const newVal = data.memberCount;
+
+                    if (newVal > oldVal) {
+                        stats.members = newVal;
+                        localStorage.setItem('memberCount', newVal); // Update cache
+                        const memberEl = document.getElementById('memberCount');
+                        animateCounter(memberEl, oldVal, newVal, 800);
+                    }
+
+                    // Reset form
+                    form.reset();
+
+                    // Reset button after delay
+                    setTimeout(() => {
+                        btnText.textContent = 'Join the Movement';
+                        submitBtn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+
+            } catch (error) {
+                console.error('Join Error:', error);
                 submitBtn.classList.remove('loading');
-                btnText.textContent = 'Welcome Aboard! 🎉';
-
-                // Show success message
-                successMessage.classList.add('show');
-
-                // Increment counters with animation
-                incrementCounters();
-
-                // Reset form
-                form.reset();
-
-                // Reset button after delay
-                setTimeout(() => {
-                    btnText.textContent = 'Join the Movement';
-                    submitBtn.disabled = false;
-                }, 3000);
-
-            }, 1500);
+                btnText.textContent = 'Try Again';
+                submitBtn.disabled = false;
+                alert('Something went wrong: ' + error.message);
+            }
         });
 
         // Initialize
         createParticles();
-        updateStats();
+        fetchMemberCount(); // Fetch real data instead of static init
     </script>
 </body>
 

@@ -14,6 +14,8 @@ const db = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const pointsRoutes = require('./routes/pointsRoutes');
 const User = require('./models/userModel');
+const Subscriber = require('./models/subscriberModel');
+const newsletterRoutes = require('./routes/newsletterRoutes'); // Import here
 
 
 
@@ -93,6 +95,8 @@ app.get('/', (req, res) => {
 // Authentication routes
 // All these routes will be prefixed with /api/auth
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/newsletter', newsletterRoutes); // Mount here
 app.use('/api/points', pointsRoutes);
 
 // ============================================
@@ -142,6 +146,7 @@ const startServer = async () => {
 
         // Ensure Users table exists
         await User.init();
+        await Subscriber.init();
 
         // Start listening for requests ONLY if running directly
 
