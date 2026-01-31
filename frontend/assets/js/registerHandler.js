@@ -82,9 +82,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 try {
                     data = await response.json();
                 } catch (parseError) {
-                    // Response was likely HTML (error page) on 500/404
                     console.error('JSON Parse Error:', parseError);
-                    throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+                    throw new Error('Our servers are currently busy. Please try again later.');
                 }
 
                 if (response.ok && data.success) {
@@ -96,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Redirect
                     setTimeout(() => {
-                        window.location.href = '/dashboard/dashboard.html';
+                        window.location.href = '/solutions/community.html';
                     }, 1500);
 
                 } else {
@@ -105,11 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             } catch (error) {
                 console.error('Registration error:', error);
-                // Show specific error message if available
-                const msg = error.message.includes('Server Error')
-                    ? error.message
-                    : 'Connection error. Please ensure backend is running.';
-                showError(msg);
+                showError(error.message);
             }
             finally {
                 registerButton.disabled = false;

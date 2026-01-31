@@ -79,7 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     data = await response.json();
                 } catch (parseError) {
                     console.error('JSON Parse Error:', parseError);
-                    throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+                    // If JSON fails, it's likely a 500 HTML error page from the server or proxy
+                    throw new Error('Our servers are currently busy or down. Please try again later.');
                 }
 
                 if (response.ok && data.success) {
@@ -89,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     localStorage.setItem('user', JSON.stringify(data.user));
 
                     setTimeout(() => {
-                        window.location.href = '/dashboard/dashboard.html';
+                        window.location.href = '/solutions/community.html';
                     }, 1500);
 
                 } else {
@@ -98,9 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             } catch (error) {
                 console.error('Login error:', error);
-                const msg = error.message.includes('Server Error')
-                    ? error.message
-                    : 'Connection error. Please ensure backend is running.';
+                // Clean up the error message if it's the custom one, otherwise generic
+                const msg = error.message;
                 showError(msg);
             } finally {
 
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // If on login page and already logged in, redirect to dashboard
         if (token && currentPath.includes('login/loginPage.html')) {
-            window.location.href = '/dashboard/dashboard.html';
+            window.location.href = '/solutions/community.html';
         }
     };
 
