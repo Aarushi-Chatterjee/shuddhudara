@@ -1,4 +1,4 @@
-# 🚀 PurePulse Deployment & Configuration Guide
+# 🚀 SHUDDHUDARA Deployment & Configuration Guide
 
 Follow these steps to set up your APIs and fix the "Server Busy" errors on Vercel.
 

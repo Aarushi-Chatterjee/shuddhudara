@@ -79,9 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     data = await response.json();
                 } catch (parseError) {
                     console.error('JSON Parse Error:', parseError);
-                    console.error('Response Status:', response.status);
                     // If JSON fails, it's likely a 500 HTML error page from the server or proxy
-                    throw new Error(`Our servers are currently busy (Status ${response.status}). Please try again later.`);
+                    throw new Error('Our servers are currently busy or down. Please try again later.');
                 }
 
                 if (response.ok && data.success) {
@@ -168,35 +167,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-
-    // Forgot Password Functinality
-    const forgotLink = document.getElementById('forgotPasswordLink');
-    if (forgotLink) {
-        forgotLink.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const email = emailInput.value.trim();
-            if (!email) {
-                showError('Please enter your email address first to reset password.');
-                return;
-            }
-
-            try {
-                const res = await fetch(`${API_URL}/forgot-password`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    showSuccess(data.message);
-                } else {
-                    showError(data.message);
-                }
-            } catch (err) {
-                showError('Server busy. Please try again later.');
-            }
-        });
-    }
 
     checkAuthStatus();
 

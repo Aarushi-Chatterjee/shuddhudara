@@ -593,13 +593,7 @@
                     body: JSON.stringify({ name, email })
                 });
 
-                let data;
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    console.error('Parse error:', e);
-                    throw new Error('Our servers are currently busy or the table is setting up. Please try again in a few moments.');
-                }
+                const data = await response.json();
 
                 if (data.success) {
                     // Hide loading
