@@ -76,22 +76,13 @@ router.post('/join', async (req, res) => {
 // GET /api/newsletter/count
 router.get('/count', async (req, res) => {
     try {
+        // Return the actual subscriber count from the database.
         const count = await Subscriber.count();
-        // Return verification level (e.g., minimum 5247 to match the design mock until real users grow)
-        // For a real app, you might want to start at 0, but for "Join Us" excitement, we often show a baseline.
-        // Let's return the real count + a baseline offset if needed, or just real count.
-        // User asked for "based on the backend dependent on the members", so let's stick to REAL count.
-        // However, if the table is empty, 0 looks sad.
-        // Let's add a baseline in the frontend or DB seeding. For now, pure DB count.
 
-        // Actually, to match the previous design "5,247", I'll add a baseline offset in code for now
-        // so the site doesn't look empty immediately.
-        const BASELINE = 5247;
-        const total = count + BASELINE;
 
         res.json({
             success: true,
-            count: total
+            count: count
         });
     } catch (error) {
         console.error('Newsletter Count Error:', error);
