@@ -577,38 +577,44 @@
                             <p class="milestone-stats">36,000 / 50,000 pts collected</p>
                         </div>
 
-                        <div class="card input-card" id="openModalBtn">
-                            <div class="avatar-circle"
-                                style="width: 32px; height: 32px; border: none; font-size: 0.8rem;">A</div>
-                            <div class="pill-input">Share your clean air action, Aarushi...</div>
+                        <!-- Functional Post Input -->
+                        <div class="card input-card" style="flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; gap: 1rem; align-items: center; width: 100%;">
+                                <div class="avatar-circle" style="width: 40px; height: 40px; border: none;">A</div>
+                                <input type="text" class="post-input" placeholder="Share your clean air action..."
+                                    style="flex: 1; border: none; outline: none; background: #f1f5f9; padding: 0.8rem 1.2rem; border-radius: 2rem; font-family: inherit;">
+                            </div>
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button class="btn-post"
+                                    style="background: var(--brand-green); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 2rem; font-weight: 700; cursor: pointer; transition: background 0.2s;">
+                                    Share Pulse
+                                </button>
+                            </div>
                         </div>
 
-                        <div id="feedItems">
-                            <div class="card post-card">
-                                <div class="header">
-                                    <div class="author">
-                                        <div class="avatar-circle"
-                                            style="border-color: #e2e8f0; width: 40px; height: 40px;">P</div>
-                                        <div>
-                                            <h4 style="font-size: 0.95rem;">Pooja Gunturu <span
-                                                    style="font-weight: 500; color: #94a3b8; font-size: 0.8rem;">@pooja.g</span>
-                                            </h4>
-                                            <span class="meta">2 hours ago</span>
-                                        </div>
-                                    </div>
-                                    <span style="color: #94a3b8; cursor: pointer;">•••</span>
+                        <!-- Dynamic Feed Container -->
+                        <div id="posts-feed" class="feed-posts"
+                            style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <!-- Posts will load here via Script -->
+                            <p style="text-align: center; color: #94a3b8;">Loading community pulse...</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="margin-bottom: 1rem;">Recent Achievements</h4>
+                            <div style="display: flex; gap: 1rem;">
+                                <div
+                                    style="padding: 1rem; background: #f0fdf4; border-radius: 1rem; flex: 1; text-align: center;">
+                                    <span style="font-size: 1.5rem; display: block;">🏆</span>
+                                    <span style="font-weight: 700; font-size: 0.8rem;">Filter Master</span>
                                 </div>
-                                <div style="line-height: 1.6; margin-bottom: 1rem;">
-                                    <p>Just finished installing the BioBloom filter in my living room. Combined with my
-                                        new Peace Lily, the AQI indoors has dropped by 20% in just one hour! 🌿✨
-                                        #CleanAir #PurePulse</p>
+                                <div
+                                    style="padding: 1rem; background: #fffbeb; border-radius: 1rem; flex: 1; text-align: center;">
+                                    <span style="font-size: 1.5rem; display: block;">🚲</span>
+                                    <span style="font-weight: 700; font-size: 0.8rem;">Eco Rider</span>
                                 </div>
-                                <img src="https://images.unsplash.com/photo-1597050210227-211cc924032d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
-                                    alt="Post"
-                                    style="width: 100%; border-radius: 1rem; margin-bottom: 1rem; max-height: 300px; object-fit: cover;">
-                                <div class="post-actions">
-                                    <button class="breathe-btn"><span>🌬️</span> 24 Breaths</button>
-                                    <button class="breathe-btn"><span>💬</span> 8 Comments</button>
+                                <div
+                                    style="padding: 1rem; background: #fdf2f8; border-radius: 1rem; flex: 1; text-align: center;">
+                                    <span style="font-size: 1.5rem; display: block;">🌿</span>
+                                    <span style="font-weight: 700; font-size: 0.8rem;">Oxygen Soul</span>
                                 </div>
                             </div>
                         </div>
@@ -860,6 +866,97 @@
                 }
             });
         });
+    </script>
+    <!-- Community Logic -->
+    <script>
+        const API_URL = 'http://localhost:5000/api/community'; // Adjust port if needed
+
+        // DOM Elements
+        const feedContainer = document.querySelector('.feed-posts'); // You might need to add this class to the container of posts
+        const postInput = document.querySelector('.post-input');
+        const postBtn = document.querySelector('.btn-post');
+
+        // Fetch Posts on Load
+        async function fetchPosts() {
+            try {
+                const res = await fetch(`${API_URL}/posts`);
+                const posts = await res.json();
+                renderPosts(posts);
+            } catch (err) {
+                console.error('Error fetching posts:', err);
+            }
+        }
+
+        // Render Posts
+        function renderPosts(posts) {
+            const container = document.getElementById('posts-feed'); // Ensure ID exists in HTML
+            if (!container) return;
+
+            container.innerHTML = posts.map(post => `
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-user-info">
+                            <div class="user-avatar">${post.author_name.charAt(0)}</div>
+                            <div>
+                                <h4 class="user-name">${post.author_name}</h4>
+                                <span class="post-time">${new Date(post.created_at).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <span class="post-tag">${post.tags || 'General'}</span>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="likePost(${post.id})">
+                            ❤ <span id="likes-${post.id}">${post.likes}</span> Likes
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Create Post
+        if (postBtn) {
+            postBtn.addEventListener('click', async () => {
+                const content = postInput.value;
+                if (!content) return;
+
+                // Simple mock user for now, replace with real auth data if available
+                const author_name = "User";
+
+                try {
+                    const res = await fetch(`${API_URL}/posts`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ author_name, content, tags: 'Community' })
+                    });
+
+                    if (res.ok) {
+                        postInput.value = '';
+                        fetchPosts(); // Refresh
+                    }
+                } catch (err) {
+                    console.error('Error creating post:', err);
+                }
+            });
+        }
+
+        // Like Post
+        window.likePost = async (id) => {
+            try {
+                const res = await fetch(`${API_URL}/posts/${id}/like`, { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById(`likes-${id}`).innerText = data.likes;
+                }
+            } catch (err) {
+                console.error('Error liking post:', err);
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', fetchPosts);
     </script>
 </body>
 

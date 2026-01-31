@@ -16,6 +16,8 @@ const pointsRoutes = require('./routes/pointsRoutes');
 const User = require('./models/userModel');
 const Subscriber = require('./models/subscriberModel');
 const newsletterRoutes = require('./routes/newsletterRoutes'); // Import here
+const Post = require('./models/postModel');
+const communityRoutes = require('./routes/communityRoutes');
 
 
 
@@ -46,6 +48,7 @@ app.use(async (req, res, next) => {
     if (!isInitialized) {
         try {
             await User.init();
+            await Post.init();
             isInitialized = true;
             console.log('✅ Lazy initialization complete');
         } catch (error) {
@@ -92,11 +95,13 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(frontendPath, 'home', 'index.html'));
 });
 
-// Authentication routes
-// All these routes will be prefixed with /api/auth
+// Authentication// Routes
+// app.use('api/v1/auth', authRoutes) -- Example
+// app.use('/api/auth', authRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/newsletter', newsletterRoutes); // Mount here
+app.use('/api/points', pointsRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/community', communityRoutes); // Mount here
 app.use('/api/points', pointsRoutes);
 
 // ============================================
