@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Subscriber = require('../models/subscriberModel');
+const { Resend } = require('resend');
+
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // POST /api/newsletter/join
 router.post('/join', async (req, res) => {
@@ -25,6 +29,37 @@ router.post('/join', async (req, res) => {
 
         // Create new subscriber
         await Subscriber.create({ name, email });
+
+        // Send Welcome Email
+        try {
+            await resend.emails.send({
+                from: 'Shuddhudara Team <onboarding@resend.dev>', // Use verified domain in production
+                to: email, // Valid only if verified or for test account in Resend
+                subject: 'Welcome to the Movement! 🌿',
+                html: `
+                    <div style="font-family: Arial, sans-serif; color: #111827; max-width: 600px; margin: 0 auto;">
+                        <h1 style="color: #10b981;">Welcome to Shuddhudara, ${name || 'Friend'}!</h1>
+                        <p>Thank you for joining the Clean Air Revolution. You've taken the first step towards a healthier, more sustainable future.</p>
+                        
+                        <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <h3 style="margin-top: 0; color: #059669;">What happens next?</h3>
+                            <ul style="padding-left: 20px;">
+                                <li>📈 You'l receive weekly insights on air quality.</li>
+                                <li>🎁 Early access to new BioBloom updates.</li>
+                                <li>🌍 Real-time impact reports from our community.</li>
+                            </ul>
+                        </div>
+
+                        <p>We're thrilled to have you with us.</p>
+                        <p><strong>The Shuddhudara Team</strong></p>
+                    </div>
+                `
+            });
+            console.log(`📧 Welcome email sent to ${email}`);
+        } catch (emailError) {
+            // Don't fail the request if email fails (non-critical)
+            console.error('❌ Failed to send welcome email:', emailError.message);
+        }
 
         // Return new count
         const count = await Subscriber.count();
