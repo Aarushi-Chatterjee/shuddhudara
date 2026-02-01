@@ -18,6 +18,7 @@ const Subscriber = require('./models/subscriberModel');
 const newsletterRoutes = require('./routes/newsletterRoutes'); // Import here
 const Post = require('./models/postModel');
 const communityRoutes = require('./routes/communityRoutes');
+const purepulseRoutes = require('./routes/purepulseRoutes');
 
 
 
@@ -121,8 +122,8 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/points', pointsRoutes);
 app.use('/api/newsletter', newsletterRoutes);
-app.use('/api/community', communityRoutes); // Mount here
-app.use('/api/points', pointsRoutes);
+app.use('/api/community', communityRoutes);
+app.use('/api/purepulse', purepulseRoutes);
 
 // ============================================
 // ERROR HANDLING

@@ -12,6 +12,7 @@ class User {
         username VARCHAR(30) UNIQUE NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
+        platform TEXT DEFAULT 'shuddhudara',
         points INTEGER DEFAULT 0,
         impact_score INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -29,17 +30,17 @@ class User {
     /**
      * Create a new user
      */
-    static async create({ username, email, password }) {
+    static async create({ username, email, password, platform = 'shuddhudara' }) {
         // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const query = `
-      INSERT INTO users (username, email, password)
-      VALUES ($1, $2, $3)
-      RETURNING id, username, email, created_at
+      INSERT INTO users (username, email, password, platform)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id, username, email, platform, created_at
     `;
-        const values = [username, email, hashedPassword];
+        const values = [username, email, hashedPassword, platform];
 
         const { rows } = await db.query(query, values);
         return rows[0];

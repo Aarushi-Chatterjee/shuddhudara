@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --pp-black: #050505;
+    --pp-green: #00FF94;
+    --pp-green-glow: rgba(0, 255, 148, 0.4);
+    --pp-dark-green: #004D2D;
+    --pp-white: #FFFFFF;
+    --pp-gray: #1A1A1A;
+    --pp-light-gray: #333333;
+
+    --font-primary: 'Syne', sans-serif;
+    --font-secondary: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--pp-black);
+    color: var(--pp-white);
+    font-family: var(--font-secondary);
+    overflow-x: hidden;
+}
+
+.pp-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Cyber-Eco Glassmorphism */
+.pp-glass {
+    background: rgba(26, 26, 26, 0.7);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+}
+
+.pp-title {
+    font-family: var(--font-primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    color: var(--pp-green);
+    text-shadow: 0 0 15px var(--pp-green-glow);
+}
+
+.pp-button {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 3rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: var(--pp-green);
+    color: var(--pp-black);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.pp-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--pp-green-glow);
+}
+
+.pp-input {
+    background: var(--pp-gray);
+    border: 1px solid var(--pp-light-gray);
+    color: var(--pp-white);
+    padding: 1.2rem;
+    border-radius: 1rem;
+    font-family: var(--font-secondary);
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.pp-input:focus {
+    border-color: var(--pp-green);
+    outline: none;
+    box-shadow: 0 0 10px var(--pp-green-glow);
+}
+
+/* Animations */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulse-bg {
+    0% {
+        opacity: 0.1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 0.1;
+    }
+}
+
+.bg-glow {
+    position: fixed;
+    top: -10%;
+    right: -10%;
+    width: 50% !important;
+    height: 50%;
+    background: radial-gradient(circle, var(--pp-green-glow) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+    animation: float 8s infinite alternate;
+}

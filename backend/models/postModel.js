@@ -17,6 +17,7 @@ class Post {
         content TEXT NOT NULL,
         likes INTEGER DEFAULT 0,
         tags VARCHAR(100),
+        platform TEXT DEFAULT 'shuddhudara',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `;
@@ -31,13 +32,13 @@ class Post {
     /**
      * Create a new post
      */
-    static async create({ user_id, author_name, content, tags }) {
+    static async create({ user_id, author_name, content, tags, platform = 'shuddhudara' }) {
         const query = `
-      INSERT INTO posts (user_id, author_name, content, tags)
-      VALUES ($1, $2, $3, $4)
-      RETURNING id, author_name, content, likes, tags, created_at
+      INSERT INTO posts (user_id, author_name, content, tags, platform)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id, author_name, content, likes, tags, platform, created_at
     `;
-        const values = [user_id, author_name, content, tags || 'General'];
+        const values = [user_id, author_name, content, tags || 'General', platform];
 
         const { rows } = await db.query(query, values);
         return rows[0];
@@ -46,13 +47,14 @@ class Post {
     /**
      * Find all posts (Limit 50 typically)
      */
-    static async findAll(limit = 50) {
+    static async findAll(platform = 'shuddhudara', limit = 50) {
         const query = `
             SELECT * FROM posts 
+            WHERE platform = $1
             ORDER BY created_at DESC 
-            LIMIT $1
+            LIMIT $2
         `;
-        const { rows } = await db.query(query, [limit]);
+        const { rows } = await db.query(query, [platform, limit]);
         return rows;
     }
 
