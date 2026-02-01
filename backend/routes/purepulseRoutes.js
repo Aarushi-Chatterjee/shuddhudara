@@ -123,4 +123,62 @@ router.post('/breathe/:id', protect, async (req, res) => {
     }
 });
 
+/**
+ * @route   PUT /api/purepulse/post/:id
+ * @desc    Update a PurePulse post
+ * @access  Private
+ */
+router.put('/post/:id', protect, async (req, res) => {
+    try {
+        const { content, image_url } = req.body;
+        const post = await Post.update(req.params.id, req.user.id, { content, image_url });
+
+        if (!post) {
+            return res.status(404).json({
+                success: false,
+                message: 'Post not found or unauthorized'
+            });
+        }
+
+        res.json({
+            success: true,
+            post,
+            message: 'Pulse updated successfully!'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error updating pulse'
+        });
+    }
+});
+
+/**
+ * @route   DELETE /api/purepulse/post/:id
+ * @desc    Delete a PurePulse post
+ * @access  Private
+ */
+router.delete('/post/:id', protect, async (req, res) => {
+    try {
+        const post = await Post.delete(req.params.id, req.user.id);
+
+        if (!post) {
+            return res.status(404).json({
+                success: false,
+                message: 'Post not found or unauthorized'
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Pulse deleted from Nexus'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error deleting pulse'
+        });
+    }
+});
+
 module.exports = router;

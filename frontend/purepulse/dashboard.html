@@ -139,6 +139,57 @@
             color: var(--pp-green);
         }
 
+        .post-menu {
+            position: relative;
+        }
+
+        .menu-dots {
+            cursor: pointer;
+            padding: 0.5rem;
+            color: var(--pp-text-secondary);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: var(--pp-surface);
+            border: 1px solid var(--pp-border);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            display: none;
+            overflow: hidden;
+            min-width: 120px;
+        }
+
+        .menu-dropdown button {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--pp-text-primary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .menu-dropdown button:hover {
+            background: var(--pp-green-glow);
+            color: var(--pp-green);
+        }
+
+        .menu-dropdown button.delete-btn {
+            color: #ff4757;
+        }
+
+        .menu-dropdown button.delete-btn:hover {
+            background: rgba(255, 71, 87, 0.1);
+        }
+
         /* Right Sidebar */
         .right-panel {
             display: flex;
@@ -484,7 +535,18 @@
                                 <div style="flex: 1;">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
                                         <div style="font-weight: 800; font-family: 'Syne'; color: var(--pp-text-primary);">${post.author_name || 'Guardian'} ${post.is_pinned ? '<span style="color: var(--pp-green); font-size: 0.7rem; margin-left: 0.5rem;">[ ARCHITECT ]</span>' : ''}</div>
-                                        <div style="font-size: 0.7rem; color: var(--pp-text-secondary);">${post.is_pinned ? 'Nexus Origin' : new Date(post.created_at).toLocaleTimeString()}</div>
+                                        <div style="display: flex; align-items: center; gap: 1rem;">
+                                            <div style="font-size: 0.7rem; color: var(--pp-text-secondary);">${post.is_pinned ? 'Nexus Origin' : new Date(post.created_at).toLocaleTimeString()}</div>
+                                            ${!post.is_pinned && post.user_id === user.id ? `
+                                                <div class="post-menu">
+                                                    <div class="menu-dots" onclick="togglePostMenu(event, '${post.id}')">⋮</div>
+                                                    <div id="menu-${post.id}" class="menu-dropdown">
+                                                        <button onclick="editPost('${post.id}', \`${post.content}\`)">✏️ Edit Pulse</button>
+                                                        <button class="delete-btn" onclick="deletePost('${post.id}')">🗑️ Delete Pulse</button>
+                                                    </div>
+                                                </div>
+                                            ` : ''}
+                                        </div>
                                     </div>
                                     <div style="font-size: 0.75rem; color: var(--pp-text-secondary);">Guardian Rank ${post.is_pinned ? 'APEX' : '01'}</div>
                                 </div>
@@ -527,6 +589,57 @@
                     fetchProfile();
                 }
             } catch (err) { console.error('Breathe failed'); }
+        }
+
+        function togglePostMenu(e, id) {
+            e.stopPropagation();
+            const menu = document.getElementById(`menu-${id}`);
+            const isVisible = menu.style.display === 'block';
+
+            // Close all other menus
+            document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none');
+
+            menu.style.display = isVisible ? 'none' : 'block';
+        }
+
+        // Close menus when clicking outside
+        window.addEventListener('click', () => {
+            document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none');
+        });
+
+        async function editPost(id, currentContent) {
+            const newContent = prompt('Edit your pulse:', currentContent);
+            if (newContent === null || newContent === currentContent) return;
+
+            try {
+                const response = await fetch(`/api/purepulse/post/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ content: newContent })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    fetchFeed();
+                }
+            } catch (err) { console.error('Edit failed'); }
+        }
+
+        async function deletePost(id) {
+            if (!confirm('Are you sure you want to delete this pulse from the Nexus?')) return;
+
+            try {
+                const response = await fetch(`/api/purepulse/post/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    fetchFeed();
+                }
+            } catch (err) { console.error('Delete failed'); }
         }
 
         document.getElementById('sharePulseBtn').addEventListener('click', async () => {
