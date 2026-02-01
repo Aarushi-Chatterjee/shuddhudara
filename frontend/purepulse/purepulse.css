@@ -54,6 +54,17 @@ body {
     color: var(--pp-green);
     text-shadow: 0 0 15px var(--pp-green-glow);
     display: inline-block;
+    max-width: 100%;
+}
+
+.dashboard-logo {
+    font-size: 1.5rem !important;
+    letter-spacing: 2px !important;
+}
+
+.feed-title {
+    font-size: 1.25rem !important;
+    letter-spacing: 2px !important;
 }
 
 .pp-button {
