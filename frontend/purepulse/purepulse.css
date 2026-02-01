@@ -1,16 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --pp-black: #050505;
-    --pp-green: #00FF94;
-    --pp-green-glow: rgba(0, 255, 148, 0.4);
-    --pp-dark-green: #004D2D;
-    --pp-white: #FFFFFF;
-    --pp-gray: #1A1A1A;
-    --pp-light-gray: #333333;
+    /* Light Theme (Default) */
+    --pp-bg: #F8FAF9;
+    --pp-surface: #FFFFFF;
+    --pp-text-primary: #1A2E25;
+    --pp-text-secondary: #5C7067;
+    --pp-green: #00C875;
+    --pp-green-glow: rgba(0, 200, 117, 0.2);
+    --pp-border: rgba(0, 0, 0, 0.08);
+    --pp-glass: rgba(255, 255, 255, 0.8);
 
     --font-primary: 'Syne', sans-serif;
     --font-secondary: 'Plus Jakarta Sans', sans-serif;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    --pp-bg: #0A110D;
+    --pp-surface: #141E19;
+    --pp-text-primary: #F0F4F2;
+    --pp-text-secondary: #8A9A92;
+    --pp-green: #00FF94;
+    --pp-green-glow: rgba(0, 255, 148, 0.3);
+    --pp-border: rgba(255, 255, 255, 0.08);
+    --pp-glass: rgba(20, 30, 25, 0.7);
 }
 
 * {
@@ -20,15 +34,16 @@
 }
 
 body {
-    background-color: var(--pp-black);
-    color: var(--pp-white);
+    background-color: var(--pp-bg);
+    color: var(--pp-text-primary);
     font-family: var(--font-secondary);
     min-height: 100vh;
     overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
     background-image:
-        radial-gradient(circle at 50% -20%, rgba(0, 255, 148, 0.08), transparent 50%),
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        radial-gradient(circle at 50% -20%, var(--pp-green-glow), transparent 50%),
+        linear-gradient(var(--pp-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--pp-border) 1px, transparent 1px);
     background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
@@ -40,9 +55,9 @@ body {
 
 /* Cyber-Eco Glassmorphism */
 .pp-glass {
-    background: rgba(26, 26, 26, 0.7);
+    background: var(--pp-glass);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--pp-border);
     border-radius: 1.5rem;
 }
 
@@ -58,7 +73,7 @@ body {
 }
 
 .dashboard-logo {
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
     letter-spacing: 2px !important;
 }
 
@@ -89,14 +104,14 @@ body {
 }
 
 .pp-input {
-    background: rgba(26, 26, 26, 0.5);
-    border: 2px solid var(--pp-light-gray);
-    color: var(--pp-white);
+    background: var(--pp-surface);
+    border: 1px solid var(--pp-border);
+    color: var(--pp-text-primary);
     padding: 1.2rem;
     border-radius: 1.25rem;
     font-family: var(--font-secondary);
     width: 100%;
-    transition: all 0.3s ease;
+    transition: var(--transition);
     font-size: 1rem;
 }
 
@@ -112,13 +127,14 @@ p,
 span,
 div,
 li {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--pp-text-secondary);
 }
 
 .pp-title,
 .pp-button,
-.pp-input {
-    color: var(--pp-white);
+.pp-input,
+.nav-link {
+    color: var(--pp-text-primary);
 }
 
 @keyframes float {

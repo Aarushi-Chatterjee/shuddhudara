@@ -145,6 +145,10 @@
     </div>
 
     <script>
+        // Theme Persistence Layer
+        const currentTheme = localStorage.getItem('pp-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const username = document.getElementById('username').value;

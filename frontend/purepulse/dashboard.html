@@ -163,7 +163,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #888;
+            color: var(--pp-text-secondary);
         }
 
         /* Scrollbar */
@@ -176,7 +176,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--pp-light-gray);
+            background: var(--pp-border);
             border-radius: 10px;
         }
 
@@ -223,7 +223,10 @@
                     <li><a href="#" class="nav-link" data-section="guardians"><span>⚔️</span> Guardians</a></li>
                 </ul>
             </nav>
-            <div style="margin-top: auto;">
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem;">
+                <button class="nav-link" id="themeToggle"
+                    style="background: transparent; border: 1px solid var(--pp-border); cursor: pointer; border-radius: 0.8rem; margin-bottom: 0.5rem; text-align: left;"><span>🌓</span>
+                    Switch Spectrum</button>
                 <a href="#" class="nav-link" id="logoutBtn"><span>📡</span> Terminate Session</a>
             </div>
         </aside>
@@ -391,6 +394,16 @@
     </div>
 
     <script>
+        // Theme Persistence Layer
+        const currentTheme = localStorage.getItem('pp-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('pp-theme', theme);
+        });
+
         const authToken = localStorage.getItem('authToken');
         const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -460,16 +473,16 @@
                                 <div class="author-avatar" style="${post.is_pinned ? 'background: var(--pp-green); color: black;' : ''}">${post.author_name[0].toUpperCase()}</div>
                                 <div style="flex: 1;">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="font-weight: 800; font-family: 'Syne'; color: white;">${post.author_name} ${post.is_pinned ? '<span style="color: var(--pp-green); font-size: 0.7rem; margin-left: 0.5rem;">[ ARCHITECT ]</span>' : ''}</div>
-                                        <div style="font-size: 0.7rem; color: #444;">${post.is_pinned ? 'Nexus Origin' : new Date(post.created_at).toLocaleTimeString()}</div>
+                                        <div style="font-weight: 800; font-family: 'Syne'; color: var(--pp-text-primary);">${post.author_name} ${post.is_pinned ? '<span style="color: var(--pp-green); font-size: 0.7rem; margin-left: 0.5rem;">[ ARCHITECT ]</span>' : ''}</div>
+                                        <div style="font-size: 0.7rem; color: var(--pp-text-secondary);">${post.is_pinned ? 'Nexus Origin' : new Date(post.created_at).toLocaleTimeString()}</div>
                                     </div>
-                                    <div style="font-size: 0.75rem; color: #666;">Guardian Rank ${post.is_pinned ? 'APEX' : '01'}</div>
+                                    <div style="font-size: 0.75rem; color: var(--pp-text-secondary);">Guardian Rank ${post.is_pinned ? 'APEX' : '01'}</div>
                                 </div>
                             </div>
-                            <div class="post-content">${post.content}</div>
+                            <div class="post-content" style="color: var(--pp-text-primary);">${post.content}</div>
                             ${post.image_url ? `
-                                <div style="margin: 1.5rem 0; border-radius: 1rem; overflow: hidden; border: 1px solid #333;">
-                                    <img src="${post.image_url}" style="width: 100%; height: auto; display: block; filter: brightness(0.8) contrast(1.1);" onerror="this.style.display='none'">
+                                <div style="margin: 1.5rem 0; border-radius: 1rem; overflow: hidden; border: 1px solid var(--pp-border);">
+                                    <img src="${post.image_url}" style="width: 100%; height: auto; display: block; filter: brightness(0.9) contrast(1.1);" onerror="this.style.display='none'">
                                 </div>
                             ` : ''}
                             <div class="post-actions">
