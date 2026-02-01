@@ -679,6 +679,15 @@
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
+
+                // Handle token expiry before parsing JSON
+                if (response.status === 401) {
+                    alert('Your session has expired. Please login again.');
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                    return;
+                }
+
                 const data = await response.json();
                 console.log('[FRONTEND] Breathe response:', data);
 
@@ -695,7 +704,7 @@
                 }
             } catch (err) {
                 console.error('[FRONTEND] Breathe error:', err);
-                alert('Network error - check console for details');
+                alert('Network error - please check your connection');
             }
         }
 
@@ -760,6 +769,15 @@
                     },
                     body: JSON.stringify({ content })
                 });
+
+                // Handle token expiry before parsing JSON
+                if (response.status === 401) {
+                    alert('Your session has expired. Please login again.');
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                    return;
+                }
+
                 const data = await response.json();
                 console.log('[FRONTEND] Comment response:', data);
 
@@ -777,7 +795,7 @@
                 }
             } catch (err) {
                 console.error('[FRONTEND] Comment error:', err);
-                alert('Network error - check console for details');
+                alert('Network error - please check your connection');
             }
         }
 
