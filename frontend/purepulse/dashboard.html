@@ -331,7 +331,6 @@
                                 AC</div>
                             <h4 style="color: var(--pp-text-primary); margin-bottom: 0.25rem;">Aarushi C.</h4>
                             <p style="font-size: 0.75rem; color: var(--pp-green);">Apex Architect</p>
-                            <span style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">85,420 Impact</span>
                         </div>
                         <div
                             style="text-align: center; padding: 1.5rem; border: 1px solid var(--pp-border); border-radius: 1rem;">
@@ -340,9 +339,11 @@
                                 EN</div>
                             <h4 style="color: var(--pp-text-primary); margin-bottom: 0.25rem;">EcoNexus_A</h4>
                             <p style="font-size: 0.75rem; color: var(--pp-text-secondary);">Sentinel Rank</p>
-                            <span style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">12,900 Impact</span>
                         </div>
                     </div>
+                </div>
+                <div id="guardianProtocolPosts" style="margin-top: 2rem;">
+                    <!-- Architect Posts will reflect here -->
                 </div>
             </div>
 
@@ -475,14 +476,14 @@
                 const container = document.getElementById('feedContainer');
 
                 if (data.success) {
-                    container.innerHTML = data.posts.map(post => `
+                    const renderPost = (post) => `
                         <div class="post-card pp-glass" style="${post.is_pinned ? 'border-color: var(--pp-green);' : ''}">
                             ${post.is_pinned ? `<div style="font-size: 0.65rem; color: var(--pp-green); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;"><span>📌</span> Pinned Hub Protocol</div>` : ''}
                             <div class="post-author">
-                                <div class="author-avatar" style="${post.is_pinned ? 'background: var(--pp-green); color: black;' : ''}">${post.author_name[0].toUpperCase()}</div>
+                                <div class="author-avatar" style="${post.is_pinned ? 'background: var(--pp-green); color: black;' : ''}">${(post.author_name || 'G')[0].toUpperCase()}</div>
                                 <div style="flex: 1;">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="font-weight: 800; font-family: 'Syne'; color: var(--pp-text-primary);">${post.author_name} ${post.is_pinned ? '<span style="color: var(--pp-green); font-size: 0.7rem; margin-left: 0.5rem;">[ ARCHITECT ]</span>' : ''}</div>
+                                        <div style="font-weight: 800; font-family: 'Syne'; color: var(--pp-text-primary);">${post.author_name || 'Guardian'} ${post.is_pinned ? '<span style="color: var(--pp-green); font-size: 0.7rem; margin-left: 0.5rem;">[ ARCHITECT ]</span>' : ''}</div>
                                         <div style="font-size: 0.7rem; color: var(--pp-text-secondary);">${post.is_pinned ? 'Nexus Origin' : new Date(post.created_at).toLocaleTimeString()}</div>
                                     </div>
                                     <div style="font-size: 0.75rem; color: var(--pp-text-secondary);">Guardian Rank ${post.is_pinned ? 'APEX' : '01'}</div>
@@ -499,7 +500,17 @@
                                 <button class="action-btn"><span>💬</span> Feedback</button>
                             </div>
                         </div>
-                    `).join('');
+                    `;
+
+                    container.innerHTML = data.posts.map(renderPost).join('');
+
+                    const guardianContainer = document.getElementById('guardianProtocolPosts');
+                    if (guardianContainer) {
+                        guardianContainer.innerHTML = data.posts
+                            .filter(p => p.is_pinned)
+                            .map(renderPost)
+                            .join('');
+                    }
                 }
             } catch (err) { console.error('Feed sync failed'); }
         }
