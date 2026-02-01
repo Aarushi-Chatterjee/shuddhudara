@@ -66,6 +66,7 @@ exports.register = async (req, res) => {
                 username: user.username,
                 email: user.email,
                 platform: user.platform,
+                points: user.points || 0,
                 createdAt: user.created_at
             }
         });
@@ -134,7 +135,8 @@ exports.login = async (req, res) => {
                 username: user.username,
                 email: user.email,
                 platform: user.platform,
-                lastLogin: new Date() // Just for response
+                points: user.points || 0,
+                lastLogin: new Date()
             }
         });
 
@@ -171,6 +173,7 @@ exports.getProfile = async (req, res) => {
                 username: user.username,
                 email: user.email,
                 platform: user.platform,
+                points: user.impact_points || 0,
                 createdAt: user.created_at,
                 lastLogin: user.last_login
             }

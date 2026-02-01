@@ -110,10 +110,11 @@
         }
 
         .post-content {
-            font-size: 1.05rem;
+            font-size: 1rem;
             line-height: 1.6;
-            color: #ccc;
             margin-bottom: 1.5rem;
+            color: var(--pp-text-primary);
+            white-space: pre-wrap;
         }
 
         .post-actions {
@@ -188,6 +189,91 @@
 
         .menu-dropdown button.delete-btn:hover {
             background: rgba(255, 71, 87, 0.1);
+        }
+
+        /* Comment Section Styles */
+        .comment-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--pp-border);
+            display: none;
+        }
+
+        .comment-list {
+            margin-bottom: 1rem;
+        }
+
+        .comment-item {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--pp-green-glow);
+            color: var(--pp-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .comment-bubble {
+            background: var(--pp-surface);
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            flex: 1;
+            font-size: 0.85rem;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            color: var(--pp-text-primary);
+            margin-bottom: 0.2rem;
+            font-size: 0.75rem;
+        }
+
+        .comment-content {
+            color: var(--pp-text-secondary);
+            line-height: 1.4;
+        }
+
+        .comment-input-area {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .comment-input {
+            flex: 1;
+            background: var(--pp-surface);
+            border: 1px solid var(--pp-border);
+            border-radius: 2rem;
+            padding: 0.6rem 1.2rem;
+            color: var(--pp-text-primary);
+            font-size: 0.85rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .comment-input:focus {
+            border-color: var(--pp-green);
+        }
+
+        .comment-submit {
+            background: var(--pp-green);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
         }
 
         /* Right Sidebar */
@@ -559,7 +645,16 @@
                             ` : ''}
                             <div class="post-actions">
                                 <button class="action-btn" onclick="breathePost('${post.id}')"><span>🌬️</span> Breathe Life (${post.likes || 0})</button>
-                                <button class="action-btn" onclick="sendFeedback('${post.id}')"><span>💬</span> Feedback</button>
+                                <button class="action-btn" onclick="toggleComments('${post.id}')"><span>💬</span> Feedback</button>
+                            </div>
+                            <div id="comments-${post.id}" class="comment-section">
+                                <div class="comment-list" id="list-${post.id}">
+                                    <p style="font-size: 0.75rem; color: var(--pp-text-secondary); opacity: 0.6;">Establishing secure link to thread...</p>
+                                </div>
+                                <div class="comment-input-area">
+                                    <input type="text" class="comment-input" id="input-${post.id}" placeholder="Provide field evidence...">
+                                    <button class="comment-submit" onclick="submitComment('${post.id}')">Transmit</button>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -602,28 +697,63 @@
             menu.style.display = isVisible ? 'none' : 'block';
         }
 
-        async function sendFeedback(id) {
-            const feedback = prompt('Nexus Feedback Protocol: What field evidence do you have for this pulse?');
-            if (!feedback) return;
+        async function toggleComments(id) {
+            const section = document.getElementById(`comments-${id}`);
+            const isVisible = section.style.display === 'block';
+            section.style.display = isVisible ? 'none' : 'block';
 
-            // For now, feedback awards impact as "Verification Evidence"
+            if (!isVisible) {
+                fetchComments(id);
+            }
+        }
+
+        async function fetchComments(postId) {
             try {
-                const response = await fetch(`/api/purepulse/breathe/${id}`, {
+                const response = await fetch(`/api/purepulse/post/${postId}/comments`);
+                const data = await response.json();
+                const list = document.getElementById(`list-${postId}`);
+
+                if (data.success) {
+                    if (data.comments.length === 0) {
+                        list.innerHTML = '<p style="font-size: 0.75rem; color: var(--pp-text-secondary); opacity: 0.6;">No feedback logged in this sector yet.</p>';
+                        return;
+                    }
+
+                    list.innerHTML = data.comments.map(c => `
+                        <div class="comment-item">
+                            <div class="comment-avatar">${c.author_name[0].toUpperCase()}</div>
+                            <div class="comment-bubble">
+                                <div class="comment-author">${c.author_name}</div>
+                                <div class="comment-content">${c.content}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) { console.error('Comments fetch failed'); }
+        }
+
+        async function submitComment(postId) {
+            const input = document.getElementById(`input-${postId}`);
+            const content = input.value;
+            if (!content) return;
+
+            try {
+                const response = await fetch(`/api/purepulse/post/${postId}/comment`, {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${authToken}` }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ content })
                 });
                 const data = await response.json();
                 if (data.success) {
-                    alert("Verification Evidence Logged. +10 IMPACT awarded for Guardian due diligence.");
-                    fetchProfile();
+                    input.value = '';
+                    fetchComments(postId);
+                    fetchProfile(); // Update points
                 }
-            } catch (err) { console.error('Feedback failed'); }
+            } catch (err) { console.error('Comment submission failed'); }
         }
-
-        // Close menus when clicking outside
-        window.addEventListener('click', () => {
-            document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none');
-        });
 
         async function editPost(id, currentContent) {
             const newContent = prompt('Edit your pulse:', currentContent);

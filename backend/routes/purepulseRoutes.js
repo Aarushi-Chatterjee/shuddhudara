@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
+const Comment = require('../models/commentModel');
 const { protect } = require('../middleware/authMiddleware');
 
 /**
@@ -163,6 +164,64 @@ router.delete('/post/:id', protect, async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error deleting pulse'
+        });
+    }
+});
+
+/**
+ * @route   GET /api/purepulse/post/:id/comments
+ * @desc    Get comments for a post
+ * @access  Public
+ */
+router.get('/post/:id/comments', async (req, res) => {
+    try {
+        const comments = await Comment.findByPostId(req.params.id);
+        res.json({
+            success: true,
+            comments
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching comments'
+        });
+    }
+});
+
+/**
+ * @route   POST /api/purepulse/post/:id/comment
+ * @desc    Add a comment to a post
+ * @access  Private
+ */
+router.post('/post/:id/comment', protect, async (req, res) => {
+    try {
+        const { content } = req.body;
+        if (!content) {
+            return res.status(400).json({
+                success: false,
+                message: 'Comment content is required'
+            });
+        }
+
+        const comment = await Comment.create({
+            post_id: req.params.id,
+            user_id: req.user.id,
+            author_name: req.user.username,
+            content
+        });
+
+        // Award points for social feedback (+10 Impact)
+        await User.updatePoints(req.user.id, 10);
+
+        res.status(201).json({
+            success: true,
+            comment,
+            message: 'Feedback logged in the Nexus! +10 Impact Points awarded.'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error posting comment'
         });
     }
 });

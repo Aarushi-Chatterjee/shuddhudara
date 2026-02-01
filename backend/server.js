@@ -17,6 +17,7 @@ const User = require('./models/userModel');
 const Subscriber = require('./models/subscriberModel');
 const newsletterRoutes = require('./routes/newsletterRoutes'); // Import here
 const Post = require('./models/postModel');
+const Comment = require('./models/commentModel');
 const communityRoutes = require('./routes/communityRoutes');
 const purepulseRoutes = require('./routes/purepulseRoutes');
 
@@ -51,6 +52,7 @@ const initializeApp = async () => {
     try {
         await User.init();
         await Post.init();
+        await Comment.init();
         await Subscriber.init();
         console.log('✅ Services initialized');
     } catch (error) {
