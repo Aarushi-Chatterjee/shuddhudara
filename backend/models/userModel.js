@@ -22,6 +22,15 @@ class User {
         try {
             await db.query(createTableQuery);
             console.log('✅ Users table initialized');
+
+            // Migration: Add platform column if not exists
+            try {
+                await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS platform TEXT DEFAULT 'shuddhudara';`);
+                console.log('✅ Checked/Added platform column');
+            } catch (e) {
+                console.log('ℹ️ Platform column check skipped/error:', e.message);
+            }
+
         } catch (err) {
             console.error('❌ Error initializing Users table:', err);
         }
