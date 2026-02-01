@@ -68,8 +68,14 @@ class User {
      * Find user by ID with points
      */
     static async findById(id) {
-        const query = 'SELECT id, username, email, platform, points, impact_score, created_at, last_login FROM users WHERE id = $1';
+        // Robust query: Select * handles missing columns gracefully (instead of crashing)
+        const query = 'SELECT * FROM users WHERE id = $1';
         const { rows } = await db.query(query, [id]);
+
+        if (rows[0]) {
+            delete rows[0].password; // Ensure password is not returned
+        }
+
         return rows[0];
     }
 
