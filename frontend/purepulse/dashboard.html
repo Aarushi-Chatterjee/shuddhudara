@@ -602,8 +602,22 @@
             menu.style.display = isVisible ? 'none' : 'block';
         }
 
-        function sendFeedback(id) {
-            alert("Feedback Protocol Initialized: This pulse is now under review for Nexus verification. Your feedback highlights stay with the Architect.");
+        async function sendFeedback(id) {
+            const feedback = prompt('Nexus Feedback Protocol: What field evidence do you have for this pulse?');
+            if (!feedback) return;
+
+            // For now, feedback awards impact as "Verification Evidence"
+            try {
+                const response = await fetch(`/api/purepulse/breathe/${id}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert("Verification Evidence Logged. +10 IMPACT awarded for Guardian due diligence.");
+                    fetchProfile();
+                }
+            } catch (err) { console.error('Feedback failed'); }
         }
 
         // Close menus when clicking outside

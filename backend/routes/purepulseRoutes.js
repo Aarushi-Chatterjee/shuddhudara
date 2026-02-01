@@ -11,21 +11,7 @@ const { protect } = require('../middleware/authMiddleware');
  */
 router.get('/feed', async (req, res) => {
     try {
-        let dbPosts = await Post.findAll('purepulse', 50);
-
-        // Always prepend the Pinned Architect Welcome Post
-        const welcomePost = {
-            id: 'welcome_arch',
-            author_name: 'Aarushi Chatterjee',
-            content: `Establishing the Root System. 🌱\n\nWelcome to PurePulse. Today, we transition from passive observation to active guardianship. Our platform is now synchronized to track the breath of our city. Small acts—planting, protecting, and purifying—are the data points that will save us.\n\nWhy are we here? Because for too long, environmental change felt like a giant problem for 'someone else' to fix. PurePulse changes that. We believe that every time you choose a sustainable path, you aren't just one person—you are a node in a massive, living network of recovery.\n\nHow to Pulse:\n\n1. Planting: Share a photo of your indoor garden or a community sapling. These are our 'Oxygen Anchors.'\n2. Protecting: Log an action where you saved a resource or reduced waste. This is 'Data Shielding.'\n3. Purifying: Verify local air quality or use the 'Breathe Life' button on a fellow Guardian's post. This 'Positive Feedback Loop' strengthens our collective impact.\n\nLet’s make our impact visible. What’s your first pulse?\n\nImpact: +50 IMP (Breathe Life Protocol)`,
-            likes: 10,
-            image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80',
-            created_at: new Date('2026-02-01T09:00:00Z'),
-            is_pinned: true
-        };
-
-        // Combine pinned post with database posts
-        const posts = [welcomePost, ...dbPosts];
+        const posts = await Post.findAll('purepulse', 50);
 
         res.json({
             success: true,
@@ -89,12 +75,12 @@ router.post('/breathe/:id', protect, async (req, res) => {
     try {
         const postId = req.params.id;
 
-        // Handle mock posts gracefully
-        if (postId.toString().startsWith('m') || postId.toString() === 'welcome_arch') {
+        // Handle mock posts gracefully (purely for non-DB prototypes)
+        if (postId.toString().startsWith('m')) {
             await User.updatePoints(req.user.id, 10);
             return res.json({
                 success: true,
-                message: 'Impact established via mock node! +10 Impact Points awarded.'
+                message: 'Impact established via phantom node! +10 Impact Points awarded.'
             });
         }
 
