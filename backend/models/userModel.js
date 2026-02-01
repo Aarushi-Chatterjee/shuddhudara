@@ -59,7 +59,7 @@ class User {
      * Find user by ID with points
      */
     static async findById(id) {
-        const query = 'SELECT id, username, email, points, impact_score, created_at, last_login FROM users WHERE id = $1';
+        const query = 'SELECT id, username, email, platform, points, impact_score, created_at, last_login FROM users WHERE id = $1';
         const { rows } = await db.query(query, [id]);
         return rows[0];
     }

@@ -133,7 +133,10 @@
                     <a href="#" style="color: #666; text-decoration: none;">Reset Node</a>
                 </div>
 
-                <button type="submit" class="pp-button" style="width: 100%;">Initialize Session</button>
+                <button type="submit" id="initBtn" class="pp-button" style="width: 100%;">
+                    <span id="btnText">Initialize Session</span>
+                    <span id="btnLoader" style="display: none;">Syncing...</span>
+                </button>
             </form>
 
             <div class="signup-redirect">
@@ -147,7 +150,15 @@
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const btn = document.getElementById('initBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoader = document.getElementById('btnLoader');
             const errorDiv = document.getElementById('errorMessage');
+
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline';
+            errorDiv.style.display = 'none';
 
             try {
                 const response = await fetch('/api/auth/login', {
@@ -169,6 +180,10 @@
             } catch (error) {
                 errorDiv.innerText = 'Connection to nexus failed.';
                 errorDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoader.style.display = 'none';
             }
         });
     </script>

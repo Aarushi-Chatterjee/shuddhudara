@@ -24,7 +24,7 @@ const generateToken = (userId) => {
 exports.register = async (req, res) => {
     try {
         // Extract user data from request body
-        const { username, email, password } = req.body;
+        const { username, email, password, platform } = req.body;
 
         // Validate that all fields are provided
         if (!username || !email || !password) {
@@ -49,7 +49,8 @@ exports.register = async (req, res) => {
         const user = await User.create({
             username,
             email,
-            password
+            password,
+            platform: platform || 'shuddhudara'
         });
 
         // Generate authentication token
@@ -64,6 +65,7 @@ exports.register = async (req, res) => {
                 id: user.id,
                 username: user.username,
                 email: user.email,
+                platform: user.platform,
                 createdAt: user.created_at
             }
         });
@@ -131,6 +133,7 @@ exports.login = async (req, res) => {
                 id: user.id,
                 username: user.username,
                 email: user.email,
+                platform: user.platform,
                 lastLogin: new Date() // Just for response
             }
         });
@@ -167,6 +170,7 @@ exports.getProfile = async (req, res) => {
                 id: user.id,
                 username: user.username,
                 email: user.email,
+                platform: user.platform,
                 createdAt: user.created_at,
                 lastLogin: user.last_login
             }
