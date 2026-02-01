@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Light Theme (Default) */
-    --pp-bg: #F8FAF9;
+    /* Light Theme (Aero-Tech) */
+    --pp-bg: #F0F4F2;
     --pp-surface: #FFFFFF;
-    --pp-text-primary: #1A2E25;
-    --pp-text-secondary: #5C7067;
-    --pp-green: #00C875;
-    --pp-green-glow: rgba(0, 200, 117, 0.2);
-    --pp-border: rgba(0, 0, 0, 0.08);
-    --pp-glass: rgba(255, 255, 255, 0.8);
+    --pp-text-primary: #0A1A14;
+    --pp-text-secondary: #50665D;
+    --pp-green: #00A361;
+    --pp-green-glow: rgba(0, 163, 97, 0.15);
+    --pp-border: rgba(10, 26, 20, 0.06);
+    --pp-glass: rgba(255, 255, 255, 0.85);
 
     --font-primary: 'Syne', sans-serif;
     --font-secondary: 'Plus Jakarta Sans', sans-serif;
@@ -91,7 +91,7 @@ body {
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     background: var(--pp-green);
-    color: var(--pp-black);
+    color: var(--pp-bg);
     text-transform: uppercase;
     font-size: 1rem;
     letter-spacing: 2px;

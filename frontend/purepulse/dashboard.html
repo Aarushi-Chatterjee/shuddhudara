@@ -13,7 +13,7 @@
             gap: 2rem;
             height: 100vh;
             padding: 1.5rem;
-            background: #000;
+            background: var(--pp-bg);
         }
 
         /* Sidebar Styles */
@@ -34,10 +34,10 @@
         .nav-link {
             padding: 1rem 1.5rem;
             border-radius: 1rem;
-            color: #888;
+            color: var(--pp-text-secondary);
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -45,7 +45,7 @@
 
         .nav-link:hover,
         .nav-link.active {
-            background: rgba(0, 255, 148, 0.1);
+            background: var(--pp-green-glow);
             color: var(--pp-green);
         }
 
@@ -62,18 +62,18 @@
             align-items: center;
             position: sticky;
             top: 0;
-            background: #000;
+            background: var(--pp-bg);
             padding: 1rem 0;
             z-index: 5;
         }
 
         .search-node {
-            background: var(--pp-gray);
-            border: 1px solid var(--pp-light-gray);
+            background: var(--pp-surface);
+            border: 1px solid var(--pp-border);
             padding: 0.8rem 1.5rem;
             border-radius: 2rem;
             width: 300px;
-            color: white;
+            color: var(--pp-text-primary);
             outline: none;
         }
 
@@ -126,7 +126,7 @@
         .action-btn {
             background: none;
             border: none;
-            color: #666;
+            color: var(--pp-text-secondary);
             cursor: pointer;
             font-weight: 700;
             display: flex;
@@ -195,8 +195,8 @@
         .pulse-input {
             background: transparent;
             border: none;
-            border-bottom: 1px solid var(--pp-light-gray);
-            color: white;
+            border-bottom: 1px solid var(--pp-border);
+            color: var(--pp-text-primary);
             padding: 1rem 0;
             font-size: 1.2rem;
             width: 100%;
@@ -234,7 +234,7 @@
         <!-- Main Feed Content -->
         <main class="main-content">
             <header class="feed-header">
-                <h2 class="pp-title feed-title" style="color: white;">Global Pulse Feed</h2>
+                <h2 class="pp-title feed-title" style="color: var(--pp-text-primary);">Global Pulse Feed</h2>
                 <input type="text" class="search-node" placeholder="Scan for air actions...">
             </header>
 
@@ -247,7 +247,7 @@
                         <input type="text" id="photoUrl" class="pp-input" placeholder="Paste Photo URL (Nexus Link)"
                             style="font-size: 0.75rem; padding: 0.5rem; max-width: 200px; display: none;">
                         <button id="addPhotoBtn"
-                            style="background: transparent; border: 1px solid #444; color: #888; border-radius: 0.5rem; cursor: pointer; padding: 0.3rem 0.6rem; font-size: 0.7rem;">📷
+                            style="background: transparent; border: 1px solid var(--pp-border); color: var(--pp-text-secondary); border-radius: 0.5rem; cursor: pointer; padding: 0.3rem 0.6rem; font-size: 0.7rem;">📷
                             Add Impact Visual</button>
                     </div>
                     <button class="pp-button" id="sharePulseBtn"
@@ -261,26 +261,32 @@
                     <h2 class="pp-title" style="font-size: 1.2rem; margin-bottom: 1.5rem;">Guardian Milestones</h2>
                     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                         <div style="border-left: 3px solid var(--pp-green); padding-left: 1.5rem;">
-                            <h4 style="color: white; margin-bottom: 0.5rem;">Nexus Outreach</h4>
-                            <p style="font-size: 0.85rem; color: #888;">Share 50 pulses to establish the initial
+                            <h4 style="color: var(--pp-text-primary); margin-bottom: 0.5rem;">Nexus Outreach</h4>
+                            <p style="font-size: 0.85rem; color: var(--pp-text-secondary);">Share 50 pulses to establish
+                                the initial
                                 community link.</p>
                             <div
-                                style="width: 100%; height: 4px; background: #222; margin-top: 1rem; border-radius: 2px;">
+                                style="width: 100%; height: 4px; background: var(--pp-border); margin-top: 1rem; border-radius: 2px;">
                                 <div style="width: 84%; height: 100%; background: var(--pp-green); border-radius: 2px;">
                                 </div>
                             </div>
                             <span style="font-size: 0.7rem; color: var(--pp-green); display: block; margin-top: 5px;">42
                                 / 50 Pulses Shared</span>
                         </div>
-                        <div style="border-left: 3px solid #666; padding-left: 1.5rem;">
-                            <h4 style="color: white; margin-bottom: 0.5rem;">Pure Air Protocol</h4>
-                            <p style="font-size: 0.85rem; color: #888;">Verify 20 local air actions within your sector.
+                        <div style="border-left: 3px solid var(--pp-text-secondary); padding-left: 1.5rem;">
+                            <h4 style="color: var(--pp-text-primary); margin-bottom: 0.5rem;">Pure Air Protocol</h4>
+                            <p style="font-size: 0.85rem; color: var(--pp-text-secondary);">Verify 20 local air actions
+                                within your sector.
                             </p>
                             <div
-                                style="width: 100%; height: 4px; background: #222; margin-top: 1rem; border-radius: 2px;">
-                                <div style="width: 15%; height: 100%; background: #666; border-radius: 2px;"></div>
+                                style="width: 100%; height: 4px; background: var(--pp-border); margin-top: 1rem; border-radius: 2px;">
+                                <div
+                                    style="width: 15%; height: 100%; background: var(--pp-text-secondary); border-radius: 2px;">
+                                </div>
                             </div>
-                            <span style="font-size: 0.7rem; color: #666; display: block; margin-top: 5px;">3 / 20
+                            <span
+                                style="font-size: 0.7rem; color: var(--pp-text-secondary); display: block; margin-top: 5px;">3
+                                / 20
                                 Actions Verified</span>
                         </div>
                     </div>
@@ -293,18 +299,18 @@
                     <h2 class="pp-title" style="font-size: 1.2rem; margin-bottom: 1.5rem;">Nexus Ranking Protocol</h2>
                     <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.85rem; color: #888;">
                         <div
-                            style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 0.5rem;">
-                            <span style="color: white;">Level 01: Guardian Initiate</span>
+                            style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--pp-border); padding-bottom: 0.5rem;">
+                            <span style="color: var(--pp-text-primary);">Level 01: Guardian Initiate</span>
                             <span>0 - 1,000 Impact</span>
                         </div>
                         <div
-                            style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 0.5rem;">
-                            <span style="color: white;">Level 05: Earth Protector</span>
+                            style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--pp-border); padding-bottom: 0.5rem;">
+                            <span style="color: var(--pp-text-primary);">Level 05: Earth Protector</span>
                             <span>5,001 - 10,000 Impact</span>
                         </div>
                         <div
-                            style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 0.5rem;">
-                            <span style="color: white;">Level 10: Nexus Sentinel</span>
+                            style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--pp-border); padding-bottom: 0.5rem;">
+                            <span style="color: var(--pp-text-primary);">Level 10: Nexus Sentinel</span>
                             <span>10,001+ Impact</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; color: var(--pp-green);">
@@ -318,20 +324,22 @@
                     <h2 class="pp-title" style="font-size: 1.2rem; margin-bottom: 1.5rem;">Apex Guardians</h2>
                     <div
                         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem;">
-                        <div style="text-align: center; padding: 1.5rem; border: 1px solid #333; border-radius: 1rem;">
+                        <div
+                            style="text-align: center; padding: 1.5rem; border: 1px solid var(--pp-border); border-radius: 1rem;">
                             <div
-                                style="width: 60px; height: 60px; background: var(--pp-green); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: black; font-weight: bold;">
+                                style="width: 60px; height: 60px; background: var(--pp-green); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--pp-bg); font-weight: bold;">
                                 AC</div>
-                            <h4 style="color: white; margin-bottom: 0.25rem;">Aarushi C.</h4>
+                            <h4 style="color: var(--pp-text-primary); margin-bottom: 0.25rem;">Aarushi C.</h4>
                             <p style="font-size: 0.75rem; color: var(--pp-green);">Apex Architect</p>
                             <span style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">85,420 Impact</span>
                         </div>
-                        <div style="text-align: center; padding: 1.5rem; border: 1px solid #333; border-radius: 1rem;">
+                        <div
+                            style="text-align: center; padding: 1.5rem; border: 1px solid var(--pp-border); border-radius: 1rem;">
                             <div
-                                style="width: 60px; height: 60px; background: #444; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white;">
+                                style="width: 60px; height: 60px; background: var(--pp-surface); border: 1px solid var(--pp-border); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--pp-text-primary);">
                                 EN</div>
-                            <h4 style="color: white; margin-bottom: 0.25rem;">EcoNexus_A</h4>
-                            <p style="font-size: 0.75rem; color: #888;">Sentinel Rank</p>
+                            <h4 style="color: var(--pp-text-primary); margin-bottom: 0.25rem;">EcoNexus_A</h4>
+                            <p style="font-size: 0.75rem; color: var(--pp-text-secondary);">Sentinel Rank</p>
                             <span style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">12,900 Impact</span>
                         </div>
                     </div>
@@ -340,7 +348,8 @@
 
             <!-- Feed Container -->
             <div id="feedContainer">
-                <p style="text-align: center; color: #444; padding: 3rem; font-size: 0.9rem; letter-spacing: 1px;">
+                <p
+                    style="text-align: center; color: var(--pp-text-secondary); padding: 3rem; font-size: 0.9rem; letter-spacing: 1px;">
                     Establishing link with Global Pulse Feed...</p>
             </div>
         </main>
