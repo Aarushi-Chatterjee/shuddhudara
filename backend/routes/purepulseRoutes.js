@@ -11,37 +11,21 @@ const { protect } = require('../middleware/authMiddleware');
  */
 router.get('/feed', async (req, res) => {
     try {
-        let posts = await Post.findAll('purepulse', 50);
+        let dbPosts = await Post.findAll('purepulse', 50);
 
-        // Seed mock data if empty for "Wow" factor
-        if (posts.length === 0) {
-            posts = [
-                {
-                    id: 'welcome',
-                    author_name: 'Aarushi Chatterjee',
-                    content: 'Welcome to the PurePulse Nexus! 🌿 I am beyond excited to see this guardian community grow. Today, I personally oversaw the restoration of 5 hectares of wetlands in the south sector. Every breath matters—share your impact and let\'s inspire the world together! #FirstPulse #PurePulseNexus',
-                    likes: 542,
-                    image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80',
-                    created_at: new Date(Date.now() - 600000)
-                },
-                {
-                    id: 'm1',
-                    author_name: 'EcoNexus_Alpha',
-                    content: 'Just successfully deployed 50 urban filters in the central sector. Global air quality up by 0.2%! 🌬️ #ActionRecord',
-                    likes: 124,
-                    image_url: null,
-                    created_at: new Date(Date.now() - 3600000)
-                },
-                {
-                    id: 'm2',
-                    author_name: 'Guardian_Sarah',
-                    content: 'Participated in the community re-wilding project today. 500 saplings planted! 🌱',
-                    likes: 89,
-                    image_url: 'https://images.unsplash.com/photo-1576085898323-218117f310f8?auto=format&fit=crop&w=1000&q=80',
-                    created_at: new Date(Date.now() - 7200000)
-                }
-            ];
-        }
+        // Always prepend the Pinned Architect Welcome Post
+        const welcomePost = {
+            id: 'welcome_arch',
+            author_name: 'Aarushi Chatterjee',
+            content: 'Welcome to the PurePulse Nexus! 🌿 I am beyond excited to see this guardian community grow. Today, I personally oversaw the restoration of 5 hectares of wetlands in the south sector. Every breath matters—share your impact and let\'s inspire the world together! #FirstPulse #PurePulseNexus',
+            likes: 542,
+            image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80',
+            created_at: new Date('2026-02-01T09:00:00Z'),
+            is_pinned: true
+        };
+
+        // Combine pinned post with database posts
+        const posts = [welcomePost, ...dbPosts];
 
         res.json({
             success: true,
