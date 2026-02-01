@@ -23,7 +23,13 @@ body {
     background-color: var(--pp-black);
     color: var(--pp-white);
     font-family: var(--font-secondary);
+    min-height: 100vh;
     overflow-x: hidden;
+    background-image:
+        radial-gradient(circle at 50% -20%, rgba(0, 255, 148, 0.08), transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
 .pp-container {
@@ -90,7 +96,20 @@ body {
     background: rgba(0, 255, 148, 0.05);
 }
 
-/* Animations */
+/* Soften white text to avoid harshness */
+p,
+span,
+div,
+li {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pp-title,
+.pp-button,
+.pp-input {
+    color: var(--pp-white);
+}
+
 @keyframes float {
 
     0%,
