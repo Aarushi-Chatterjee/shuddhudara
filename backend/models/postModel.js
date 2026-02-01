@@ -32,13 +32,13 @@ class Post {
     /**
      * Create a new post
      */
-    static async create({ user_id, author_name, content, tags, platform = 'shuddhudara' }) {
+    static async create({ user_id, author_name, content, tags, image_url, platform = 'shuddhudara' }) {
         const query = `
-      INSERT INTO posts (user_id, author_name, content, tags, platform)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING id, author_name, content, likes, tags, platform, created_at
+      INSERT INTO posts (user_id, author_name, content, tags, image_url, platform)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id, author_name, content, likes, tags, image_url, platform, created_at
     `;
-        const values = [user_id, author_name, content, tags || 'General', platform];
+        const values = [user_id, author_name, content, tags || 'General', image_url || null, platform];
 
         const { rows } = await db.query(query, values);
         return rows[0];

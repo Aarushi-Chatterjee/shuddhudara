@@ -218,9 +218,9 @@
             <h1 class="pp-title dashboard-logo">PurePulse</h1>
             <nav>
                 <ul class="side-nav">
-                    <li><a href="#" class="nav-link active"><span>💠</span> Feed Nexus</a></li>
-                    <li><a href="#" class="nav-link"><span>🌱</span> Eco Goals</a></li>
-                    <li><a href="#" class="nav-link"><span>⚔️</span> Guardians</a></li>
+                    <li><a href="#" class="nav-link active" data-section="feed"><span>💠</span> Feed Nexus</a></li>
+                    <li><a href="#" class="nav-link" data-section="goals"><span>🌱</span> Eco Goals</a></li>
+                    <li><a href="#" class="nav-link" data-section="guardians"><span>⚔️</span> Guardians</a></li>
                 </ul>
             </nav>
             <div style="margin-top: auto;">
@@ -236,12 +236,74 @@
             </header>
 
             <!-- Input Node -->
-            <div class="input-area pp-glass">
+            <div id="inputNode" class="input-area pp-glass">
                 <textarea id="postContent" class="pulse-input" placeholder="What's your environmental impact today?"
                     rows="1"></textarea>
-                <div style="display: flex; justify-content: flex-end;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <div style="display: flex; gap: 1rem;">
+                        <input type="text" id="photoUrl" class="pp-input" placeholder="Paste Photo URL (Nexus Link)"
+                            style="font-size: 0.75rem; padding: 0.5rem; max-width: 200px; display: none;">
+                        <button id="addPhotoBtn"
+                            style="background: transparent; border: 1px solid #444; color: #888; border-radius: 0.5rem; cursor: pointer; padding: 0.3rem 0.6rem; font-size: 0.7rem;">📷
+                            Add Impact Visual</button>
+                    </div>
                     <button class="pp-button" id="sharePulseBtn"
                         style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Share Pulse</button>
+                </div>
+            </div>
+
+            <!-- Eco Goals Section (Hidden) -->
+            <div id="goalsSection" style="display: none;">
+                <div class="pp-glass" style="padding: 2rem; margin-bottom: 2rem;">
+                    <h2 class="pp-title" style="font-size: 1.2rem; margin-bottom: 1.5rem;">Current Eco-Milestones</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="border-left: 3px solid var(--pp-green); padding-left: 1.5rem;">
+                            <h4 style="color: white; margin-bottom: 0.5rem;">Project Green Lung</h4>
+                            <p style="font-size: 0.85rem; color: #888;">Planting 10,000 urban trees in industrial
+                                corridors.</p>
+                            <div
+                                style="width: 100%; height: 4px; background: #222; margin-top: 1rem; border-radius: 2px;">
+                                <div style="width: 64%; height: 100%; background: var(--pp-green); border-radius: 2px;">
+                                </div>
+                            </div>
+                            <span
+                                style="font-size: 0.7rem; color: var(--pp-green); display: block; margin-top: 5px;">6,400
+                                / 10,000 Nodes Active</span>
+                        </div>
+                        <div style="border-left: 3px solid #666; padding-left: 1.5rem;">
+                            <h4 style="color: white; margin-bottom: 0.5rem;">Coral Nexus Restore</h4>
+                            <p style="font-size: 0.85rem; color: #888;">Deploying AI-monitored coral nurseries in the
+                                Bay Area.</p>
+                            <span style="font-size: 0.7rem; color: #666; display: block; margin-top: 5px;">Awaiting
+                                Guardian Consensus</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guardians Section (Hidden) -->
+            <div id="guardiansSection" style="display: none;">
+                <div class="pp-glass" style="padding: 2rem;">
+                    <h2 class="pp-title" style="font-size: 1.2rem; margin-bottom: 1.5rem;">Apex Guardians</h2>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center; padding: 1.5rem; border: 1px solid #333; border-radius: 1rem;">
+                            <div
+                                style="width: 60px; height: 60px; background: var(--pp-green); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: black; font-weight: bold;">
+                                AC</div>
+                            <h4 style="color: white; margin-bottom: 0.25rem;">Aarushi C.</h4>
+                            <p style="font-size: 0.75rem; color: var(--pp-green);">Nexus Architect</p>
+                            <span style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">85,420 IMP</span>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; border: 1px solid #333; border-radius: 1rem;">
+                            <div
+                                style="width: 60px; height: 60px; background: #444; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white;">
+                                EN</div>
+                            <h4 style="color: white; margin-bottom: 0.25rem;">EcoNexus_A</h4>
+                            <p style="font-size: 0.75rem; color: #888;">Field Guardian</p>
+                            <span style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">12,900 IMP</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -309,6 +371,41 @@
         // Update UI with user data
         document.getElementById('userName').innerText = user.username + ' • Level 1';
 
+        // Section Toggling Logic
+        const sections = {
+            'feed': { container: document.getElementById('feedContainer'), input: document.getElementById('inputNode'), title: 'Global Pulse Feed' },
+            'goals': { container: document.getElementById('goalsSection'), input: null, title: 'Network Eco-Goals' },
+            'guardians': { container: document.getElementById('guardiansSection'), input: null, title: 'Hall of Guardians' }
+        };
+
+        document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('data-section');
+
+                // Update nav classes
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Update Header
+                document.querySelector('.feed-title').innerText = sections[target].title;
+
+                // Show/Hide sections
+                Object.keys(sections).forEach(key => {
+                    sections[key].container.style.display = key === target ? 'block' : 'none';
+                });
+
+                // Show/Hide input node
+                document.getElementById('inputNode').style.display = target === 'feed' ? 'block' : 'none';
+            });
+        });
+
+        // Photo URL Toggle
+        document.getElementById('addPhotoBtn').addEventListener('click', () => {
+            const photoInput = document.getElementById('photoUrl');
+            photoInput.style.display = photoInput.style.display === 'none' ? 'block' : 'none';
+        });
+
         async function fetchProfile() {
             try {
                 const response = await fetch('/api/auth/profile', {
@@ -332,14 +429,22 @@
                         <div class="post-card pp-glass">
                             <div class="post-author">
                                 <div class="author-avatar">${post.author_name[0].toUpperCase()}</div>
-                                <div>
-                                    <div style="font-weight: 800; font-family: 'Syne';">${post.author_name}</div>
-                                    <div style="font-size: 0.75rem; color: #666;">${new Date(post.created_at).toLocaleString()}</div>
+                                <div style="flex: 1;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-weight: 800; font-family: 'Syne'; color: white;">${post.author_name}</div>
+                                        <div style="font-size: 0.7rem; color: #444;">${new Date(post.created_at).toLocaleTimeString()}</div>
+                                    </div>
+                                    <div style="font-size: 0.75rem; color: #666;">Guardian Rank 01</div>
                                 </div>
                             </div>
                             <div class="post-content">${post.content}</div>
+                            ${post.image_url ? `
+                                <div style="margin: 1.5rem 0; border-radius: 1rem; overflow: hidden; border: 1px solid #333;">
+                                    <img src="${post.image_url}" style="width: 100%; height: auto; display: block; filter: brightness(0.8) contrast(1.1);" onerror="this.style.display='none'">
+                                </div>
+                            ` : ''}
                             <div class="post-actions">
-                                <button class="action-btn" onclick="breathePost(${post.id})"><span>🌬️</span> Breathe Life (${post.likes})</button>
+                                <button class="action-btn" onclick="breathePost('${post.id}')"><span>🌬️</span> Breathe Life (${post.likes || 0})</button>
                                 <button class="action-btn"><span>💬</span> Feedback</button>
                             </div>
                         </div>
@@ -364,6 +469,7 @@
 
         document.getElementById('sharePulseBtn').addEventListener('click', async () => {
             const content = document.getElementById('postContent').value;
+            const image_url = document.getElementById('photoUrl').value;
             if (!content) return;
 
             try {
@@ -373,12 +479,14 @@
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${authToken}`
                     },
-                    body: JSON.stringify({ content })
+                    body: JSON.stringify({ content, image_url })
                 });
 
                 const data = await response.json();
                 if (data.success) {
                     document.getElementById('postContent').value = '';
+                    document.getElementById('photoUrl').value = '';
+                    document.getElementById('photoUrl').style.display = 'none';
                     fetchFeed();
                     fetchProfile();
                 }
