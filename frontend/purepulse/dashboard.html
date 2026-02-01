@@ -559,7 +559,7 @@
                             ` : ''}
                             <div class="post-actions">
                                 <button class="action-btn" onclick="breathePost('${post.id}')"><span>🌬️</span> Breathe Life (${post.likes || 0})</button>
-                                <button class="action-btn"><span>💬</span> Feedback</button>
+                                <button class="action-btn" onclick="sendFeedback('${post.id}')"><span>💬</span> Feedback</button>
                             </div>
                         </div>
                     `;
@@ -600,6 +600,10 @@
             document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none');
 
             menu.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function sendFeedback(id) {
+            alert("Feedback Protocol Initialized: This pulse is now under review for Nexus verification. Your feedback highlights stay with the Architect.");
         }
 
         // Close menus when clicking outside
