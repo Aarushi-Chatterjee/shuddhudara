@@ -28,9 +28,8 @@ class Post {
             await db.query('ALTER TABLE posts ADD COLUMN IF NOT EXISTS is_pinned BOOLEAN DEFAULT FALSE');
 
             // Seed Welcome Post if missing
-            const { rows } = await db.query("SELECT * FROM posts WHERE is_pinned = TRUE AND platform = 'purepulse' LIMIT 1");
-            if (rows.length === 0) {
-                const welcomeText = `Establishing the Root System. 🌱
+            // Seed/Restore Welcome Post (Force Update to ensure correct text)
+            const welcomeText = `Establishing the Root System. 🌱
 
 Welcome to PurePulse. Today, we transition from passive observation to active guardianship. Our platform is now synchronized to track the breath of our city. Small acts—planting, protecting, and purifying—are the data points that will save us.
 
@@ -46,10 +45,23 @@ Let’s make our impact visible. What’s your first pulse?
 
 Impact: +50 IMP (Breathe Life Protocol)`;
 
+            const { rows } = await db.query("SELECT * FROM posts WHERE is_pinned = TRUE AND platform = 'purepulse' LIMIT 1");
+
+            if (rows.length === 0) {
+                // Insert if missing
                 await db.query(`
                     INSERT INTO posts (author_name, content, likes, image_url, platform, is_pinned)
                     VALUES ($1, $2, $3, $4, $5, $6)
                 `, ['Aarushi Chatterjee', welcomeText, 10, 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80', 'purepulse', true]);
+                console.log('✅ Welcome post seeded');
+            } else {
+                // RESTORE/UPDATE existing pinned post to original text
+                await db.query(`
+                    UPDATE posts 
+                    SET content = $1, likes = 10 
+                    WHERE is_pinned = TRUE AND platform = 'purepulse'
+                `, [welcomeText]);
+                console.log('✅ Welcome post restored to original');
             }
 
             console.log('✅ Posts table initialized and seeded');
