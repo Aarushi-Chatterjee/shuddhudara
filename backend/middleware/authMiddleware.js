@@ -31,31 +31,42 @@ const protect = async (req, res, next) => {
             });
         }
 
+        let decoded;
         try {
             // Verify token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'shuddhudara_temp_secret_for_deployment');
+            console.log('[AUTH] Verifying token...');
+            decoded = jwt.verify(token, process.env.JWT_SECRET || 'shuddhudara_temp_secret_for_deployment');
+            console.log('[AUTH] Token decoded successfully, user ID:', decoded.id);
+        } catch (error) {
+            console.error('[AUTH] Token verification failed:', error.message);
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid or expired token. Please login again.'
+            });
+        }
 
-            // Get user from database (exclude password - helper does this)
+        try {
+            // Get user from database
             req.user = await User.findById(decoded.id);
-
+            console.log('[AUTH] User found:', req.user ? req.user.username : 'null');
 
             // Check if user still exists
             if (!req.user) {
+                console.log('[AUTH] User not found in database');
                 return res.status(401).json({
                     success: false,
                     message: 'User no longer exists'
                 });
             }
 
-
-            // Call next middleware/route handler
+            console.log('[AUTH] Authentication successful for user:', req.user.username);
             next();
-
         } catch (error) {
-            // Token is invalid or expired
-            return res.status(401).json({
+            console.error('[AUTH] Database error during user lookup:', error);
+            // Return 500 for database errors instead of 401
+            return res.status(500).json({
                 success: false,
-                message: 'Invalid or expired token. Please login again.'
+                message: 'Server error check database connection'
             });
         }
 
