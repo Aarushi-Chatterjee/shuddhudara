@@ -24,6 +24,10 @@
         {
             "source": "/dashboard/(.*)",
             "destination": "/frontend/dashboard/$1"
+        },
+        {
+            "source": "/purepulse/(.*)",
+            "destination": "/frontend/purepulse/$1"
         }
     ]
 }
