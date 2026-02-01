@@ -674,16 +674,29 @@
 
         async function breathePost(id) {
             try {
+                console.log('[FRONTEND] Breathing life into post:', id);
                 const response = await fetch(`/api/purepulse/breathe/${id}`, {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 const data = await response.json();
+                console.log('[FRONTEND] Breathe response:', data);
+
                 if (data.success) {
+                    // Update UI immediately if user data returned
+                    if (data.user && data.user.points !== undefined) {
+                        document.getElementById('userImpact').innerText = data.user.points;
+                    }
                     fetchFeed();
                     fetchProfile();
+                } else {
+                    console.error('[FRONTEND] Breathe failed:', data.message);
+                    alert(data.message || 'Failed to breathe life');
                 }
-            } catch (err) { console.error('Breathe failed'); }
+            } catch (err) {
+                console.error('[FRONTEND] Breathe error:', err);
+                alert('Network error - check console for details');
+            }
         }
 
         function togglePostMenu(e, id) {
@@ -738,6 +751,7 @@
             if (!content) return;
 
             try {
+                console.log('[FRONTEND] Submitting comment to post:', postId);
                 const response = await fetch(`/api/purepulse/post/${postId}/comment`, {
                     method: 'POST',
                     headers: {
@@ -747,12 +761,24 @@
                     body: JSON.stringify({ content })
                 });
                 const data = await response.json();
+                console.log('[FRONTEND] Comment response:', data);
+
                 if (data.success) {
                     input.value = '';
+                    // Update UI immediately if user data returned
+                    if (data.user && data.user.points !== undefined) {
+                        document.getElementById('userImpact').innerText = data.user.points;
+                    }
                     fetchComments(postId);
                     fetchProfile(); // Update points
+                } else {
+                    console.error('[FRONTEND] Comment failed:', data.message);
+                    alert(data.message || 'Failed to submit comment');
                 }
-            } catch (err) { console.error('Comment submission failed'); }
+            } catch (err) {
+                console.error('[FRONTEND] Comment error:', err);
+                alert('Network error - check console for details');
+            }
         }
 
         async function editPost(id, currentContent) {

@@ -75,19 +75,24 @@ router.post('/post', protect, async (req, res) => {
 router.post('/breathe/:id', protect, async (req, res) => {
     try {
         const postId = req.params.id;
+        console.log(`[BREATHE] Post ID: ${postId}, User: ${req.user.username}`);
 
         // Handle mock posts gracefully (purely for non-DB prototypes)
         if (postId.toString().startsWith('m')) {
             await User.updatePoints(req.user.id, 10);
+            const updatedUser = await User.findById(req.user.id);
             return res.json({
                 success: true,
-                message: 'Impact established via phantom node! +10 Impact Points awarded.'
+                message: 'Impact established via phantom node! +10 Impact Points awarded.',
+                user: { points: updatedUser.points }
             });
         }
 
         const newLikes = await Post.incrementLikes(postId);
+        console.log(`[BREATHE] New likes count: ${newLikes}`);
 
         if (newLikes === null) {
+            console.error(`[BREATHE] Post ${postId} not found`);
             return res.status(404).json({
                 success: false,
                 message: 'Post not found'
@@ -96,16 +101,20 @@ router.post('/breathe/:id', protect, async (req, res) => {
 
         // Award points for interaction (+10 Impact)
         await User.updatePoints(req.user.id, 10);
+        const updatedUser = await User.findById(req.user.id);
+        console.log(`[BREATHE] User ${req.user.username} now has ${updatedUser.points} points`);
 
         res.json({
             success: true,
             likes: newLikes,
+            user: { points: updatedUser.points },
             message: 'Breathed life into the pulse! +10 Impact Points awarded.'
         });
     } catch (error) {
+        console.error('[BREATHE] Error:', error);
         res.status(500).json({
             success: false,
-            message: 'Error interacting with post'
+            message: 'Error interacting with post: ' + error.message
         });
     }
 });
@@ -196,6 +205,8 @@ router.get('/post/:id/comments', async (req, res) => {
 router.post('/post/:id/comment', protect, async (req, res) => {
     try {
         const { content } = req.body;
+        console.log(`[COMMENT] Post ID: ${req.params.id}, User: ${req.user.username}`);
+
         if (!content) {
             return res.status(400).json({
                 success: false,
@@ -209,19 +220,24 @@ router.post('/post/:id/comment', protect, async (req, res) => {
             author_name: req.user.username,
             content
         });
+        console.log(`[COMMENT] Created comment ID: ${comment.id}`);
 
         // Award points for social feedback (+10 Impact)
         await User.updatePoints(req.user.id, 10);
+        const updatedUser = await User.findById(req.user.id);
+        console.log(`[COMMENT] User ${req.user.username} now has ${updatedUser.points} points`);
 
         res.status(201).json({
             success: true,
             comment,
+            user: { points: updatedUser.points },
             message: 'Feedback logged in the Nexus! +10 Impact Points awarded.'
         });
     } catch (error) {
+        console.error('[COMMENT] Error:', error);
         res.status(500).json({
             success: false,
-            message: 'Error posting comment'
+            message: 'Error posting comment: ' + error.message
         });
     }
 });
