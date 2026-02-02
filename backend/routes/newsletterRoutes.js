@@ -6,28 +6,37 @@ const { sendEmail } = require('../utils/emailService');
 // POST /api/newsletter/join
 router.post('/join', async (req, res) => {
     try {
-        const { name, email } = req.body;
+        let { name, email } = req.body;
+
+        // 1. Trim and Validate Input
+        email = email ? email.trim().toLowerCase() : null;
+        name = name ? name.trim() : null;
 
         if (!email) {
             return res.status(400).json({ success: false, message: 'Email is required' });
         }
 
-        // Check if already subscribed
+        // Basic Regex for Email Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ success: false, message: 'Please provide a valid email address' });
+        }
+
+        // 2. Check if already subscribed (Case-insensitive via lowercasing in DB if needed, but here we do it in code)
         const existing = await Subscriber.exists(email);
         if (existing) {
-            // If already exists, just return success + current count (idempotent behavior)
             const count = await Subscriber.count();
             return res.status(200).json({
                 success: true,
                 message: 'You are already subscribed!',
-                memberCount: count
+                memberCount: count // Actual count from DB
             });
         }
 
-        // Create new subscriber
+        // 3. Create new subscriber
         await Subscriber.create({ name, email });
 
-        // Send Welcome Email
+        // 4. Send Welcome Email (Non-blocking)
         try {
             const isWaitlist = name === 'BioBloom Waitlist Member';
             const subject = isWaitlist ? 'Your BioBloom Waitlist Confirmation + 20% OFF! 🌸' : 'Welcome to the Movement! 🌿';
@@ -68,21 +77,27 @@ router.post('/join', async (req, res) => {
                 `
             });
         } catch (emailError) {
-            // Don't fail the request if email fails (non-critical)
             console.error('❌ Failed to send welcome email:', emailError.message);
         }
 
-        // Return new count
-        const count = await Subscriber.count();
+        // 5. Final Success Response with accurate count
+        const finalCount = await Subscriber.count();
         res.status(201).json({
             success: true,
             message: 'Welcome to the community!',
-            memberCount: count
+            memberCount: finalCount // Pure organic data count
         });
 
     } catch (error) {
-        console.error('Newsletter Join Error:', error);
-        res.status(500).json({ success: false, message: 'Server error' });
+        console.error('Newsletter Join Error Details:', {
+            message: error.message,
+            stack: error.stack,
+            body: req.body
+        });
+        res.status(500).json({
+            success: false,
+            message: process.env.NODE_ENV === 'development' ? `Server error: ${error.message}` : 'Server error'
+        });
     }
 });
 

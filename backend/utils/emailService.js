@@ -25,6 +25,9 @@ const sendEmail = async ({ to, subject, html, fromName = 'Shuddhudara' }) => {
     try {
         const url = `${baseUrl}/api/send-email`;
 
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -37,8 +40,11 @@ const sendEmail = async ({ to, subject, html, fromName = 'Shuddhudara' }) => {
                 to,
                 subject,
                 html
-            })
+            }),
+            signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         const data = await response.json();
 

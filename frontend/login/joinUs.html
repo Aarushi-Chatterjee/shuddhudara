@@ -582,9 +582,15 @@
             const successMessage = document.getElementById('successMessage');
             const form = this;
 
-            // Get form data
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
+            // Get form data and trim
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+
+            // Simple client-side validation
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
 
             // Show loading state
             submitBtn.classList.add('loading');
@@ -613,16 +619,21 @@
                     if (data.message === 'You are already subscribed!') {
                         successMessage.querySelector('h3').textContent = '🎉 Already Joined!';
                         successMessage.querySelector('p').textContent = 'You are already part of the community.';
+                    } else {
+                        // Reset success message text just in case it was changed by previous attempt
+                        successMessage.querySelector('h3').textContent = '🎉 Welcome to the Community!';
+                        successMessage.querySelector('p').textContent = 'Check your email for a special welcome message. You\'re now part of the clean air revolution!';
                     }
 
-                    // Update counter with new verifiable count from server
+                    // Update counter with purely organic count from server
                     const oldVal = stats.members;
                     const newVal = data.memberCount;
 
-                    if (newVal > oldVal) {
+                    if (typeof newVal === 'number') {
                         stats.members = newVal;
-                        localStorage.setItem('memberCount', newVal); // Update cache
+                        localStorage.setItem('memberCount', newVal);
                         const memberEl = document.getElementById('memberCount');
+                        // Animate from 0 if it's the first time
                         animateCounter(memberEl, oldVal, newVal, 800);
                     }
 
