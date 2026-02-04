@@ -173,7 +173,7 @@ exports.getProfile = async (req, res) => {
                 username: user.username,
                 email: user.email,
                 platform: user.platform,
-                points: user.impact_points || 0,
+                points: user.points || 0,
                 createdAt: user.created_at,
                 lastLogin: user.last_login
             }

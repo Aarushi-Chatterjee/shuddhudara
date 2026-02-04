@@ -606,7 +606,7 @@
                                 <div class="author-avatar" style="${post.is_pinned ? 'background: var(--pp-green); color: black;' : ''}">${(post.author_name || 'G')[0].toUpperCase()}</div>
                                 <div style="flex: 1;">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="font-weight: 800; font-family: 'Syne'; color: var(--pp-text-primary);">${post.author_name || 'Guardian'} ${post.is_pinned ? '<span style="color: var(--pp-green); font-size: 0.7rem; margin-left: 0.5rem;">[ ARCHITECT ]</span>' : ''}</div>
+                                        <div style="font-weight: 800; font-family: 'Syne'; color: var(--pp-text-primary); text-transform: uppercase; letter-spacing: 1px;">${post.author_name || 'Guardian'} ${post.is_pinned ? '<span style="color: var(--pp-green); font-size: 0.7rem; margin-left: 0.5rem;">[ ARCHITECT ]</span>' : ''}</div>
                                         <div style="display: flex; align-items: center; gap: 1rem;">
                                             <div style="font-size: 0.7rem; color: var(--pp-text-secondary);">${post.is_pinned ? 'Nexus Origin' : new Date(post.created_at).toLocaleTimeString()}</div>
                                             ${!post.is_pinned && post.user_id === user.id ? `
@@ -861,10 +861,10 @@
 
                     container.innerHTML = data.guardians.map(g => `
                         <div style="text-align: center; padding: 1.5rem; border: 1px solid var(--pp-border); border-radius: 1rem;">
-                            <div style="width: 60px; height: 60px; background: ${g.points > 1000 ? 'var(--pp-green)' : 'var(--pp-surface)'}; border: 1px solid var(--pp-border); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: ${g.points > 1000 ? 'var(--pp-bg)' : 'var(--pp-text-primary)'}; font-weight: bold;">
+                            <div style="width: 60px; height: 60px; background: ${g.points > 1000 ? 'var(--pp-green)' : 'var(--pp-surface)'}; border: 1px solid var(--pp-border); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: ${g.points > 1000 ? 'var(--pp-bg)' : 'var(--pp-text-primary)'}; font-weight: bold; font-family: 'Syne';">
                                 ${g.username[0].toUpperCase()}
                             </div>
-                            <h4 style="color: var(--pp-text-primary); margin-bottom: 0.25rem;">${g.username}</h4>
+                            <h4 style="color: var(--pp-text-primary); margin-bottom: 0.25rem; font-family: 'Syne'; text-transform: uppercase; letter-spacing: 1px;">${g.username}</h4>
                             <p style="font-size: 0.75rem; color: ${g.points > 1000 ? 'var(--pp-green)' : 'var(--pp-text-secondary)'};">
                                 ${g.points > 10000 ? 'Apex Architect' : g.points > 5000 ? 'Sentinel Rank' : g.points > 1000 ? 'Earth Protector' : 'Guardian Initiate'}
                             </p>
