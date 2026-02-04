@@ -26,9 +26,11 @@ class User {
             // Migration: Add platform column if not exists
             try {
                 await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS platform TEXT DEFAULT 'shuddhudara';`);
-                console.log('✅ Checked/Added platform column');
+                await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS points INTEGER DEFAULT 0;`);
+                await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS impact_score INTEGER DEFAULT 0;`);
+                console.log('✅ Checked/Added missing user columns (platform, points, impact_score)');
             } catch (e) {
-                console.log('ℹ️ Platform column check skipped/error:', e.message);
+                console.log('ℹ️ User column check skipped/error:', e.message);
             }
 
         } catch (err) {
