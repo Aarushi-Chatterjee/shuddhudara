@@ -111,6 +111,20 @@ class User {
         const query = 'UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = $1';
         await db.query(query, [id]);
     }
+
+    /**
+     * Get top guardians (rankings)
+     */
+    static async getTopGuardians(limit = 10) {
+        const query = `
+            SELECT id, username, points 
+            FROM users 
+            ORDER BY points DESC 
+            LIMIT $1
+        `;
+        const { rows } = await db.query(query, [limit]);
+        return rows;
+    }
 }
 
 // Initialize the table when this module is loaded (or called separately)

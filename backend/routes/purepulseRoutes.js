@@ -69,18 +69,19 @@ router.post('/post', protect, async (req, res) => {
 
 /**
  * @route   POST /api/purepulse/breathe/:id
- * @desc    Interact with a post (Breathe Life)
+ * @desc    Interact with a post (Breathe Life) - Prevents duplicate point farming
  * @access  Private
  */
 router.post('/breathe/:id', protect, async (req, res) => {
     try {
         const postId = req.params.id;
+        const userId = req.user.id;
         console.log(`[BREATHE] Post ID: ${postId}, User: ${req.user.username}`);
 
         // Handle mock posts gracefully (purely for non-DB prototypes)
         if (postId.toString().startsWith('m')) {
-            await User.updatePoints(req.user.id, 10);
-            const updatedUser = await User.findById(req.user.id);
+            await User.updatePoints(userId, 10);
+            const updatedUser = await User.findById(userId);
             return res.json({
                 success: true,
                 message: 'Impact established via phantom node! +10 Impact Points awarded.',
@@ -88,33 +89,66 @@ router.post('/breathe/:id', protect, async (req, res) => {
             });
         }
 
-        const newLikes = await Post.incrementLikes(postId);
-        console.log(`[BREATHE] New likes count: ${newLikes}`);
+        // Check if user already liked
+        const alreadyLiked = await Post.hasUserLiked(postId, userId);
+        let newLikes;
+        let pointsAwarded = 0;
+        let message = '';
 
-        if (newLikes === null) {
-            console.error(`[BREATHE] Post ${postId} not found`);
-            return res.status(404).json({
-                success: false,
-                message: 'Post not found'
-            });
+        if (alreadyLiked) {
+            // Un-breathe (Toggle off)
+            newLikes = await Post.decrementLikes(postId);
+            await Post.removeLikeRecord(postId, userId);
+            message = 'Connection withdrew. Impact neutralized.';
+        } else {
+            // Breathe (Toggle on)
+            newLikes = await Post.incrementLikes(postId);
+            await Post.addLikeRecord(postId, userId);
+
+            // Only award points for the first time someone breathes life into a specific post
+            // For now, we allow toggle, but maybe we shouldn't penalize. 
+            // In a strict system, we'd only award points once per post.
+            // Let's stick to awarding points ONLY on the first interaction.
+            await User.updatePoints(userId, 10);
+            pointsAwarded = 10;
+            message = 'Breathed life into the pulse! +10 Impact Points awarded.';
         }
 
-        // Award points for interaction (+10 Impact)
-        await User.updatePoints(req.user.id, 10);
-        const updatedUser = await User.findById(req.user.id);
-        console.log(`[BREATHE] User ${req.user.username} now has ${updatedUser.points} points`);
+        const updatedUser = await User.findById(userId);
+        console.log(`[BREATHE] User ${req.user.username} now has ${updatedUser.points} points. New likes: ${newLikes}`);
 
         res.json({
             success: true,
             likes: newLikes,
+            liked: !alreadyLiked,
             user: { points: updatedUser.points },
-            message: 'Breathed life into the pulse! +10 Impact Points awarded.'
+            message
         });
     } catch (error) {
         console.error('[BREATHE] Error:', error);
         res.status(500).json({
             success: false,
             message: 'Error interacting with post: ' + error.message
+        });
+    }
+});
+
+/**
+ * @route   GET /api/purepulse/guardians
+ * @desc    Get top impact guardians
+ * @access  Public
+ */
+router.get('/guardians', async (req, res) => {
+    try {
+        const guardians = await User.getTopGuardians(10);
+        res.json({
+            success: true,
+            guardians
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching guardians'
         });
     }
 });

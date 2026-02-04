@@ -27,6 +27,18 @@ class Post {
             await db.query("ALTER TABLE posts ADD COLUMN IF NOT EXISTS platform TEXT DEFAULT 'shuddhudara'");
             await db.query('ALTER TABLE posts ADD COLUMN IF NOT EXISTS is_pinned BOOLEAN DEFAULT FALSE');
 
+            // Create post_likes table to prevent duplicate point farming
+            const createLikesTableQuery = `
+              CREATE TABLE IF NOT EXISTS post_likes (
+                id SERIAL PRIMARY KEY,
+                post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+                user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(post_id, user_id)
+              );
+            `;
+            await db.query(createLikesTableQuery);
+
             // Seed Welcome Post if missing
             // Seed/Restore Welcome Post (Force Update to ensure correct text)
             const welcomeText = `Establishing the Root System. 🌱
@@ -129,6 +141,40 @@ Impact: +50 IMP (Breathe Life Protocol)`;
         const query = 'DELETE FROM posts WHERE id = $1 AND user_id = $2 RETURNING id';
         const { rows } = await db.query(query, [id, userId]);
         return rows[0];
+    }
+
+    /**
+     * Check if a user has liked a post
+     */
+    static async hasUserLiked(postId, userId) {
+        const query = 'SELECT id FROM post_likes WHERE post_id = $1 AND user_id = $2';
+        const { rows } = await db.query(query, [postId, userId]);
+        return rows.length > 0;
+    }
+
+    /**
+     * Internal method to add a like record
+     */
+    static async addLikeRecord(postId, userId) {
+        const query = 'INSERT INTO post_likes (post_id, user_id) VALUES ($1, $2) ON CONFLICT DO NOTHING';
+        await db.query(query, [postId, userId]);
+    }
+
+    /**
+     * Internal method to remove a like record
+     */
+    static async removeLikeRecord(postId, userId) {
+        const query = 'DELETE FROM post_likes WHERE post_id = $1 AND user_id = $2';
+        await db.query(query, [postId, userId]);
+    }
+
+    /**
+     * Decrement likes count
+     */
+    static async decrementLikes(id) {
+        const query = 'UPDATE posts SET likes = GREATEST(0, likes - 1) WHERE id = $1 RETURNING likes';
+        const { rows } = await db.query(query, [id]);
+        return rows[0] ? rows[0].likes : null;
     }
 }
 
