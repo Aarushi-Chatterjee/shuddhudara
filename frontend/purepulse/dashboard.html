@@ -594,7 +594,9 @@
 
         async function fetchFeed() {
             try {
-                const response = await fetch('/api/purepulse/feed');
+                const response = await fetch('/api/purepulse/feed', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
                 const data = await response.json();
                 const container = document.getElementById('feedContainer');
 
@@ -630,7 +632,9 @@
                                 </div>
                             ` : ''}
                             <div class="post-actions">
-                                <button class="action-btn" onclick="breathePost('${post.id}')"><span>🌬️</span> Breathe Life (${post.likes || 0})</button>
+                                <button class="action-btn" onclick="breathePost('${post.id}')" style="${post.user_has_liked ? 'color: var(--pp-green); font-weight: 800;' : ''}">
+                                    <span>${post.user_has_liked ? '🔋' : '🌬️'}</span> ${post.user_has_liked ? 'Life Infused' : 'Breathe Life'} (${post.likes || 0})
+                                </button>
                                 <button class="action-btn" onclick="toggleComments('${post.id}')"><span>💬</span> Feedback</button>
                             </div>
                             <div id="comments-${post.id}" class="comment-section">
@@ -731,7 +735,7 @@
                         <div class="comment-item">
                             <div class="comment-avatar">${c.author_name[0].toUpperCase()}</div>
                             <div class="comment-bubble">
-                                <div class="comment-author">${c.author_name}</div>
+                                <div class="comment-author" style="font-family: 'Syne'; text-transform: uppercase; letter-spacing: 0.5px;">${c.author_name}</div>
                                 <div class="comment-content">${c.content}</div>
                             </div>
                         </div>

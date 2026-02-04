@@ -99,15 +99,33 @@ Impact: +50 IMP (Breathe Life Protocol)`;
 
     /**
      * Find all posts (Limit 50 typically)
+     * includes user_has_liked if currentUserId is provided
      */
-    static async findAll(platform = 'shuddhudara', limit = 50) {
-        const query = `
-            SELECT * FROM posts 
-            WHERE platform = $1
-            ORDER BY is_pinned DESC, created_at DESC 
-            LIMIT $2
-        `;
-        const { rows } = await db.query(query, [platform, limit]);
+    static async findAll(platform = 'shuddhudara', limit = 50, currentUserId = null) {
+        let query;
+        let values;
+
+        if (currentUserId) {
+            query = `
+                SELECT p.*, 
+                (EXISTS (SELECT 1 FROM post_likes pl WHERE pl.post_id = p.id AND pl.user_id = $3)) as user_has_liked
+                FROM posts p
+                WHERE p.platform = $1
+                ORDER BY p.is_pinned DESC, p.created_at DESC 
+                LIMIT $2
+            `;
+            values = [platform, limit, currentUserId];
+        } else {
+            query = `
+                SELECT *, false as user_has_liked FROM posts 
+                WHERE platform = $1
+                ORDER BY is_pinned DESC, created_at DESC 
+                LIMIT $2
+            `;
+            values = [platform, limit];
+        }
+
+        const { rows } = await db.query(query, values);
         return rows;
     }
 

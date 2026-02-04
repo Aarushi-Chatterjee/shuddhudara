@@ -4,15 +4,32 @@ const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const Comment = require('../models/commentModel');
 const { protect } = require('../middleware/authMiddleware');
+const jwt = require('jsonwebtoken');
+
+// Optional auth middleware for the feed
+const optionalAuth = async (req, res, next) => {
+    try {
+        let token;
+        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+            token = req.headers.authorization.split(' ')[1];
+            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'shuddhudara_temp_secret_for_deployment');
+            req.user = await User.findById(decoded.id);
+        }
+        next();
+    } catch (err) {
+        next(); // Proceed without user
+    }
+};
 
 /**
  * @route   GET /api/purepulse/feed
  * @desc    Get PurePulse community feed
- * @access  Public
+ * @access  Public (Optional Auth for liked state)
  */
-router.get('/feed', async (req, res) => {
+router.get('/feed', optionalAuth, async (req, res) => {
     try {
-        const posts = await Post.findAll('purepulse', 50);
+        const userId = req.user ? req.user.id : null;
+        const posts = await Post.findAll('purepulse', 50, userId);
 
         res.json({
             success: true,
@@ -99,16 +116,16 @@ router.post('/breathe/:id', protect, async (req, res) => {
             // Un-breathe (Toggle off)
             newLikes = await Post.decrementLikes(postId);
             await Post.removeLikeRecord(postId, userId);
-            message = 'Connection withdrew. Impact neutralized.';
+
+            // Deduct points when un-breathing to prevent farming and keep sync
+            await User.updatePoints(userId, -10);
+            message = 'Connection withdrew. Impact neutralized. (-10 Impact)';
         } else {
             // Breathe (Toggle on)
             newLikes = await Post.incrementLikes(postId);
             await Post.addLikeRecord(postId, userId);
 
-            // Only award points for the first time someone breathes life into a specific post
-            // For now, we allow toggle, but maybe we shouldn't penalize. 
-            // In a strict system, we'd only award points once per post.
-            // Let's stick to awarding points ONLY on the first interaction.
+            // Award points for interaction
             await User.updatePoints(userId, 10);
             pointsAwarded = 10;
             message = 'Breathed life into the pulse! +10 Impact Points awarded.';
