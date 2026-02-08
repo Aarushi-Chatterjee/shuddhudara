@@ -59,6 +59,8 @@ body {
     backdrop-filter: blur(15px);
     border: 1px solid var(--pp-border);
     border-radius: 1.5rem;
+    width: 100%;
+    transition: var(--transition);
 }
 
 .pp-title {
@@ -70,6 +72,7 @@ body {
     text-shadow: 0 0 15px var(--pp-green-glow);
     display: inline-block;
     max-width: 100%;
+    word-break: break-word;
 }
 
 .dashboard-logo {
