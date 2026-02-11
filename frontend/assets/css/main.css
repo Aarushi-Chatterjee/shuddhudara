@@ -747,7 +747,7 @@ img {
 
   /* Solutions Grid - Keep 2 columns on tablet/large phone, only 1 on very small */
   .solutions-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
   /* Spacing */
