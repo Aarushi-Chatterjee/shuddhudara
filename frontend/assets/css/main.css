@@ -325,14 +325,12 @@ img {
 
 /* Nature Background Variant - Add this class to .hero to enable */
 .hero-nature-bg {
-  background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') no-repeat center center/cover;
-}
-
-@media (min-width: 768px) {
-  .hero-nature-bg {
-    background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-    background-attachment: fixed;
-  }
+  background: linear-gradient(rgba(241, 248, 233, 0.85), rgba(241, 248, 233, 0.7)),
+    url('https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* Parallax-like effect */
 }
 
 .hero::before {

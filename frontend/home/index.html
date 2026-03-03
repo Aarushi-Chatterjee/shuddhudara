@@ -27,8 +27,7 @@
     <nav class="nav-container">
       <!-- Logo Section -->
       <div class="logo-container">
-        <img src="../assets/images/logos/logo.jpg" alt="SHUDDHUDARA Logo" class="logo-image" loading="lazy"
-          decoding="async">
+        <img src="../assets/images/logos/logo.jpg" alt="SHUDDHUDARA Logo" class="logo-image">
         <h1 class="site-title">SHUDDHUDARA</h1>
       </div>
 
@@ -136,23 +135,40 @@
       <div class="scroll-reveal" style="margin-top: 4rem; text-align: center;">
         <h3 style="color: var(--color-primary); font-size: 1.875rem; margin-bottom: 2rem;">See the Impact</h3>
         <!-- Image Slider Container -->
-        <div class="slider-container">
-          <!-- After Image -->
-          <div class="image-after" style="background-image: url('../assets/images/room_after.png');">
-            <span class="label-after">AFTER: Clean & Fresh Air</span>
+        <div class="slider-container"
+          style="position: relative; width: 100%; max-width: 800px; height: 500px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+
+          <!-- After Image (Background - Clean & Vibrant) -->
+          <div class="image-after"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('../assets/images/room_after.png') no-repeat center center/cover;">
+            <span
+              style="position: absolute; top: 20px; right: 20px; background: rgba(16, 185, 129, 0.9); padding: 5px 12px; border-radius: 8px; font-weight: 700; color: white; z-index: 2; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">AFTER:
+              Clean & Fresh Air</span>
           </div>
 
-          <!-- Before Image -->
-          <div class="image-before" id="beforeImageHome">
-            <div class="image-before-inner" style="background-image: url('../assets/images/room_before_v2.jpg');">
-              <div class="image-before-overlay"></div>
+          <!-- Before Image (Foreground - Hazy & Polluted) -->
+          <div class="image-before" id="beforeImageHome"
+            style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; z-index: 2; overflow: hidden; border-right: 2px solid white;">
+            <!-- Inner content with filters applied -->
+            <div
+              style="position: absolute; top: 0; left: 0; width: 800px; height: 100%; background: url('../assets/images/room_before_v2.jpg') no-repeat center center/cover; filter: sepia(20%) grayscale(40%) blur(1px) brightness(90%);">
+              <div class="overlay"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(100, 110, 100, 0.15);">
+              </div>
             </div>
-            <span class="label-before">BEFORE: Polluted Air</span>
+            <!-- Labels outside the filter div but inside the mask -->
+            <span
+              style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.85); padding: 5px 12px; border-radius: 8px; font-weight: 700; color: white; z-index: 3; box-shadow: 0 4px 6px rgba(0,0,0,0.1); white-space: nowrap;">BEFORE:
+              Polluted Air</span>
           </div>
 
           <!-- Slider Handle -->
-          <input type="range" min="0" max="100" value="50" class="slider-range" id="sliderRangeHome">
-          <div class="slider-button" id="sliderButtonHome">↔</div>
+          <input type="range" min="0" max="100" value="50" class="slider-range" id="sliderRangeHome"
+            style="position: absolute; top: 50%; left: -10px; width: calc(100% + 20px); height: 100%; opacity: 0; cursor: col-resize; z-index: 10; margin: 0;">
+          <div class="slider-button" id="sliderButtonHome"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: white; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 5;">
+            ↔
+          </div>
         </div>
         <p style="margin-top: 1.5rem; color: var(--color-gray-600); font-size: 1.1rem; font-weight: 500;">Drag slider to
           see how SHUDDHUDARA transforms your indoor space</p>
@@ -183,8 +199,7 @@
       <div class="team-grid">
         <!-- Team Member 1: Aarushi Chatterjee -->
         <div class="team-member scroll-reveal">
-          <img src="../assets/images/team/aarushi_chatterjee.jpg" alt="Aarushi Chatterjee" class="team-photo"
-            loading="lazy" decoding="async">
+          <img src="../assets/images/team/aarushi_chatterjee.jpg" alt="Aarushi Chatterjee" class="team-photo">
           <h3 class="team-name">Aarushi Chatterjee</h3>
           <p class="team-nationality">🇮🇳 India</p>
           <p class="team-description">
@@ -214,8 +229,7 @@
 
         <!-- Team Member 2: Pooja Gunturu -->
         <div class="team-member scroll-reveal">
-          <img src="../assets/images/team/pooja_gunturu.jpg" alt="Pooja Gunturu" class="team-photo" loading="lazy"
-            decoding="async">
+          <img src="../assets/images/team/pooja_gunturu.jpg" alt="Pooja Gunturu" class="team-photo">
           <h3 class="team-name">Pooja Gunturu</h3>
           <p class="team-nationality">🇮🇳 India</p>
           <p class="team-description">
@@ -245,8 +259,7 @@
 
         <!-- Team Member 3: Setyorini Okiviana -->
         <div class="team-member scroll-reveal">
-          <img src="../assets/images/team/setyorini_okiviana.jpg" alt="Setyorini Okiviana" class="team-photo"
-            loading="lazy" decoding="async">
+          <img src="../assets/images/team/setyorini_okiviana.jpg" alt="Setyorini Okiviana" class="team-photo">
           <h3 class="team-name">Setyorini Okiviana</h3>
           <p class="team-nationality">🇮🇩 Indonesia</p>
           <p class="team-description">
@@ -277,8 +290,7 @@
 
         <!-- Team Member 4: Clarissa Tomponu -->
         <div class="team-member scroll-reveal">
-          <img src="../assets/images/team/clarissa_tomponu.jpg" alt="Clarissa Tomponu" class="team-photo" loading="lazy"
-            decoding="async">
+          <img src="../assets/images/team/clarissa_tomponu.jpg" alt="Clarissa Tomponu" class="team-photo">
           <h3 class="team-name">Clarissa Tomponu</h3>
           <p class="team-nationality">🇮🇩 Indonesia</p>
           <p class="team-description">
@@ -309,8 +321,7 @@
 
         <!-- Team Member 5: Vaisakh -->
         <div class="team-member scroll-reveal">
-          <img src="../assets/images/team/vaisakh.jpg" alt="Vaishakh M V" class="team-photo" loading="lazy"
-            decoding="async">
+          <img src="../assets/images/team/varel.jpg" alt="Vaishakh M V " class="team-photo">
           <h3 class="team-name">Vaishakh M V</h3>
           <p class="team-nationality">🇮🇳 India</p>
           <p class="team-description">
@@ -341,8 +352,7 @@
 
         <!-- Team Member 6: Varel -->
         <div class="team-member scroll-reveal">
-          <img src="../assets/images/team/varel.jpg" alt="Muhammad Varel Arifianta" class="team-photo" loading="lazy"
-            decoding="async">
+          <img src="../assets/images/team/vaisakh.jpg" alt="Muhammad Varel Arifianta" class="team-photo">
           <h3 class="team-name">Muhammad Varel Arifianta</h3>
           <p class="team-nationality">🇮🇩 Indonesia</p>
           <p class="team-description">
