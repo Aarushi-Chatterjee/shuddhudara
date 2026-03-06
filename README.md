@@ -116,6 +116,11 @@ shuddhudara/
 - [x] **Plantify**: AI plant companion system live.
 - [x] **OxyGenZ**: Gamified engagement platform live.
 - [x] **PurePulse**: Community & data HUB live.
+<<<<<<< HEAD
+=======
+- [ ] **Community Expansion**: Scale local air guardian networks.
+- [ ] **IoT Integration**: Real-time sensor data for PurePulse.
+>>>>>>> 9421cca (Update README and solution pages to reflect current active platform state)
 
 ---
 
