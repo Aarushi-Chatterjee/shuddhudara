@@ -105,7 +105,33 @@
             border: 1px solid rgba(255, 71, 87, 0.2);
             text-align: center;
         }
+
+        .login-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--pp-text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .login-separator::before,
+        .login-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-separator:not(:empty)::before {
+            margin-right: .5em;
+        }
+
+        .login-separator:not(:empty)::after {
+            margin-left: .5em;
+        }
     </style>
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
@@ -143,6 +169,27 @@
                     <span id="btnText">Initialize Session</span>
                     <span id="btnLoader" style="display: none;">Syncing...</span>
                 </button>
+
+                <div class="login-separator">OR</div>
+
+                <!-- Google Sign-In Button Container -->
+                <div id="g_id_onload"
+                    data-client_id="26116138257-nvfro611d0nq5jrfblat9aortka9gng5.apps.googleusercontent.com"
+                    data-context="signin"
+                    data-ux_mode="popup"
+                    data-callback="handleCredentialResponse"
+                    data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin"
+                    data-type="standard"
+                    data-shape="rectangular"
+                    data-theme="outline"
+                    data-text="signin_with"
+                    data-size="large"
+                    data-logo_alignment="left"
+                    data-width="100%">
+                </div>
             </form>
 
             <div class="signup-redirect">
@@ -196,6 +243,37 @@
                 btnLoader.style.display = 'none';
             }
         });
+
+        // Handle Google OAuth Response
+        async function handleCredentialResponse(response) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/auth/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        idToken: response.credential,
+                        platform: 'purepulse'
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errorDiv.innerText = data.message || 'Google Auth Failed';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                errorDiv.innerText = 'Nexus link disrupted during Google Sync.';
+                errorDiv.style.display = 'block';
+            }
+        }
     </script>
 </body>
 
