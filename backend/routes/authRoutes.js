@@ -10,7 +10,8 @@ const {
     login,
     getProfile,
     logout,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 } = require('../controllers/authController');
 
 // Import authentication middleware
@@ -34,6 +35,11 @@ router.post('/login', login);
 // @desc    Request password reset
 // @access  Public
 router.post('/forgot-password', forgotPassword);
+
+// @route   POST /api/auth/reset-password/:token
+// @desc    Reset password
+// @access  Public
+router.post('/reset-password/:token', resetPassword);
 
 /**
  * Protected Routes (authentication required)

@@ -3,6 +3,7 @@
 
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 /**
  * Generate JWT Token
@@ -209,11 +210,10 @@ exports.logout = async (req, res) => {
 
 /**
  * @route   POST /api/auth/forgot-password
- * @desc    Initiate password reset (placeholder for now)
+ * @desc    Initiate password reset
  * @access  Public
  */
 exports.forgotPassword = async (req, res) => {
-    // Same as before...
     try {
         const { email } = req.body;
 
@@ -233,9 +233,24 @@ exports.forgotPassword = async (req, res) => {
             });
         }
 
+        // Generate token
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        
+        // Expiry - 1 hour from now
+        const resetExpires = new Date(Date.now() + 60 * 60 * 1000);
+
+        // Save token to DB
+        await User.setResetToken(email, resetToken, resetExpires);
+
+        // Construct reset link
+        const host = req.get('host');
+        const protocol = req.protocol || 'http';
+        const resetUrl = `${protocol}://${host}/purepulse/reset-password.html?token=${resetToken}`;
+
         res.status(200).json({
             success: true,
-            message: 'Password reset functionality will be implemented. Please contact support for now.'
+            message: 'Recovery protocol sent successfully.',
+            resetLink: resetUrl // Returned for local testing as requested
         });
 
     } catch (error) {
@@ -243,6 +258,50 @@ exports.forgotPassword = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Server error during password reset request'
+        });
+    }
+};
+
+/**
+ * @route   POST /api/auth/reset-password/:token
+ * @desc    Reset password using token
+ * @access  Public
+ */
+exports.resetPassword = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { newPassword } = req.body;
+
+        if (!newPassword || newPassword.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide a valid new password (min 6 characters)'
+            });
+        }
+
+        // Find user by valid generic token
+        const user = await User.findByResetToken(token);
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid or expired recovery token'
+            });
+        }
+
+        // Update password
+        await User.updatePassword(user.id, newPassword);
+
+        res.status(200).json({
+            success: true,
+            message: 'Identity credentials successfully updated. You may now Initialize Session.'
+        });
+
+    } catch (error) {
+        console.error('Reset Password Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error during password reset process'
         });
     }
 };

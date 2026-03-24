@@ -28,7 +28,9 @@ class User {
                 await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS platform TEXT DEFAULT 'shuddhudara';`);
                 await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS points INTEGER DEFAULT 0;`);
                 await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS impact_score INTEGER DEFAULT 0;`);
-                console.log('✅ Checked/Added missing user columns (platform, points, impact_score)');
+                await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_password_token VARCHAR(255);`);
+                await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_password_expires TIMESTAMP;`);
+                console.log('✅ Checked/Added missing user columns (platform, points, impact_score, reset_password_token, reset_password_expires)');
             } catch (e) {
                 console.log('ℹ️ User column check skipped/error:', e.message);
             }
@@ -126,6 +128,48 @@ class User {
         `;
         const { rows } = await db.query(query, [limit]);
         return rows;
+    }
+
+    /**
+     * Set reset password token and expiry
+     */
+    static async setResetToken(email, token, expiry) {
+        const query = `
+            UPDATE users 
+            SET reset_password_token = $1, reset_password_expires = $2 
+            WHERE email = $3
+            RETURNING id, email
+        `;
+        const { rows } = await db.query(query, [token, expiry, email]);
+        return rows[0];
+    }
+
+    /**
+     * Find user by valid reset token
+     */
+    static async findByResetToken(token) {
+        const query = `
+            SELECT * FROM users 
+            WHERE reset_password_token = $1 
+            AND reset_password_expires > CURRENT_TIMESTAMP
+        `;
+        const { rows } = await db.query(query, [token]);
+        return rows[0];
+    }
+
+    /**
+     * Update password and clear reset token
+     */
+    static async updatePassword(userId, newPassword) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        
+        const query = `
+            UPDATE users 
+            SET password = $1, reset_password_token = NULL, reset_password_expires = NULL 
+            WHERE id = $2
+        `;
+        await db.query(query, [hashedPassword, userId]);
     }
 }
 
