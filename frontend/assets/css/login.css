@@ -305,12 +305,33 @@
 }
 
 /* Responsive Design */
+@media (max-width: 768px) {
+    .login-card {
+        padding: var(--spacing-2xl);
+    }
+}
+
 @media (max-width: 480px) {
+    .login-container {
+        max-width: 100%;
+        padding: 0 var(--spacing-sm);
+    }
+
     .login-card {
         padding: var(--spacing-xl);
     }
 
     .login-logo {
         font-size: var(--font-size-3xl);
+    }
+}
+
+@media (max-width: 360px) {
+    .login-card {
+        padding: var(--spacing-lg);
+    }
+
+    .login-logo {
+        font-size: var(--font-size-2xl);
     }
 }

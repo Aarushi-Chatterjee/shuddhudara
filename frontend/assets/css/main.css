@@ -105,6 +105,12 @@
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -116,7 +122,6 @@ body {
   line-height: 1.6;
   color: var(--color-gray-800);
   background-color: var(--color-light-bg);
-  overflow-x: hidden;
 }
 
 h1,
@@ -170,7 +175,7 @@ a:hover {
   color: var(--color-primary-dark);
 }
 
-img {
+img, video {
   max-width: 100%;
   height: auto;
   display: block;
@@ -180,8 +185,9 @@ img {
    LAYOUT UTILITIES
    -------------------------------------------- */
 .container {
+  width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   padding: 0 var(--spacing-lg);
 }
 
@@ -696,10 +702,54 @@ img {
 }
 
 /* --------------------------------------------
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (Base Breakpoints)
    -------------------------------------------- */
-@media (max-width: 768px) {
 
+/* 1200px - Large Tablet / Small Desktop */
+@media (max-width: 1200px) {
+  .solutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .nav-menu {
+    gap: var(--spacing-lg);
+  }
+
+  h1 { font-size: calc(var(--font-size-5xl) * 0.9); }
+  h2 { font-size: calc(var(--font-size-4xl) * 0.9); }
+  h3 { font-size: calc(var(--font-size-3xl) * 0.9); }
+  .hero-title { font-size: calc(var(--font-size-5xl) * 0.9); }
+}
+
+/* 1024px - Tablet Portrait */
+@media (max-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .solutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-org-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-subtitle {
+    max-width: 90%;
+  }
+
+  .section {
+    padding: var(--spacing-2xl) 0;
+  }
+}
+
+/* 768px - Mobile Landscape */
+@media (max-width: 768px) {
   /* Mobile Navigation */
   .hamburger {
     display: flex;
@@ -723,49 +773,36 @@ img {
   }
 
   /* Typography */
-  h1 {
-    font-size: var(--font-size-4xl);
-  }
+  h1 { font-size: var(--font-size-4xl); }
+  h2 { font-size: var(--font-size-3xl); }
+  h3 { font-size: var(--font-size-2xl); }
+  .hero-title { font-size: var(--font-size-4xl); }
 
-  h2 {
-    font-size: var(--font-size-3xl);
-  }
-
-  h3 {
-    font-size: var(--font-size-2xl);
-  }
-
-  .hero-title {
-    font-size: var(--font-size-4xl);
-  }
-
-  /* Team Grid */
+  /* Grids to Single Column */
   .team-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
   }
 
-  /* Solutions Grid - Keep 2 columns on tablet/large phone, only 1 on very small */
   .solutions-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Spacing */
+  .about-org-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Structural Padding */
   .section {
     padding: var(--spacing-2xl) 0;
   }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-
-  /* Team Grid - 2 columns on tablet */
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Solutions Grid - 2 columns on tablet */
-  .solutions-grid {
-    grid-template-columns: repeat(2, 1fr);
+  
+  .hero {
+    padding-top: 120px;
   }
 }
 
@@ -837,16 +874,37 @@ img {
   border-radius: var(--radius-full);
 }
 
+/* 480px - Mobile Portrait */
 @media (max-width: 480px) {
-  .solutions-grid {
-    grid-template-columns: 1fr;
-  }
+  .solutions-grid { grid-template-columns: 1fr; }
+  .about-org-grid { grid-template-columns: 1fr; }
+  .story-grid { grid-template-columns: 1fr; }
 
-  .about-org-grid {
-    grid-template-columns: 1fr;
+  .hero-title { font-size: var(--font-size-3xl); }
+  .hero-subtitle { font-size: var(--font-size-lg); }
+  
+  h1 { font-size: var(--font-size-3xl); }
+  h2 { font-size: var(--font-size-2xl); }
+  h3 { font-size: var(--font-size-xl); }
+  
+  .btn {
+    width: 100%;
+    display: block;
+    margin-bottom: var(--spacing-md);
   }
+  
+  .nav-menu { width: 85%; }
+}
 
-  .story-grid {
-    grid-template-columns: 1fr;
+/* 360px - Small Mobile */
+@media (max-width: 360px) {
+  .hero-title { font-size: var(--font-size-2xl); }
+  .hero-subtitle { font-size: var(--font-size-md); }
+  
+  .section { padding: var(--spacing-xl) 0; }
+  
+  .team-photo {
+    width: 120px;
+    height: 120px;
   }
 }

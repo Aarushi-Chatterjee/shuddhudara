@@ -33,6 +33,17 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
 body {
     background-color: var(--pp-bg);
     color: var(--pp-text-primary);
@@ -176,4 +187,29 @@ li {
     z-index: -1;
     pointer-events: none;
     animation: float 8s infinite alternate;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .pp-container { padding: 0 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    .bg-glow { width: 80% !important; height: 80%; }
+    .pp-title { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+    .pp-container { padding: 0 1rem; }
+    .pp-glass { border-radius: 1rem; }
+    .pp-input, .pp-button { padding: 1rem; font-size: 0.9rem; }
+    
+    .login-wrapper { padding: 1rem !important; }
+    .login-card { padding: 1.5rem !important; }
+    .login-logo { font-size: 1.5rem !important; }
+}
+
+@media (max-width: 360px) {
+    .pp-title { font-size: 1.25rem; }
+    .login-card { padding: 1rem !important; }
 }
