@@ -1,62 +1,43 @@
-// emailService.js - Utility to send emails via Freesend (Elastic Email)
-// API documentation: https://elasticemail.com/developers/api/v2/email/send
+// emailService.js - Centralized email utility using Resend
+// Used by: newsletterRoutes.js (welcome emails), authController.js (password reset)
+
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
- * Send an email using Elastic Email API
- * @param {Object} options - Email options
- * @param {string} options.to - Recipient email
- * @param {string} options.subject - Email subject
- * @param {string} options.html - HTML content of the email
- * @param {string} options.fromName - Sender name
+ * Send an email via Resend
+ * @param {Object} options
+ * @param {string} options.to - Recipient email address
+ * @param {string} options.subject - Email subject line
+ * @param {string} options.html - Full HTML body
+ * @param {string} [options.fromName] - Sender display name (default: Shuddhudara)
+ * @param {string} [options.fromEmail] - Sender email (must be a verified Resend domain)
  */
-const sendEmail = async ({ to, subject, html, fromName = 'Shuddhudara' }) => {
-    const apiKey = process.env.FREESEND_API_KEY;
-    const fromEmail = 'shuddhudara@gmail.com';
-
-    // Default base URL for Freesend (often self-hosted or provided by the platform)
-    // If you are using a specific instance, you can add FREESEND_BASE_URL to your .env
-    const baseUrl = process.env.FREESEND_BASE_URL || 'https://api.freesend.io';
-
-    if (!apiKey) {
-        console.error('❌ FREESEND_API_KEY is missing');
+const sendEmail = async ({ to, subject, html, fromName = 'Shuddhudara', fromEmail = 'noreply@shuddhudara.in' }) => {
+    if (!process.env.RESEND_API_KEY) {
+        console.error('❌ RESEND_API_KEY is missing from environment variables');
         return false;
     }
 
     try {
-        const url = `${baseUrl}/api/send-email`;
-
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                fromName,
-                fromEmail,
-                to,
-                subject,
-                html
-            }),
-            signal: controller.signal
+        const { data, error } = await resend.emails.send({
+            from: `${fromName} <${fromEmail}>`,
+            to,
+            subject,
+            html
         });
 
-        clearTimeout(timeoutId);
-
-        const data = await response.json();
-
-        if (response.ok) {
-            console.log(`📧 Email sent successfully via Freesend to ${to}`);
-            return true;
-        } else {
-            console.error('❌ Freesend API Error:', data.error || data.message || response.statusText);
+        if (error) {
+            console.error('❌ Resend API Error:', error);
             return false;
         }
-    } catch (error) {
-        console.error('❌ Error sending email via Freesend:', error.message);
+
+        console.log(`📧 Email sent via Resend to ${to} (id: ${data?.id})`);
+        return true;
+
+    } catch (err) {
+        console.error('❌ Unexpected error sending email via Resend:', err.message);
         return false;
     }
 };

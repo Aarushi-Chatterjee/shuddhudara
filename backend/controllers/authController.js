@@ -4,10 +4,7 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const { Resend } = require('resend');
-
-// Initialize Resend with API key from environment
-const resend = new Resend(process.env.RESEND_API_KEY);
+const { sendEmail } = require('../utils/emailService');
 
 /**
  * Generate JWT Token
@@ -249,12 +246,12 @@ exports.forgotPassword = async (req, res) => {
         // Build reset URL — uses FRONTEND_URL in production (Vercel), fallbacks to localhost
         const baseUrl = process.env.FRONTEND_URL || `http://localhost:${process.env.PORT || 3000}`;
         const resetUrl = `${baseUrl}/purepulse/reset-password.html?token=${resetToken}`;
-
-        // Send email via Resend
-        const { error: emailError } = await resend.emails.send({
-            from: 'PurePulse <noreply@purepulse.eco>',
+        // Send email via Resend (through shared emailService)
+        const sent = await sendEmail({
             to: email,
-            subject: '🌿 PurePulse — Identity Recovery Protocol',
+            subject: '\uD83C\uDF3F PurePulse \u2014 Identity Recovery Protocol',
+            fromName: 'PurePulse',
+            fromEmail: 'noreply@purepulse.eco',
             html: `
                 <div style="font-family: 'Inter', Arial, sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 40px; border-radius: 12px; max-width: 520px; margin: auto;">
                     <h1 style="color: #00ff94; font-size: 1.8rem; margin-bottom: 0.25rem;">PurePulse</h1>
@@ -266,15 +263,14 @@ exports.forgotPassword = async (req, res) => {
                     <div style="text-align: center; margin: 32px 0;">
                         <a href="${resetUrl}" style="display: inline-block; background: #00ff94; color: #000; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 0.95rem; letter-spacing: 0.5px;">Reset Identity Credentials</a>
                     </div>
-                    <p style="color: #666; font-size: 0.8rem;">If you did not request a reset, please ignore this message — your credentials remain unchanged.</p>
+                    <p style="color: #666; font-size: 0.8rem;">If you did not request a reset, please ignore this message \u2014 your credentials remain unchanged.</p>
                     <hr style="border-color: #1a1a1a; margin: 24px 0;">
                     <p style="color: #444; font-size: 0.75rem; text-align: center;">PurePulse &mdash; Tech-Eco Environmental Platform</p>
                 </div>
             `
         });
 
-        if (emailError) {
-            console.error('Resend Email Error:', emailError);
+        if (!sent) {
             return res.status(500).json({
                 success: false,
                 message: 'Failed to send recovery email. Please try again later.'
