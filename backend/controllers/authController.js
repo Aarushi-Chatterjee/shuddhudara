@@ -4,6 +4,10 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const { Resend } = require('resend');
+
+// Initialize Resend with API key from environment
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Generate JWT Token
@@ -242,15 +246,44 @@ exports.forgotPassword = async (req, res) => {
         // Save token to DB
         await User.setResetToken(email, resetToken, resetExpires);
 
-        // Construct reset link
-        const host = req.get('host');
-        const protocol = req.protocol || 'http';
-        const resetUrl = `${protocol}://${host}/purepulse/reset-password.html?token=${resetToken}`;
+        // Build reset URL — uses FRONTEND_URL in production (Vercel), fallbacks to localhost
+        const baseUrl = process.env.FRONTEND_URL || `http://localhost:${process.env.PORT || 3000}`;
+        const resetUrl = `${baseUrl}/purepulse/reset-password.html?token=${resetToken}`;
+
+        // Send email via Resend
+        const { error: emailError } = await resend.emails.send({
+            from: 'PurePulse <noreply@purepulse.eco>',
+            to: email,
+            subject: '🌿 PurePulse — Identity Recovery Protocol',
+            html: `
+                <div style="font-family: 'Inter', Arial, sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 40px; border-radius: 12px; max-width: 520px; margin: auto;">
+                    <h1 style="color: #00ff94; font-size: 1.8rem; margin-bottom: 0.25rem;">PurePulse</h1>
+                    <p style="color: #888; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 0;">Environmental Impact HUB</p>
+                    <hr style="border-color: #1a1a1a; margin: 24px 0;">
+                    <h2 style="font-size: 1.2rem; color: #fff;">Identity Recovery Protocol</h2>
+                    <p style="color: #aaa; line-height: 1.7;">We received a request to reset the password for the Guardian account linked to <strong style="color: #fff;">${email}</strong>.</p>
+                    <p style="color: #aaa; line-height: 1.7;">Click the button below to set a new Security Protocol. This link expires in <strong style="color: #fff;">1 hour</strong>.</p>
+                    <div style="text-align: center; margin: 32px 0;">
+                        <a href="${resetUrl}" style="display: inline-block; background: #00ff94; color: #000; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 0.95rem; letter-spacing: 0.5px;">Reset Identity Credentials</a>
+                    </div>
+                    <p style="color: #666; font-size: 0.8rem;">If you did not request a reset, please ignore this message — your credentials remain unchanged.</p>
+                    <hr style="border-color: #1a1a1a; margin: 24px 0;">
+                    <p style="color: #444; font-size: 0.75rem; text-align: center;">PurePulse &mdash; Tech-Eco Environmental Platform</p>
+                </div>
+            `
+        });
+
+        if (emailError) {
+            console.error('Resend Email Error:', emailError);
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to send recovery email. Please try again later.'
+            });
+        }
 
         res.status(200).json({
             success: true,
-            message: 'Recovery protocol sent successfully.',
-            resetLink: resetUrl // Returned for local testing as requested
+            message: 'Recovery protocol dispatched. Check your secure inbox.'
         });
 
     } catch (error) {
